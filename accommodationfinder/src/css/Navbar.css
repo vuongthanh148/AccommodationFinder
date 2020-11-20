@@ -31,6 +31,10 @@ small{
 	font-weight: 300;
 }
 
+.ev-header-1 {
+    height: 10vh;
+}
+
 .ev-header-1 .ev-topnav{
     background: var(--primary-color) !important;
     padding: 10px 15px;

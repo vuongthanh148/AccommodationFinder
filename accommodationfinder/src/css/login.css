@@ -23,15 +23,15 @@ body{
 	font-family: Montserrat,sans-serif !important;	
 }
 
-.ev-header-1 {
-	height: 10vh;
+.uk-height-1-1 {
+	height: 90vh !important;
 }
 
 .uk-background-cover {
 	background-image: url("../image/bg-img-1.jpg");
 	background-size: cover !important;
 	background-repeat: no-repeat;
-	height: 100vh;
+	height: 100%;
 }
 
 .ev-section-padding-v-s{
