@@ -1,0 +1,110 @@
+@import "https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,900";
+
+/* ----------------------------------------------------------- */
+/* COLOR VARIABLES */
+/* ----------------------------------------------------------- */
+#root{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+body{
+	--primary-color: #bf7c2f;
+	--secondary-color: #032737;
+	--primary-alpha-Dot75: rgba(191, 124, 47, 0.75);
+	--primary-alpha-Dot50: rgba(191, 124, 47, 0.50);
+	--primary-alpha-Dot10: rgba(191, 124, 47, 0.10);
+	--secondary-alpha-Dot50: rgba(3, 39, 55, 0.50);
+    --secondary-alpha-Dot85: rgba(3, 39, 55, 0.85);
+    margin: 0;
+}
+
+/* ----------------------------------------------------------- */
+/* COMMON STYLES */
+/* ----------------------------------------------------------- */
+
+body{
+	font-family: Montserrat,sans-serif !important;
+}
+
+small{
+	font-weight: 300;
+}
+
+.ev-header-1 .ev-topnav{
+    background: var(--primary-color) !important;
+    padding: 10px 15px;
+    height: 100%;
+}
+
+.ev-header-1 .ev-topnav .uk-subnav{
+	margin: 0;
+	font-weight: 400;
+	-webkit-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+}
+
+.ev-header-1 .ev-topnav .uk-subnav>li>a:hover{
+
+	color: #ffffff !important;
+	-webkit-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+}
+
+.ev-header-1 .ev-topnav .uk-iconnav>*>a{
+	-webkit-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+}
+
+.ev-header-1 .ev-topnav .uk-iconnav>*>a:hover{
+	color: #ffffff !important;
+	-webkit-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+}
+
+.ev-header-1 .ev-topnav .uk-navbar{
+	padding: 0 10px;
+}
+
+.ev-header-1 .ev-topnav .uk-subnav>*>:first-child{
+	font-size: 13px;
+}
+.uk-section-primary{
+	background: var(--primary-color) !important;
+}
+.ev-container{
+	margin: auto;
+	padding: 0 10px;
+	max-width: 90vw;
+}
+.ev-header-1 .ev-topnav .uk-subnav{
+	margin: 0;
+	font-weight: 400;
+	-webkit-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+}
+
+.ev-header-1 .ev-topnav .uk-subnav>li>a:hover{
+
+	color: #ffffff !important;
+	-webkit-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+}
+.ev-header-1 .ev-nav .uk-navbar-nav>li.uk-active>a{
+	color: var(--primary-color);
+}
+
+.uk-navbar-right {
+    margin-left: auto;
+}
+
+.uk-logo {
+    width: 200px;
+    height: auto;
+}

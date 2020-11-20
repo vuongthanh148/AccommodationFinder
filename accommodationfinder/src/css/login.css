@@ -23,12 +23,15 @@ body{
 	font-family: Montserrat,sans-serif !important;	
 }
 
+.ev-header-1 {
+	height: 10vh;
+}
 
 .uk-background-cover {
 	background-image: url("../image/bg-img-1.jpg");
 	background-size: cover !important;
 	background-repeat: no-repeat;
-	height: 100vh !important;
+	height: 100vh;
 }
 
 .ev-section-padding-v-s{
@@ -99,7 +102,7 @@ body{
 }
 .ev-auth-2 .ev-logo{
 	max-width: 350px;
-	height: 110px;
+	height: 100px;
 }
 .ev-auth-2 .uk-heading-line{
 	font-weight: 600;

@@ -31,7 +31,7 @@ class App extends Component {
             <Route path="/profile">
               <Profile />
             </Route>
-            <Route path="/home">
+            <Route path="/">
               <Home />
             </Route>
           </Switch>
