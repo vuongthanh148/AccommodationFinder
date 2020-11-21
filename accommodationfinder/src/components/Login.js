@@ -53,7 +53,7 @@ class Login extends Component {
                             <button className="uk-button uk-width-1-1 uk-border-pill">Đăng nhập</button>
 
                             <div className="uk-margin uk-width-1-1 uk-text-small">
-                            Bạn chưa có tài khoản? <a className="ev-link-primary uk-text-bold" href="signup-2.html">Đăng ký</a>
+                            Bạn chưa có tài khoản? <NavLink className="ev-link-primary uk-text-bold" activeStyle={{color:'#fff'}} to="/signup" onClick = {this.props.changeState}>Đăng ký</NavLink>
                             <a className="uk-margin uk-display-block" href="forgot-2.html*">Quên mật khẩu?</a>
                             </div>
                         </form>

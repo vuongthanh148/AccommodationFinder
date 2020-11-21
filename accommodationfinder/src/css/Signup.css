@@ -43,11 +43,40 @@ body{
 }
 
 /* /////////////////////////////////////// */
+.uk-heading-line {
+	font-size: 1.5rem !important;
+}
 
 .signup-width {
     max-width: 70vw !important;
 }
-.ev-auth-2 .option-signup {
-    width: 100%;
-    max-width: 80vw !important;
+
+.signup-option-container {
+	padding-right: 15px;
+    padding-left: 15px;
+	display: inline-flex;
+}
+
+.signup-option {
+	text-align: center;
+	margin: 30px 0;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+	width: 50%;
+}
+.signup-option .option-content {
+	height: 85%;
+}
+.signup-option .option-button {
+	height: 15%;
+}
+
+.signup-button {
+    width: 50% !important;
+}
+
+.signup-button:hover {
+    color: var(--primary-color);
+    background: #ffffff !important;
 }

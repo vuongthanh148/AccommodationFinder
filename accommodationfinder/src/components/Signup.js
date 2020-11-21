@@ -25,14 +25,24 @@ class Signup extends Component {
                 <div class="ev-auth-2 uk-position-z-index signup-width">
                     <NavLink  activeStyle={{color:'#fff'}} to="/home"><img className="ev-logo" src={logo}/></NavLink>
                     <h5 class="uk-heading-line"><span>Sign Up</span></h5>
-                    <div className="option-signup uk-flex uk-flex-center uk-flex-middle">
-                        <div className="signup-owner">
-                            <h1>Chủ trọ</h1>
-                            <h3>Bạn có thể đăng bài viết, chat với admin, nhận được những dữ liệu thống kê về nhu cầu thuê trọ để có những chiến lược marketing hiệu quả</h3>
+                    <div className="signup-option-container">
+                        <div className="signup-option">
+                            <div className="option-content">
+                                <h2>Chủ trọ</h2>
+                                <h4>Bạn có thể đăng bài viết, chat với admin, nhận được những dữ liệu thống kê về nhu cầu thuê trọ để có những chiến lược marketing hiệu quả</h4>
+                            </div>
+                            <div className="option-button">
+                                <button className="uk-button uk-width-1-1 uk-border-pill signup-button">Đăng ký</button>
+                            </div>
                         </div>
-                        <div className="signup-nonowner">
-                            <h1>Người thuê trọ</h1>
-                            <h3>Bạn có thể tìm kiếm những trọ phù hợp nhất với nhu cầu của mình...........</h3>
+                        <div className="signup-option">
+                            <div className="option-content">
+                                <h2>Người thuê trọ</h2>
+                                <h4>Bạn có thể tìm kiếm những trọ phù hợp nhất với nhu cầu của mình...</h4>
+                            </div>
+                            <div className="option-button">
+                                <button className="uk-button uk-width-1-1 uk-border-pill signup-button">Đăng ký</button>
+                            </div>
                         </div>
                     </div>
                 </div>
