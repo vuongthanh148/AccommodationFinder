@@ -18,6 +18,7 @@ body{
 	--secondary-alpha-Dot50: rgba(3, 39, 55, 0.50);
     --secondary-alpha-Dot85: rgba(3, 39, 55, 0.85);
     margin: 0;
+    /* overflow: hidden; */
 }
 
 /* ----------------------------------------------------------- */

@@ -10,7 +10,7 @@ class Home extends Component {
   }
 
   componentDidMount(){
-    console.log('did it mount?');
+    this.props.changeState(true)
     //Request all needed data
   }
   render() {

@@ -1,10 +1,19 @@
 import react, { Component } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link, NavLink } from "react-router-dom";
 import reactDOM from 'react-dom';
 import "../css/login.css";
 import "../css/unikit.css"
 import logo_trang from '../image/logo_ngang_trang.png';
 
+
 class Login extends Component {
+    constructor(props){
+        super(props)
+    }
+
+    componentDidMount(){
+        this.props.changeState(false);
+    }
 
     render(){
         return(
@@ -13,30 +22,27 @@ class Login extends Component {
                     <div className="uk-overlay ev-overlay-secondary uk-position-cover"></div>
 
                     <div className="ev-auth-2 uk-position-z-index">
-
-                        <a href="http://">
-                            <img className="ev-logo" src={logo_trang}/>
-                        </a>
-
+                        <NavLink  activeStyle={{color:'#fff'}} to="/home"><img className="ev-logo" src={logo_trang}/></NavLink>
+                    
                         <h5 className="uk-heading-line"><span>Đăng nhập</span></h5>
 
                         <form>
                             <div className="uk-margin">
                                 <div className="uk-width-1-1 uk-inline">
-                                    <input className="uk-input uk-border-pill" placeholder="Email" type="text"/>
+                                    <input className="uk-input uk-border-pill" placeholder="Email" type="text" required/>
                                 </div>
                             </div>
                             <div className="uk-margin">
                                 <div className="uk-width-1-1 uk-inline">
-                                    <input className="uk-input uk-border-pill" placeholder="Password" type="text"/>
+                                    <input className="uk-input uk-border-pill" placeholder="Password" type="text" required/>
                                 </div>
                             </div>
 
                             <div className="uk-margin uk-text-left padding-h uk-text-small  uk-preserve-color">
                                 <label>
                                     Bạn là: 
-                                    <input className="uk-checkbox owner padding-left" type="checkbox" />Chủ trọ
-                                    <input className="uk-checkbox nonowner padding-left" type="checkbox" />Người thuê trọ
+                                    <input className="uk-radio margin" type="radio" name="typeUser" required />Chủ trọ
+                                    <input className="uk-radio margin" type="radio" name="typeUser" required />Người thuê trọ
                                 </label>
                             </div>
 

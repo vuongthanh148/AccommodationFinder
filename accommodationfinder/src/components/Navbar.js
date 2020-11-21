@@ -8,26 +8,31 @@ import "../css/Navbar.css";
 import "../css/unikit.css"
 
 class Navbar extends Component {
+  constructor(props){
+    super(props);
+  }
   render() {
     return (
-      <Bar />
+      <Bar changeState = {this.props.changeState}/>
     );
   }
 }
 
 export default Navbar;
 
-function Bar() {
-  return(
-    <div className="ev-header-1 uk-visible@m">
+class Bar extends Component {
+  render(){
+    return(
+      <div className="ev-header-1 uk-visible@m">
       {/* TOP NAVBAR */}
       <div className="ev-topnav uk-section-primary uk-padding-small">
         <div className="ev-container">
           <nav className="uk-navbar-container uk-navbar-transparent uk-navbar">
             <div className="uk-navbar-left">
-              <a className="uk-logo" href="index.html">
+              <NavLink className="uk-logo" activeStyle={{color:'#fff'}} to="/home"><img className="ev-logo" src={logo}/></NavLink>
+              {/* <a className="uk-logo" href="index.html">
                 <img src={logo} />
-              </a>
+              </a> */}
             </div>
 
             <div className="uk-navbar-right">
@@ -36,9 +41,11 @@ function Bar() {
                   <NavLink  activeStyle={{color:'#fff'}} to="/home">Trang chủ</NavLink>
                 </li>
                 <li>
-                  <NavLink  activeStyle={{color:'#fff'}} to="/login">Đăng nhập</NavLink>
+                  <NavLink  activeStyle={{color:'#fff'}} to="/login" onClick = {this.props.changeState}>Đăng nhập</NavLink>
                 </li>
-                <li><a href="#">Đăng ký</a></li>
+                <li>
+                <NavLink  activeStyle={{color:'#fff'}} to="/signup" onClick = {this.props.changeState}>Đăng ký</NavLink>
+                </li>
               </ul>
             </div>
           </nav>
@@ -46,6 +53,8 @@ function Bar() {
       </div>
     </div>
   )
+  }
+    
 }
 
 {/* <nav>

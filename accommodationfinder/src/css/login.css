@@ -24,7 +24,7 @@ body{
 }
 
 .uk-height-1-1 {
-	height: 90vh !important;
+	height: 100vh !important;
 }
 
 .uk-background-cover {
@@ -166,6 +166,12 @@ body{
     display: block!important;
 }
 
-.padding-left {
+.margin {
 	margin-left: 35px !important;
+	margin-right: 5px !important;
+}
+
+.ev-auth-2 .uk-radio {
+	width: 20px !important;
+	height: 20px !important;
 }
