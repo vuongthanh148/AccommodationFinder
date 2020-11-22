@@ -46,10 +46,8 @@ body{
 	background: var(--secondary-alpha-Dot85) !important;
 }
 .ev-auth-2{
-	padding: 0 20px;
 	text-align: center;
-	width: 100%;
-	max-width: 350px;
+	width: 30vw;
 }
 
 .ev-auth-2 .uk-heading-line{
@@ -100,9 +98,9 @@ body{
 .ev-auth-2 .uk-button:hover{
 	background: var(--primary-color);
 }
-.ev-auth-2 .ev-logo{
-	max-width: 350px;
-	height: 100px;
+.ev-logo{
+	height: auto;
+	width: 100%;
 }
 .ev-auth-2 .uk-heading-line{
 	font-weight: 600;

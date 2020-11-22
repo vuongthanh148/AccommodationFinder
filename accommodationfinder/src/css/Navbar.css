@@ -32,7 +32,8 @@ small{
 }
 
 .ev-header-1 {
-    height: 10vh;
+	height: 10vh;
+	position: relative;
 }
 
 .ev-header-1 .ev-topnav{
@@ -112,3 +113,18 @@ small{
     width: 200px;
     height: auto;
 }
+
+.uk-navbar {
+	display: flex;
+	position: absolute;
+	margin: auto;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 90vw;
+  }
+
+  .navbar-right-element{
+	margin: 0;
+  }

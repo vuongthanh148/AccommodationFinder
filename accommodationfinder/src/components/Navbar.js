@@ -23,10 +23,8 @@ export default Navbar;
 class Bar extends Component {
   render(){
     return(
-      <div className="ev-header-1 uk-visible@m">
+      <div className="ev-header-1 ev-topnav uk-section-primary">
       {/* TOP NAVBAR */}
-      <div className="ev-topnav uk-section-primary uk-padding-small">
-        <div className="ev-container">
           <nav className="uk-navbar-container uk-navbar-transparent uk-navbar">
             <div className="uk-navbar-left">
               <NavLink className="uk-logo" activeStyle={{color:'#fff'}} to="/home"><img className="ev-logo" src={logo}/></NavLink>
@@ -34,9 +32,8 @@ class Bar extends Component {
                 <img src={logo} />
               </a> */}
             </div>
-
             <div className="uk-navbar-right">
-              <ul className="uk-subnav uk-subnav-divider">
+              <ul className="uk-subnav uk-subnav-divider navbar-right-element">
                 <li>
                   <NavLink  activeStyle={{color:'#fff'}} to="/home">Trang chủ</NavLink>
                 </li>
@@ -49,8 +46,6 @@ class Bar extends Component {
               </ul>
             </div>
           </nav>
-        </div>
-      </div>
     </div>
   )
   }

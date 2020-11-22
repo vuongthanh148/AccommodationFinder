@@ -2635,10 +2635,10 @@ ul.uk-nav-sub {
 .uk-nav-center.uk-nav-parent-icon > .uk-parent > a::after {
   position: absolute;
 }
-.uk-navbar {
+/* .uk-navbar {
   display: flex;
   position: relative;
-}
+} */
 .uk-navbar-container:not(.uk-navbar-transparent) {
   background: #f8f8f8;
 }

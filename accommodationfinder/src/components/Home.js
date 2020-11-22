@@ -29,7 +29,6 @@ export default Home;
 function Cover() {
   return(
       <div className="ev-hero-image uk-cover-container uk-background-cover uk-background-secondary uk-flex">
-
           <div className="ev-hero-image-overlay uk-flex uk-flex-center uk-flex-middle uk-position-z-index uk-position-relative">
               <div className="uk-width-1-1@m uk-text-center uk-margin-auto uk-margin-auto-vertical">
                   <h1 className="uk-text-bold">Discover The Best Accommodations</h1>

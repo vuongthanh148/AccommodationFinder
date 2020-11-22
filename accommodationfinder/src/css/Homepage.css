@@ -18,9 +18,11 @@ body{
 	--secondary-alpha-Dot50: rgba(3, 39, 55, 0.50);
     --secondary-alpha-Dot85: rgba(3, 39, 55, 0.85);
     margin: 0;
-    /* overflow: hidden; */
+    
 }
-
+::-webkit-scrollbar {
+    display: none;
+}
 /* ----------------------------------------------------------- */
 /* COMMON STYLES */
 /* ----------------------------------------------------------- */
@@ -208,7 +210,7 @@ li {
 .ev-hero-image .ev-hero-image-overlay {
 	background-color: var(--secondary-alpha-Dot85);
 	width: 100%;
-	height: 700px;
+	height: 90vh;
 }
 
 .ev-hero-image .uk-button-primary{
