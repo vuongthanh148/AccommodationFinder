@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link, NavLink } from "react-router-dom";
-import { FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import { faFacebookF, faTwitter, faYoutube, faInstagram} from '@fortawesome/free-brands-svg-icons';
+// import { FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+// import { faFacebookF, faTwitter, faYoutube, faInstagram} from '@fortawesome/free-brands-svg-icons';
 import logo from '../image/logo_ngang_trang.png';
-import { FaPhone } from 'react-icons/fa';
+// import { FaPhone } from 'react-icons/fa';
 import "../css/Navbar.css";
-import "../css/unikit.css"
 
 class Navbar extends Component {
   constructor(props){
@@ -28,9 +27,6 @@ class Bar extends Component {
           <nav className="uk-navbar-container uk-navbar-transparent uk-navbar">
             <div className="uk-navbar-left">
               <NavLink className="uk-logo" activeStyle={{color:'#fff'}} to="/home"><img className="ev-logo" src={logo}/></NavLink>
-              {/* <a className="uk-logo" href="index.html">
-                <img src={logo} />
-              </a> */}
             </div>
             <div className="uk-navbar-right">
               <ul className="uk-subnav uk-subnav-divider navbar-right-element">

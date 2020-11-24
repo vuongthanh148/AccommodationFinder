@@ -8,6 +8,7 @@
     padding: 0;
     margin: 0;
 }
+
 body{
 	--primary-color: #bf7c2f;
 	--secondary-color: #032737;
@@ -17,6 +18,18 @@ body{
 	--secondary-alpha-Dot50: rgba(3, 39, 55, 0.50);
     --secondary-alpha-Dot85: rgba(3, 39, 55, 0.85);
     margin: 0;
+}
+
+html {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+	  "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+	  "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1.5;
+	-webkit-text-size-adjust: 100%;
+	background: #fff;
+	color: #666;
 }
 
 /* ----------------------------------------------------------- */
@@ -123,8 +136,158 @@ small{
 	right: 0;
 	bottom: 0;
 	width: 90vw;
-  }
+}
 
-  .navbar-right-element{
+.navbar-right-element{
 	margin: 0;
-  }
+}
+
+.navbar-right-element a:hover {
+	color: #ffffff !important;
+}
+
+
+/* //////////////////////////////////////// */
+.uk-section-primary {
+  background: #1e87f0;
+}
+.uk-section-primary:not(.uk-preserve-color) {
+color: rgba(255, 255, 255, 0.7);
+}
+.uk-section-primary:not(.uk-preserve-color) .uk-logo,
+.uk-section-primary:not(.uk-preserve-color) .uk-logo:focus,
+.uk-section-primary:not(.uk-preserve-color) .uk-logo:hover,
+.uk-section-primary:not(.uk-preserve-color) .uk-subnav > * > a:focus,
+.uk-section-primary:not(.uk-preserve-color) .uk-subnav > * > a:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.uk-section-primary:not(.uk-preserve-color) .uk-subnav > * > :first-child {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.uk-section-primary:not(.uk-preserve-color)
+  .uk-subnav-divider
+  > :nth-child(n + 2):not(.uk-first-column)::before {
+  border-left-color: rgba(255, 255, 255, 0.2);
+}
+
+.uk-section-primary:not(.uk-preserve-color)
+  .uk-logo
+  > :not(.uk-logo-inverse):not(:only-of-type) {
+  display: inline;
+}
+
+.uk-navbar-container:not(.uk-navbar-transparent) {
+	background: #f8f8f8;
+}
+.uk-navbar-container > ::after,
+.uk-navbar-container > ::before {
+	display: none !important;
+}
+.uk-navbar-container > .uk-container .uk-navbar-left {
+	margin-left: -15px;
+	margin-right: -15px;
+}
+.uk-navbar-container > .uk-container .uk-navbar-right {
+	margin-right: -15px;
+}
+.uk-navbar-container:not(.uk-navbar-transparent) {
+	background: #f8f8f8;
+}
+
+.uk-navbar-left,
+.uk-navbar-right {
+  display: flex;
+  align-items: center;
+}
+.uk-navbar-left,
+.uk-navbar-right {
+  flex-wrap: wrap;
+}
+.uk-navbar-right {
+  margin-left: auto;
+}
+.uk-logo {
+  font-size: 1.5rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  color: #666;
+  text-decoration: none;
+}
+.uk-logo:focus,
+.uk-logo:hover {
+  color: #666;
+  outline: 0;
+  text-decoration: none;
+}
+
+.uk-section-primary:not(.uk-preserve-color)
+  .uk-logo
+  > :not(.uk-logo-inverse):not(:only-of-type){
+  display: none;
+}
+.uk-subnav {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -20px;
+  padding: 0;
+  list-style: none;
+}
+.uk-subnav > * {
+  flex: none;
+  padding-left: 20px;
+  position: relative;
+}
+.uk-subnav > * > :first-child {
+  display: block;
+  color: #999;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  transition: 0.1s ease-in-out;
+  transition-property: color, background-color;
+}
+.uk-subnav > * > a:focus,
+.uk-subnav > * > a:hover {
+  color: #666;
+  text-decoration: none;
+  outline: 0;
+}
+.uk-subnav > .uk-active > a {
+  color: #333;
+}
+.uk-subnav-divider {
+  margin-left: -41px;
+}
+.uk-subnav-divider > * {
+  display: flex;
+  align-items: center;
+}
+.uk-subnav-divider > ::before {
+  content: "";
+  height: 1.5em;
+  margin-left: 0;
+  margin-right: 20px;
+  border-left: 1px solid transparent;
+}
+.uk-subnav-divider > :nth-child(n + 2):not(.uk-first-column)::before {
+  border-left-color: #e5e5e5;
+}
+.uk-subnav-divider {
+  margin-left: -41px;
+}
+.uk-subnav-divider > * {
+  display: flex;
+  align-items: center;
+}
+.uk-subnav-divider > ::before {
+  content: "";
+  height: 1.5em;
+  margin-left: 0;
+  margin-right: 20px;
+  border-left: 1px solid transparent;
+}
+.uk-subnav-divider > :nth-child(n + 2):not(.uk-first-column)::before {
+  border-left-color: #e5e5e5;
+}

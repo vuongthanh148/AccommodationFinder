@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Post from "./components/Post";
-import Signup from "./components/Signup"
+import Signup from "./components/Signup";
+import SignupOwner from "./components/SignupOwner"
 // import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -38,6 +39,9 @@ class App extends Component {
             </Route>
             <Route path="/signup">
               <Signup changeState = {this.changeState} />
+            </Route>
+            <Route path="/signupOwner">
+              <SignupOwner changeState = {this.changeState} />
             </Route>
             <Route path="/post">
               <Post />

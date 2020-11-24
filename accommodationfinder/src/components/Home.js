@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "../css/Homepage.css";
-// import "../css/unikit.css"
 import {list_items, Cities, District, Stresses, Universities, Price, Square, Room_type, Air_conditioner, Electric_water_heater, Ve_sinh} from "../data/searchBar"
 import Select from 'react-select';
 
@@ -28,14 +27,13 @@ export default Home;
 
 function Cover() {
   return(
-      <div className="ev-hero-image uk-cover-container uk-background-cover uk-background-secondary uk-flex">
-          <div className="ev-hero-image-overlay uk-flex uk-flex-center uk-flex-middle uk-position-z-index uk-position-relative">
-              <div className="uk-width-1-1@m uk-text-center uk-margin-auto uk-margin-auto-vertical">
-                  <h1 className="uk-text-bold">Discover The Best Accommodations</h1>
-                  <h4 className="uk-margin-medium-bottom uk-margin-small-top">Your Property, Our Priority.</h4>
-                  <a className="uk-button uk-button-primary uk-button-large uk-border-pill" href="#">
+      <div className="homecover-hero-image">
+          <div className="homecover-hero-image-overlay homecover-flex homecover-position-z-index">
+              <div className="homecover-width-1-1@m homecover-text-center">
+                  <h1 className="homecover-text-bold">Discover The Best Accommodations</h1>
+                  <h4 className="homecover-margin">Your Property, Our Priority.</h4>
+                  <a className="homecover-button homecover-button-primary homecover-button-large homecover-border-pill" href="#">
                       Discover Now
-                      <i className="fas fa-angle-right uk-margin-small-left"></i>
                   </a>
               </div>
           </div>
@@ -46,17 +44,17 @@ function Cover() {
 function Search() {
   
   return(
-      <div className="ev-section-light ev-bottom-border">
-          <div className="ev-container-search ev-section-padding-v-m ev-advanced-search">
-              <div className="ev-title-dark uk-text-center uk-margin-remove-top">
+      <div className="search-section">
+          <div className="search-container">
+              <div className="search-title">
                   <p>Find Your</p>
                   <h3>Perfect Accommodation</h3>
               </div>
 
-              <form className="uk-grid-small uk-grid">
-                  <div className="uk-width-1-2 uk-width-1-2@s uk-width-1-4@m">
-                      <div className="uk-margin">
-                          <div className="uk-width-1-1 uk-inline">
+              <form className="search-grid-small search-grid">
+                  <div className="search-width">
+                      <div className="search-margin">
+                          <div className="search-width-1-1 search-inline">
                               <h4>Thành phố</h4>
                               <Select
                               className="list-cities"
@@ -67,9 +65,9 @@ function Search() {
                       </div>
                   </div>
 
-                  <div className="uk-width-1-2 uk-width-1-2@s uk-width-1-4@m">
-                      <div className="uk-margin">
-                          <div className="uk-width-1-1 uk-inline">
+                  <div className="search-width">
+                      <div className="search-margin">
+                          <div className="search-width-1-1 search-inline">
                               <h4>Quận huyện</h4>
                               <Select
                                   className="list-district"
@@ -80,9 +78,9 @@ function Search() {
                       </div>
                   </div>
 
-                  <div className="uk-width-1-2 uk-width-1-2@s uk-width-1-4@m">
-                      <div className="uk-margin">
-                          <div className="uk-width-1-1 uk-inline">
+                  <div className="search-width">
+                      <div className="search-margin">
+                          <div className="search-width-1-1 search-inline">
                               <h4>Đường phố</h4>
                               <Select
                                   className="list-stresses"
@@ -93,9 +91,9 @@ function Search() {
                       </div>
                   </div>
 
-                  <div className="uk-width-1-2 uk-width-1-2@s uk-width-1-4@m">
-                      <div className="uk-margin">
-                          <div className="uk-width-1-1 uk-inline">
+                  <div className="search-width">
+                      <div className="search-margin">
+                          <div className="search-width-1-1 search-inline">
                               <h4>Gần trường ĐH, CĐ</h4>
                               <Select
                                   className="list-universities"
@@ -106,9 +104,9 @@ function Search() {
                       </div>
                   </div>
 
-                  <div className="uk-width-1-2 uk-width-1-2@s uk-width-1-4@m">
-                      <div className="uk-margin">
-                          <div className="uk-width-1-1 uk-inline">
+                  <div className="search-width">
+                      <div className="search-margin">
+                          <div className="search-width-1-1 search-inline">
                               <h4>Khoảng giá</h4>
                               <Select
                                   className="list-price"
@@ -119,9 +117,9 @@ function Search() {
                       </div>
                   </div>
 
-                  <div className="uk-width-1-2 uk-width-1-2@s uk-width-1-4@m">
-                      <div className="uk-margin">
-                          <div className="uk-width-1-1 uk-inline">
+                  <div className="search-width">
+                      <div className="search-margin">
+                          <div className="search-width-1-1 search-inline">
                               <h4>Diện tích</h4>
                               <Select
                                   className="list-square"
@@ -132,9 +130,9 @@ function Search() {
                       </div>
                   </div>
 
-                  <div className="uk-width-1-2 uk-width-1-2@s uk-width-1-4@m">
-                      <div className="uk-margin">
-                          <div className="uk-width-1-1 uk-inline">
+                  <div className="search-width">
+                      <div className="search-margin">
+                          <div className="search-width-1-1 search-inline">
                               <h4>Loại phòng</h4>
                               <Select
                                   className="list-room-type"
@@ -145,9 +143,35 @@ function Search() {
                       </div>
                   </div>
 
-                  <div className="uk-width-1-2 uk-width-1-2@s uk-width-1-4@m">
-                      <div className="uk-margin">
-                          <div className="uk-width-1-1 uk-inline">
+                  <div className="search-width">
+                      <div className="search-margin">
+                          <div className="search-width-1-1 search-inline">
+                              <h4>Điều hòa</h4>
+                              <Select
+                                  className="list-air-conditioner"
+                                  defaultValue={list_items[7]}
+                                  options={Air_conditioner}
+                              />
+                          </div>
+                      </div>
+                  </div>
+
+                  <div className="search-width">
+                      <div className="search-margin">
+                          <div className="search-width-1-1 search-inline">
+                              <h4>Nóng lạnh</h4>
+                              <Select
+                                  className="list-electric-water-heater"
+                                  defaultValue={list_items[8]}
+                                  options={Electric_water_heater}
+                              />
+                          </div>
+                      </div>
+                  </div>
+
+                  <div className="search-width">
+                      <div className="search-margin">
+                          <div className="search-width-1-1 search-inline">
                               <h4>Vệ sinh</h4>
                               <Select
                                   className="list-ve-sinh"
@@ -158,33 +182,14 @@ function Search() {
                       </div>
                   </div>
 
-                  <div className="uk-width-1-1@s uk-width-5-6@m">
-                      <div className="uk-margin">
-                          <ul className="ev-other-features uk-accordion">
-                              <li>
-                                  <a className="uk-accordion-title" href="#" onClick={click_feauter()}>YÊU CẦU KHÁC</a>
-                                  <div className="uk-accordion-content">
-
-                                      <div className="uk-grid-small uk-grid">
-
-                                          <div className="uk-width-1-2@s uk-width-1-3@m uk-width-1-4@l">
-                                              <label><input className="uk-checkbox" type="checkbox"/>Nóng lạnh</label>
-                                          </div>
-
-                                          <div className="uk-width-1-2@s uk-width-1-3@m uk-width-1-4@l">
-                                              <label><input className="uk-checkbox" type="checkbox"/>Điều hòa</label>
-                                          </div>
-                                      </div>
-
-                                  </div>
-                              </li>
-                          </ul>
+                  <div className="search-width-1-1@s search-width-5-6@m">
+                      <div className="search-margin search-other-features">
                       </div>
                   </div>
 
-                  <div className="uk-width-1-1@s uk-width-1-6@m">
-                      <div className="uk-margin">
-                          <button className="uk-button uk-button-primary uk-button-large uk-border-rounded uk-margin-small-top uk-width-1-1 uk-text-truncate" type="submit">Search <i className="fas fa-angle-right uk-margin-small-left"></i></button>
+                  <div className="search-width-1-1@s search-width-1-6@m">
+                      <div className="search-margin">
+                          <button className="search-button search-button-primary search-button-large search-border-rounded search-margin-small-top search-width-1-1 search-text-truncate" type="submit">Search</button>
                       </div>
                   </div>
 
