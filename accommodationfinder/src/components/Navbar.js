@@ -22,46 +22,28 @@ export default Navbar;
 class Bar extends Component {
   render(){
     return(
-      <div className="ev-header-1 ev-topnav uk-section-primary">
+      <div className="ev-header-1 navbar-section-primary">
       {/* TOP NAVBAR */}
-          <nav className="uk-navbar-container uk-navbar-transparent uk-navbar">
-            <div className="uk-navbar-left">
-              <NavLink className="uk-logo" activeStyle={{color:'#fff'}} to="/home"><img className="ev-logo" src={logo}/></NavLink>
-            </div>
-            <div className="uk-navbar-right">
-              <ul className="uk-subnav uk-subnav-divider navbar-right-element">
-                <li>
-                  <NavLink  activeStyle={{color:'#fff'}} to="/home">Trang chủ</NavLink>
-                </li>
-                <li>
-                  <NavLink  activeStyle={{color:'#fff'}} to="/login" onClick = {this.props.changeState}>Đăng nhập</NavLink>
-                </li>
-                <li>
-                <NavLink  activeStyle={{color:'#fff'}} to="/signup" onClick = {this.props.changeState}>Đăng ký</NavLink>
-                </li>
-              </ul>
-            </div>
-          </nav>
+        <nav className="navbar-container navbar-transparent navbar">
+          <div className="navbar-left">
+            <NavLink className="navbar-logo" activeStyle={{color:'#fff'}} to="/home"><img className="ev-logo" src={logo}/></NavLink>
+          </div>
+          <div className="navbar-right">
+            <ul className="navbar-subnav navbar-subnav-divider navbar-right-element">
+              <li>
+                <NavLink  activeStyle={{color:'#fff'}} to="/home">Trang chủ</NavLink>
+              </li>
+              <li>
+                <NavLink  activeStyle={{color:'#fff'}} to="/login" onClick = {this.props.changeState}>Đăng nhập</NavLink>
+              </li>
+              <li>
+              <NavLink  activeStyle={{color:'#fff'}} to="/signup" onClick = {this.props.changeState}>Đăng ký</NavLink>
+              </li>
+            </ul>
+          </div>
+        </nav>
     </div>
   )
   }
     
 }
-
-{/* <nav>
-          <ul>
-            <li>
-              <NavLink  activeStyle={{color:'#53acff'}} to="/home">Home</NavLink>
-            </li>
-            <li>
-              <NavLink  activeStyle={{color:'#53acff'}} to="/login">Login</NavLink>
-            </li>
-            <li>
-              <NavLink  activeStyle={{color:'#53acff'}} to="/post">Create new Post</NavLink>
-            </li>
-            <li>
-              <NavLink  activeStyle={{color:'#53acff'}} to="/profile">My profile</NavLink>
-            </li>
-          </ul>
-        </nav> */}
-
