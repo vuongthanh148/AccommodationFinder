@@ -8,6 +8,7 @@ import SignupNonowner from "./components/SignupNonowner";
 // import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Navbar1 from "./components/Navbar1";
 import Profile from './components/Profile';
 
 
@@ -31,7 +32,7 @@ class App extends Component {
     return (
       // this.renderedScreen(this.state.screen)
       <Router>
-          {this.state.navbar? <Navbar />: null}
+          {this.state.navbar? <Navbar1 />: null}
           {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
           <Switch>
