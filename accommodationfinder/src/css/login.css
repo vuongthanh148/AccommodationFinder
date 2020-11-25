@@ -440,7 +440,10 @@ a:hover {
 @media (max-width: 400px) {
   .login-auth-2{
     text-align: center;
-    width: 80vw;
+    width: 90vw;
+  }
+  .login-logo {
+    width: 80%;
   }
   .margin {
     margin-left: 15px !important;
@@ -450,94 +453,37 @@ a:hover {
 @media (min-width: 401px) {
   .login-auth-2{
     text-align: center;
-    width: 55vw;
+    width: 65vw;
+  }
+  .login-logo {
+    width: 80%;
   }
   .margin {
     margin-left: 15px !important;
   }
 }
 
-@media (min-width: 641px) {
+@media (min-width: 640px) {
   .login-auth-2{
     text-align: center;
-    width: 50vw;
+    width: 350px;
+  }
+  .login-logo {
+    width: 80%;
   }
   .margin {
     margin-left: 20px !important;
-  }
-  .login-flex-center\@s {
-    justify-content: center;
-  }
-  .login-flex-right\@s {
-    justify-content: flex-end;
   }
 }
 @media (min-width: 960px) {
   .login-auth-2{
     text-align: center;
-    width: 40vw;
+    width: 400px;
+  }
+  .login-logo {
+    width: 80%;
   }
   .margin {
     margin-left: 35px !important;
-  }
-  .login-flex-left\@m {
-    justify-content: flex-start;
-  }
-  .login-flex-center\@m {
-    justify-content: center;
-  }
-  .flex-right {
-    justify-content: flex-end;
-  }
-  .login-flex-between\@m {
-    justify-content: space-between;
-  }
-  .login-flex-around\@m {
-    justify-content: space-around;
-  }
-}
-@media (min-width: 1200px) {
-  .login-auth-2{
-    text-align: center;
-    width: 30vw;
-  }
-  .login-flex-left\@l {
-    justify-content: flex-start;
-  }
-  .login-flex-center\@l {
-    justify-content: center;
-  }
-  .login-flex-right\@l {
-    justify-content: flex-end;
-  }
-  .login-flex-between\@l {
-    justify-content: space-between;
-  }
-  .login-flex-around\@l {
-    justify-content: space-around;
-  }
-}
-@media (min-width: 1600px) {
-  .login-auth-2{
-    text-align: center;
-    width: 25vw;
-  }
-  .margin {
-    margin-left: 55px !important;
-  }
-  .login-flex-left\@xl {
-    justify-content: flex-start;
-  }
-  .login-flex-center\@xl {
-    justify-content: center;
-  }
-  .login-flex-right\@xl {
-    justify-content: flex-end;
-  }
-  .login-flex-between\@xl {
-    justify-content: space-between;
-  }
-  .login-flex-around\@xl {
-    justify-content: space-around;
   }
 }
