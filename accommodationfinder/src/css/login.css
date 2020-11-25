@@ -68,7 +68,8 @@ body{
 	background-repeat: no-repeat;
 }
 
-.login-auth-2 .login-checkbox:checked{
+.login-auth-2 .login-checkbox:checked,
+.login-auth-2 .login-radio:checked{
 	border: 2px solid var(--primary-color) !important;
 }
 
@@ -80,8 +81,8 @@ body{
 .login-checkbox:checked, .login-checkbox:indeterminate{
 	background-color: var(--primary-color) !important;
 }
-.login-checkbox:focus{
-	border-color: var(--primary-color) !important;
+.login-radio:checked{
+	background-color: var(--primary-color) !important;
 }
 
 .login-link-primary{
@@ -153,15 +154,15 @@ body{
   color: rgba(255, 255, 255, 0.5);
 }
 
-.login-light .login-checkbox,
+.login-light .login-checkbox {
+  background-color: rgba(242, 242, 242, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
 .login-light .login-radio {
   background-color: rgba(242, 242, 242, 0.1);
   border-color: rgba(255, 255, 255, 0.2);
 }
-.login-light .login-checkbox:focus,
-.login-light .login-radio:focus {
-  border-color: rgba(255, 255, 255, 0.7);
-}
+
 .login-light .login-checkbox:checked,
 .login-light .login-checkbox:indeterminate,
 .login-light .login-radio:checked {
@@ -174,7 +175,7 @@ body{
   background-color: #e6e6e6;
 }
 .login-light .login-radio:checked {
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Ccircle%20fill%3D%22%23666%22%20cx%3D%228%22%20cy%3D%228%22%20r%3D%222%22%20%2F%3E%0A%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2214%22%20height%3D%2211%22%20viewBox%3D%220%200%2014%2011%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666%22%20points%3D%2212%201%205%207.5%202%205%201%205.5%205%2010%2013%201.5%22%20%2F%3E%0A%3C%2Fsvg%3E%0A");
 }
 .login-light .login-checkbox:checked {
   background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2214%22%20height%3D%2211%22%20viewBox%3D%220%200%2014%2011%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23666%22%20points%3D%2212%201%205%207.5%202%205%201%205.5%205%2010%2013%201.5%22%20%2F%3E%0A%3C%2Fsvg%3E%0A");
@@ -242,14 +243,6 @@ body{
   font: inherit;
 }
 
-/* .login-input[type="search"]::-webkit-search-cancel-button,
-.login-input[type="search"]::-webkit-search-decoration {
-  -webkit-appearance: none;
-}
-.login-input[type="number"]::-webkit-inner-spin-button,
-.login-input[type="number"]::-webkit-outer-spin-button {
-  height: auto;
-} */
 .login-input::-moz-placeholder {
   opacity: 1;
 }
@@ -342,26 +335,13 @@ body{
   outline: 0;
   border-color: #1e87f0;
 }
-.login-checkbox:checked,
-.login-checkbox:indeterminate,
-.login-radio:checked {
-  background-color: #1e87f0;
-  border-color: transparent;
-}
+
 .login-checkbox:checked:focus,
 .login-checkbox:indeterminate:focus,
 .login-radio:checked:focus {
   background-color: #0e6dcd;
 }
-.login-radio:checked {
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Ccircle%20fill%3D%22%23fff%22%20cx%3D%228%22%20cy%3D%228%22%20r%3D%222%22%20%2F%3E%0A%3C%2Fsvg%3E");
-}
-.login-checkbox:checked {
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2214%22%20height%3D%2211%22%20viewBox%3D%220%200%2014%2011%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23fff%22%20points%3D%2212%201%205%207.5%202%205%201%205.5%205%2010%2013%201.5%22%20%2F%3E%0A%3C%2Fsvg%3E%0A");
-}
-.login-checkbox:indeterminate {
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Crect%20fill%3D%22%23fff%22%20x%3D%223%22%20y%3D%228%22%20width%3D%2210%22%20height%3D%221%22%20%2F%3E%0A%3C%2Fsvg%3E");
-}
+
 .login-checkbox:disabled,
 .login-radio:disabled {
   background-color: #f8f8f8;
@@ -421,20 +401,10 @@ body{
   display: block !important;
 }
 
-a:active,
-a:hover {
-  outline: 0;
-}
-.login-link,
-a {
+.login-link{
   color: #1e87f0;
   text-decoration: none;
   cursor: pointer;
-}
-
-a:hover {
-  color: #0f6ecd;
-  text-decoration: underline;
 }
 
 @media (max-width: 400px) {

@@ -28,20 +28,20 @@ class Login extends Component {
                         <form>
                             <div className="login-margin">
                                 <div className="login-inline">
-                                    <input className="login-input login-border-pill" placeholder="Email" type="text" required/>
+                                    <input className="login-input login-border-pill" placeholder="Email" type="text" required="required"/>
                                 </div>
                             </div>
                             <div className="login-margin">
                                 <div className="login-inline">
-                                    <input className="login-input login-border-pill" placeholder="Password" type="text" required/>
+                                    <input className="login-input login-border-pill" placeholder="Password" type="text" required="required"/>
                                 </div>
                             </div>
 
                             <div className="login-margin login-text-left login-text-small">
                                 <label>
                                     Bạn là: 
-                                    <input className="login-radio margin" type="radio" name="typeUser" required />Chủ trọ
-                                    <input className="login-radio margin" type="radio" name="typeUser" required />Người thuê trọ
+                                    <input className="login-radio margin" type="radio" name="typeUser" />Chủ trọ
+                                    <input className="login-radio margin" type="radio" name="typeUser" />Người thuê trọ
                                 </label>
                             </div>
 
