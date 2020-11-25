@@ -70,22 +70,6 @@ li {
 	background-color: var(--primary-color) !important;
 }
 
-.homecover-hero-image .homecover-button-primary{
-	color: #ffffff !important;
-	font-weight: 600 !important;
-	-webkit-transition: all .2s ease-in-out;
-	-o-transition: all .2s ease-in-out;
-	transition: all .2s ease-in-out;
-}
-
-.homecover-hero-image .homecover-button-primary:hover{
-	color: var(--primary-color) !important;
-	background-color: #ffffff !important;
-	-webkit-transition: all .2s ease-in-out;
-	-o-transition: all .2s ease-in-out;
-	transition: all .2s ease-in-out;
-}
-
 .homecover-flex {
   display: flex;
   justify-content: center;
@@ -282,7 +266,6 @@ li {
   position: relative;
   max-width: 100%;
   vertical-align: middle;
-  -webkit-backface-visibility: hidden;
 }
 .search-accordion {
   padding: 0;

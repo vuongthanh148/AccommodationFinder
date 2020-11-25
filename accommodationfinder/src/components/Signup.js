@@ -4,8 +4,6 @@
 
 import react, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link, NavLink } from "react-router-dom";
-import reactDOM from 'react-dom';
-import "../css/unikit.css";
 import "../css/Signup.css";
 import logo from '../image/logo_ngang_trang.png';
 
@@ -20,19 +18,19 @@ class Signup extends Component {
 
     render() { 
         return ( 
-            <div class="uk-background-cover uk-background-center-center uk-height-1-1 ev-section-padding-v-s uk-panel uk-flex uk-flex-wrap uk-flex-middle uk-flex-center uk-light">
-                <div class="uk-overlay ev-overlay-secondary uk-position-cover"></div>
-                <div class="ev-auth-2 uk-position-z-index signup-width">
-                    <NavLink  activeStyle={{color:'#fff'}} to="/home"><img className="ev-logo" src={logo}/></NavLink>
-                    <h5 class="uk-heading-line"><span>Sign Up</span></h5>
+            <div className="signup-background-cover signup-flex signup-light">
+                <div className="signup-overlay-secondary signup-position-cover"></div>
+                <div className="signup-position-z-index signup-width">
+                    <NavLink  activeStyle={{color:'#fff'}} to="/home"><img className="signup-logo" src={logo}/></NavLink>
+                    <h5 className="signup-heading-line"><span>Sign Up</span></h5>
                     <div className="signup-option-container">
-                        <div className="signup-option">
+                        <div className="signup-option signup-option-owner">
                             <div className="option-content">
                                 <h2>Chủ trọ</h2>
                                 <h4>Bạn có thể đăng bài viết, chat với admin, nhận được những dữ liệu thống kê về nhu cầu thuê trọ để có những chiến lược marketing hiệu quả</h4>
                             </div>
                             <div className="option-button">
-                                <button className="uk-button uk-width-1-1 uk-border-pill signup-button">Đăng ký</button>
+                                <NavLink className="signup-button signup-border-pill signup-text-bold signup-position-z-index" activeStyle={{color:'#fff'}} to="/signupOwner" onClick = {this.props.changeState}>Đăng ký</NavLink>
                             </div>
                         </div>
                         <div className="signup-option">
@@ -41,7 +39,7 @@ class Signup extends Component {
                                 <h4>Bạn có thể tìm kiếm những trọ phù hợp nhất với nhu cầu của mình...</h4>
                             </div>
                             <div className="option-button">
-                                <button className="uk-button uk-width-1-1 uk-border-pill signup-button">Đăng ký</button>
+                                <NavLink className="signup-button signup-border-pill signup-text-bold" activeStyle={{color:'#fff'}} to="/signupOwner" onClick = {this.props.changeState}>Đăng ký</NavLink>
                             </div>
                         </div>
                     </div>

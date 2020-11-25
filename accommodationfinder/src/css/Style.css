@@ -16,22 +16,19 @@ a:active,
 a:hover {
   outline: 0;
 }
-.uk-link,
+
 a {
   color: #1e87f0;
   text-decoration: none;
   cursor: pointer;
 }
-.uk-link-toggle:focus .uk-link,
-.uk-link-toggle:hover .uk-link,
-.uk-link:hover,
+
 a:hover {
   color: #0f6ecd;
   text-decoration: underline;
 }
 abbr[title] {
   text-decoration: underline dotted;
-  -webkit-text-decoration-style: dotted;
 }
 b,
 strong {
@@ -130,17 +127,7 @@ ul {
 * + ul {
   margin-top: 20px;
 }
-.uk-h1,
-.uk-h2,
-.uk-h3,
-.uk-h4,
-.uk-h5,
-.uk-h6,
-.uk-heading-2xlarge,
-.uk-heading-large,
-.uk-heading-medium,
-.uk-heading-small,
-.uk-heading-xlarge,
+
 h1,
 h2,
 h3,
@@ -155,17 +142,7 @@ h6 {
   color: #333;
   text-transform: none;
 }
-* + .uk-h1,
-* + .uk-h2,
-* + .uk-h3,
-* + .uk-h4,
-* + .uk-h5,
-* + .uk-h6,
-* + .uk-heading-2xlarge,
-* + .uk-heading-large,
-* + .uk-heading-medium,
-* + .uk-heading-small,
-* + .uk-heading-xlarge,
+
 * + h1,
 * + h2,
 * + h3,
@@ -174,42 +151,41 @@ h6 {
 * + h6 {
   margin-top: 40px;
 }
-.uk-h1,
+
 h1 {
   font-size: 2.23125rem;
   line-height: 1.2;
 }
-.uk-h2,
+
 h2 {
   font-size: 1.7rem;
   line-height: 1.3;
 }
-.uk-h3,
+
 h3 {
   font-size: 1.5rem;
   line-height: 1.4;
 }
-.uk-h4,
+
 h4 {
   font-size: 1.25rem;
   line-height: 1.4;
 }
-.uk-h5,
+
 h5 {
   font-size: 16px;
   line-height: 1.4;
 }
-.uk-h6,
+
 h6 {
   font-size: 0.875rem;
   line-height: 1.4;
 }
 @media (min-width: 960px) {
-  .uk-h1,
   h1 {
     font-size: 2.625rem;
   }
-  .uk-h2,
+
   h2 {
     font-size: 2rem;
   }
@@ -233,7 +209,7 @@ dt {
 dd {
   margin-left: 0;
 }
-.uk-hr,
+
 hr {
   overflow: visible;
   text-align: inherit;
@@ -241,7 +217,7 @@ hr {
   border: 0;
   border-top: 1px solid #e5e5e5;
 }
-* + .uk-hr,
+
 * + hr {
   margin-top: 20px;
 }
@@ -302,15 +278,7 @@ template {
 .uk-breakpoint-s::before {
   content: "640px";
 }
-.uk-breakpoint-m::before {
-  content: "960px";
-}
-.uk-breakpoint-l::before {
-  content: "1200px";
-}
-.uk-breakpoint-xl::before {
-  content: "1600px";
-}
+
 :root {
   --uk-breakpoint-s: 640px;
   --uk-breakpoint-m: 960px;
@@ -321,7 +289,6 @@ template {
 :root {
     --uk-leader-fill-content: .;
 }
-
 
 #root{
     width: 100%;
