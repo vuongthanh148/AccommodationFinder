@@ -1,11 +1,17 @@
 
 @import "https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,900";
 
+@import "react-slideshow-image/dist/styles.css";
+
 @import url("./Style.css");
+
+
 /* ----------------------------------------------------------- */
 /* COMMON STYLES */
 /* ----------------------------------------------------------- */
-
+html{
+  scroll-behavior: smooth;
+}
 body{
 	font-family: Montserrat,sans-serif !important;
 }
@@ -23,6 +29,27 @@ ul > li {
   list-style: none;
 }
 /* Cover */
+.each-slide{
+  background-repeat: no-repeat; 
+  background-size: cover;
+  background-position: 50% 50%;
+  overflow: hidden;
+  width: 100%;
+}
+.each-image-cover{
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /*width: 100%;
+  background-repeat: no-repeat; 
+  background-size: cover;
+  background-position: 50% 50%;
+  overflow: hidden;
+  background-blend-mode: normal; */
+  background-color: var(--secondary-alpha-Dot85);
+
+}
 .homecover-hero-image {
   background-image: url('../image/bg-img-1.jpg') !important;
   overflow: hidden;
@@ -87,8 +114,20 @@ ul > li {
   z-index: 1;
 }
 
+.slide-container{
+  position: relative;
+}
+
 .homecover-text-center {
   text-align: center !important;
+  position: absolute;
+  margin: auto;
+  z-index: 1;
+  position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 60%;
 }
 .homecover-text-bold {
   font-weight: 700;
