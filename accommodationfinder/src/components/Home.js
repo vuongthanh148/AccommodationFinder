@@ -40,11 +40,7 @@ class Home extends Component {
 let myRef = React.createRef();
 export default Home;
 
-const slideImages = [
-  "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/edc-web-house-tour-fuller07-1586874956.jpg",
-  "https://www.metricon.com.au/metricon/media/metricon/gallery/2020/july/0001.jpg",
-  "https://news.mogi.vn/wp-content/uploads/2019/03/cach-khac-phuc-loi-treo-dong-ho-phong-khach-chan-van-may-gia-chu-anh-4.jpg",
-];
+
 
 class Cover extends Component {
   constructor() {
@@ -52,7 +48,11 @@ class Cover extends Component {
     // this.myRef = React.createRef()
   }
   executeScroll = () => myRef.current.scrollIntoView();
-
+  slideImages = [
+    "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/edc-web-house-tour-fuller07-1586874956.jpg",
+    "https://www.metricon.com.au/metricon/media/metricon/gallery/2020/july/0001.jpg",
+    "https://news.mogi.vn/wp-content/uploads/2019/03/cach-khac-phuc-loi-treo-dong-ho-phong-khach-chan-van-may-gia-chu-anh-4.jpg",
+  ];
   render() {
     return (
       <div className="slide-container">
@@ -79,7 +79,7 @@ class Cover extends Component {
           <div
             className="each-slide"
             style={{
-              backgroundImage: `url(${slideImages[0]})`,
+              backgroundImage: `url(${this.slideImages[0]})`,
             }}
           >
             <div className="each-image-cover"></div>
@@ -87,7 +87,7 @@ class Cover extends Component {
           <div
             className="each-slide"
             style={{
-              backgroundImage: `url(${slideImages[1]})`,
+              backgroundImage: `url(${this.slideImages[1]})`,
             }}
           >
             <div className="each-image-cover"></div>
@@ -95,7 +95,7 @@ class Cover extends Component {
           <div
             className="each-slide"
             style={{
-              backgroundImage: `url(${slideImages[2]})`,
+              backgroundImage: `url(${this.slideImages[2]})`,
             }}
           >
             <div className="each-image-cover"></div>
