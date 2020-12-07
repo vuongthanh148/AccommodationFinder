@@ -189,14 +189,7 @@ p {
 h3 {
     text-align: center;
 }
-ul > li {
-    display: inline-block;
-    text-align: center;
-}
-img {
-    height: 300px;
-    width: 300px;
-}
+
 .uk-border-rounded img {
     background-image: url(../image/bg-img-1.jpg);
 }
