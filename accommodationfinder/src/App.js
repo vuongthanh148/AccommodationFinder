@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { Component } from "react";
 import Home from "./components/Home";
 import Login from "./components/Login";
@@ -11,10 +12,20 @@ import Navbar from "./components/Navbar";
 import Navbar1 from "./components/Navbar1";
 import NavbarMobile from "./components/NavbarMobile";
 import NavbarMobile1 from "./components/NavbarMobile1";
+=======
+import React, { Component } from 'react';
+import Home from './components/Home';
+import Login from './components/Login';
+import Post from './components/Post';
+// import './App.css';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import Navbar from './components/Navbar';
+>>>>>>> main
 import Profile from './components/Profile';
-
+import Listing from './components/Listing';
 
 class App extends Component {
+<<<<<<< HEAD
   constructor() {
     super();
     this.state = {
@@ -66,6 +77,39 @@ class App extends Component {
       </Router>
     );
   }
+=======
+    constructor() {
+        super();
+    }
+
+    render() {
+        return (
+            // this.renderedScreen(this.state.screen)
+            <Router>
+                <Navbar />
+                {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+                <Switch>
+                    <Route path='/login'>
+                        <Login />
+                    </Route>
+                    <Route path='/post'>
+                        <Post />
+                    </Route>
+                    <Route path='/profile'>
+                        <Profile />
+                    </Route>
+                    <Route path='/home'>
+                        <Home />
+                    </Route>
+                    <Route path='/listing'>
+                        <Listing />
+                    </Route>
+                </Switch>
+            </Router>
+        );
+    }
+>>>>>>> main
 }
 
 export default App;
