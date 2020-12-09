@@ -115,23 +115,95 @@ class Search extends Component {
       className: "",
       list_city: [],
       list_district: [],
+      list_ward: [],
+      list_accomod: [],
       selectedOptionCity: null,
       selectedOptionDistrict: null,
+      selectedOptionWard: null,
+      accommodationInfo: {},
+      facilitiesInfo: {}
     };
+    this.getAccomod = this.getAccomod.bind(this);
   }
 
+  options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+  };
+
+  getPosition = (callback) => {
+     navigator.geolocation.getCurrentPosition(
+      position => {
+         console.log(position.coords.latitude, position.coords.longitude)
+         axios.get(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=vi`).then((res) => {
+           console.log(res.data)
+           this.state.list_city.forEach(c => {
+             if(c.label === res.data.localityInfo.administrative[1].name){
+                axios.get(`https://thongtindoanhnghiep.co/api/city/${c.ID}/district`).then((res1) => {
+                res1.data.forEach(e => {
+                  if(this.removeAccents(e.Title) === res.data.localityInfo.administrative[2].name.replace(' District', '')){
+                    res.data.localityInfo.administrative[2].name = e.Title.replace('Quận ', '')
+                  }
+                });
+                this.setState({
+                  accommodationInfo: {
+                    city: res.data.localityInfo.administrative[1].name,
+                    district: res.data.localityInfo.administrative[2].name,
+                  }
+                })
+                if(res.data.localityInfo.administrative[3] !== undefined){
+                  this.setState({
+                    accommodationInfo: {
+                      ward: res.data.localityInfo.administrative[3].name,
+                    }
+                  })
+                }
+                callback()
+              });
+             }
+           })
+         })
+
+      }, () => {
+        console.log("unable to get location")
+        //Get all accomod
+      }, this.options
+    );
+  }
+
+  getAccomod = () => {
+    console.log(this.state.accommodationInfo)
+    const data = {
+      accommodationInfo: this.state.accommodationInfo,
+      facilitiesInfo: this.state.facilitiesInfo,
+    }
+    axios.post('https://accommodation-finder.herokuapp.com/accommodation', {
+      accommodationInfo: this.state.accommodationInfo,
+      facilitiesInfo: this.state.facilitiesInfo,
+    }).then((res) => {
+      console.log('data fetched: ', res)
+    })
+  }
+
+  removeAccents(str) {
+    return str.normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '')
+              .replace(/đ/g, 'd').replace(/Đ/g, 'D').replace(/Quan |Huyen |Thi Xa |Thanh Pho |District /g, '');
+  }
 
   componentDidMount() {
-    axios.get(`https://thongtindoanhnghiep.co/api/city`).then((res) => {
+    axios.get(`https://thongtindoanhnghiep.co/api/city`, ).then((res) => {
       const cities = res.data.LtsItem.map((item) => {
         return {
           ID: item.ID,
           type: "city",
-          value: item.Title,
+          value: this.removeAccents(item.Title),
           label: item.Title,
         };
       });
       this.setState({ list_city: cities });
+      this.getPosition(this.getAccomod);
     });
   }
 
@@ -149,28 +221,36 @@ class Search extends Component {
     }
   };
 
-  handleChange = (selectedOptionCity) => {
-    this.setState({ selectedOptionCity, selectedOptionDistrict: ""});
-    console.log(`Option selected:`, selectedOptionCity);
-    let url = "";
-    if (selectedOptionCity.type === "city") {
-      url = `https://thongtindoanhnghiep.co/api/city/${selectedOptionCity.ID}/district`;
+  handleChange = (selectedOption) => {
+    console.log(`Option selected:`, selectedOption);
+    let url = "", typeOption = "";
+    if (selectedOption.type === "city") {
+      this.setState({selectedOptionCity: selectedOption, selectedOptionDistrict: "", selectedOptionWard: ""})
+      url = `https://thongtindoanhnghiep.co/api/city/${selectedOption.ID}/district`;
+      typeOption = "district"
+    }
+    else if (selectedOption.type === "district") {
+      this.setState({selectedOptionDistrict: selectedOption, selectedOptionWard: ""})
+      url = `https://thongtindoanhnghiep.co/api/district/${selectedOption.ID}/ward`;
+      typeOption = "ward"
     }
     axios.get(url).then((res) => {
-      const districts = res.data.map((item) => {
+      console.log(res)
+      const finalData = res.data.map((item) => {
         return {
           ID: item.ID,
-          type: "district",
-          value: item.Title,
+          type: typeOption,
+          value: this.removeAccents(item.Title),
           label: item.Title,
         };
       });
-      this.setState({ list_district: districts });
+      if(typeOption === "district") this.setState({ list_district: finalData });
+      else if(typeOption === "ward") this.setState({ list_ward: finalData });
     });
   };
 
   render() {
-    const { selectedOptionCity, selectedOptionDistrict } = this.state;
+    const { selectedOptionCity, selectedOptionDistrict, selectedOptionWard } = this.state;
     return (
       <div className="search-section">
         <div className="search-container">
@@ -201,7 +281,7 @@ class Search extends Component {
                     className="list-district"
                     value={selectedOptionDistrict}
                     placeholder={"Quận/Huyện"}
-                    onChange ={ (selectedOptionDistrict) => {this.setState({selectedOptionDistrict})} }
+                    onChange={this.handleChange}
                     options={this.state.list_district}
                   />
                 </div>
@@ -212,9 +292,11 @@ class Search extends Component {
               <div className="search-margin">
                 <div className="search-width-1-1 search-inline">
                   <Select
-                    className="list-stresses"
-                    defaultValue={list_items[2]}
-                    options={Stresses}
+                    className="list-ward"
+                    value={selectedOptionWard}
+                    placeholder={"Phường/Xã"}
+                    onChange ={ (selectedOptionWard) => {this.setState({selectedOptionWard})} }
+                    options={this.state.list_ward}
                   />
                 </div>
               </div>
