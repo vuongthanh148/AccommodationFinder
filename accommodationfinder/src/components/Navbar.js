@@ -45,5 +45,4 @@ class Bar extends Component {
     </div>
   )
   }
-    
 }

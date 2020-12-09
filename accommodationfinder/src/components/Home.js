@@ -17,6 +17,7 @@ import {
 } from "../data/searchBar";
 import Select from "react-select";
 import { Slide } from "react-slideshow-image";
+import Listing from "./Listing";
 
 class Home extends Component {
   constructor(props) {
@@ -33,14 +34,13 @@ class Home extends Component {
       <div className="App">
         <Cover />
         <Search />
+
       </div>
     );
   }
 }
 let myRef = React.createRef();
 export default Home;
-
-
 
 class Cover extends Component {
   constructor() {
@@ -252,6 +252,7 @@ class Search extends Component {
   render() {
     const { selectedOptionCity, selectedOptionDistrict, selectedOptionWard } = this.state;
     return (
+      <>
       <div className="search-section">
         <div className="search-container">
           <div ref={myRef} className="search-title">
@@ -412,6 +413,8 @@ class Search extends Component {
           </form>
         </div>
       </div>
+      <Listing />
+      </>
     );
   }
 }
