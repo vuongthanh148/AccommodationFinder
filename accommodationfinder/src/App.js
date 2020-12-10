@@ -4,7 +4,7 @@ import Login from "./components/Login";
 import Post from "./components/Post";
 import Signup from "./components/Signup";
 import SignupOwner from "./components/SignupOwner";
-import SignupNonowner from "./components/SignupNonowner";
+import SignupRenter from "./components/SignupRenter";
 // import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import Navbar from "./components/Navbar";
