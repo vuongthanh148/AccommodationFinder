@@ -40,6 +40,7 @@ class Signup extends Component {
                             </div>
                             <div className="option-button">
                                 <NavLink className="signup-button signup-border-pill signup-text-bold" activeStyle={{color:'#fff'}} to="/signupRenter" onClick = {this.props.changeNavbarState}>Đăng ký</NavLink>
+
                             </div>
                         </div>
                     </div>

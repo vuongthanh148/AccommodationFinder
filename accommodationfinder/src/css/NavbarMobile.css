@@ -97,6 +97,20 @@
 }
 
 /* Side Menu */
+.user-bar {
+  padding: 10px 0px 10px 0px;
+}
+.avatar-user {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+.user-name {
+  padding-left: 15px;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
 .sidemenu-right {
   left: -100%;
   transition: 250ms;
@@ -175,7 +189,8 @@
 }
 .sidebar-button{
 	font-family: Montserrat,sans-serif !important;
-	font-weight: 600 !important;
+  font-weight: 600 !important;
+  width: 100%;
 }
  /* ///////////////////// */
 .sidebar-offcanvas-bar .sidebar-search-input:-ms-input-placeholder {

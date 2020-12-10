@@ -8,9 +8,7 @@ import SignupRenter from "./components/SignupRenter";
 // import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Navbar1 from "./components/Navbar1";
-import NavbarMobile from "./components/NavbarMobile";
-import NavbarMobile1 from "./components/NavbarMobile1";
+// import Navbar1 from "./components/Navbar1";
 import Profile from './components/Profile';
 
 
@@ -34,7 +32,7 @@ class App extends Component {
     return (
       // this.renderedScreen(this.state.screen)
       <Router>
-          {this.state.navbar? <NavbarMobile1 />: null}
+          {this.state.navbar? <Navbar />: null}
           {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
           <Switch>
@@ -60,7 +58,7 @@ class App extends Component {
               <Home changeNavbarState = {this.changeNavbarState}/>
             </Route>
             <Route path="/">
-               <Redirect to="/home"/>
+              <Redirect to="/home"/>
             </Route>
           </Switch>
       </Router>
