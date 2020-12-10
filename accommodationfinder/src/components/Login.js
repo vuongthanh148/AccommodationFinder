@@ -18,7 +18,7 @@ class Login extends Component {
     }
 
     componentDidMount(){
-        this.props.changeState(false);
+        this.props.changeNavbarState(false);
     }
 
     handleSubmit(event){
@@ -66,7 +66,7 @@ class Login extends Component {
                             <button className="login-button login-border-pill">Đăng nhập</button>
 
                             <div className="login-margin login-text-small">
-                            Bạn chưa có tài khoản? <NavLink className="login-link-primary login-text-bold" activeStyle={{color:'#fff'}} to="/signup" onClick = {this.props.changeState}>Đăng ký</NavLink>
+                            Bạn chưa có tài khoản? <NavLink className="login-link-primary login-text-bold" activeStyle={{color:'#fff'}} to="/signup" onClick = {this.props.changeNavbarState}>Đăng ký</NavLink>
                             <a className="login-margin login-display-block" href="forgot-2.html*">Quên mật khẩu?</a>
                             </div>
                         </form>
