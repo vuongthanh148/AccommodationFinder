@@ -62,7 +62,35 @@ class Bar extends Component {
           <div className="navbar1-left">
             <NavLink className="navbar1-logo" activeStyle={{color:'#fff'}} to="/home"><img className="ev-logo" src={logo}/></NavLink>
           </div>
-          
+          <div className="navbar1-right">
+            <ul className="navbar1-subnav navbar1-subnav-divider navbar1-right-element">
+              <li>
+                <NavLink  activeStyle={{color:'#fff'}} to="/home">Trang chủ</NavLink>
+              </li>
+              <li className="user-button">
+                
+                <a href="#" className="click-button" onClick={this.changeState}>
+                  <img className="navbar1-avatar-user" src={avatar}/>
+                  <div className="navbar1-user-name">Le Thi Hanh</div> 
+                  <span className="user-icon"><Icon icon={this.state.icon} /></span>
+                  
+                </a>           
+                <div className="user-navbar-dropdown" style={{display:this.state.divAppearance}}>
+                  <ul className="user-nav user-navbar-dropdown-nav">
+                    <li><NavLink  activeStyle={{color:'#fff'}} to="/profile" onClick={this.changeState}>Profile</NavLink></li>
+                    <li className="user-nav-divider"></li>
+                    <li onClick={this.changeState}><a>Dang xuat</a></li>
+                  </ul>
+                </div>               
+              </li>
+            </ul>
+            <a>
+              <span className="icon-padding"><Icon icon={envelope} className="icon-messeger"/></span>
+            </a>
+            <a>
+              <span className="icon-padding"><Icon icon={bell} className="icon-notification"/></span>
+            </a>
+          </div>
         </nav>
     </div>
   )

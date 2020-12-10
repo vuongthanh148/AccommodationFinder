@@ -175,7 +175,8 @@
 }
 .sidebar-button{
 	font-family: Montserrat,sans-serif !important;
-	font-weight: 600 !important;
+  font-weight: 600 !important;
+  width: 100%;
 }
  /* ///////////////////// */
 .sidebar-offcanvas-bar .sidebar-search-input:-ms-input-placeholder {

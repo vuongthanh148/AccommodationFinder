@@ -15,7 +15,7 @@ class Navbar extends Component {
   constructor(props){
     super(props);
     this.state = ({
-      loggedIn: true
+      loggedIn: false
     })
   }
   render() {
@@ -25,7 +25,7 @@ class Navbar extends Component {
           <Bar loggedIn={this.state.loggedIn}/>
         </div>       
         <div className="display-moblie-nav">
-          <NavbarMobile />
+          <NavbarMobile loggedIn={this.state.loggedIn}/>
         </div>        
       </div> 
     );
