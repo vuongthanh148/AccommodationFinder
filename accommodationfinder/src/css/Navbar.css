@@ -46,28 +46,8 @@ small{
 .navbar-right-element a:hover {
 	color: #ffffff !important;
 }
-
-.navbar-section-primary:not(.navbar-preserve-color) {
-  color: rgba(255, 255, 255, 0.7);
-}
-.navbar-section-primary:not(.navbar-preserve-color) .navbar-logo,
-.navbar-section-primary:not(.navbar-preserve-color) .navbar-logo:focus,
-.navbar-section-primary:not(.navbar-preserve-color) .navbar-logo:hover,
-.navbar-section-primary:not(.navbar-preserve-color) .navbar-subnav > * > a:focus,
-.navbar-section-primary:not(.navbar-preserve-color) .navbar-subnav > * > a:hover {
-  color: rgba(255, 255, 255, 0.7);
-}
-
 .navbar-section-primary:not(.navbar-preserve-color) .navbar-subnav > * > :first-child {
   color: rgba(255, 255, 255, 0.5);
-}
-
-.navbar-container:not(.navbar-transparent) {
-	background: #f8f8f8;
-}
-.navbar-container > ::after,
-.navbar-container > ::before {
-	display: none !important;
 }
 .navbar-container > .navbar-left {
 	margin-left: -15px;
@@ -76,7 +56,6 @@ small{
 .navbar-container > .navbar-right {
 	margin-right: -15px;
 }
-
 .navbar-left,
 .navbar-right {
   display: flex;
@@ -84,14 +63,12 @@ small{
   flex-wrap: wrap;
   margin-left: auto;
 }
-
 .navbar-logo:focus,
 .navbar-logo:hover {
   color: #666;
   outline: 0;
   text-decoration: none;
 }
-
 .navbar-subnav {
   display: flex;
   flex-wrap: wrap;
@@ -138,11 +115,133 @@ small{
 .navbar-subnav-divider > :nth-child(n + 2):not(.navbar-first-column)::before {
   border-left-color: #e5e5e5;
 }
+.navbar1-subnav-divider {
+  margin-left: -41px;
+}
+.navbar1-subnav-divider{
+  display: flex;
+  align-items: center;
+}
+.navbar1-subnav-divider > ::before {
+  content: "";
+  height: 1.85em;
+  margin-left: 0;
+  margin-right: 20px;
+  border-left: 1px solid transparent;
+  position: absolute;
+  align-items: center;
+  text-align: center;
+}
+.navbar1-subnav-divider > :nth-child(n + 2):not(.navbar1-first-column)::before {
+  border-left-color: #e5e5e5;
+}
+.user-icon {
+  padding-left: 5px;
+}
 
+.icon-padding {
+  padding-left: 10px;
+}
+.icon-messeger, .icon-notification {
+  height: 20px !important;
+  width: 20px !important;
+  color:rgba(255, 255, 255, 0.5);
+}
+.icon-messeger:hover, .icon-notification:hover {
+  color: #fff;
+}
+.click-button {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  align-items: center;
+  padding-left: 20px;
+}
 .display-moblie-nav {
   display: none;
 }
-
+.navbar1-avatar-user {
+  vertical-align: center;
+  width: 30px !important;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+  padding: 0px !important;
+}
+.navbar1-user-name {
+  display: inline-block;
+  font-size: 0.875rem !important;
+}
+.user-navbar-dropdown {
+  position: absolute;
+  z-index: 1020;
+  box-sizing: border-box;
+  width: 90%;
+  padding: 15px;
+  margin-left: 20px;
+  
+  background: #fff;
+  color: #666;
+  border-radius: 8px;
+	margin-top: 10px !important;
+	box-shadow: 0px 0px 18px 0px rgba(32, 32, 32, 0.15);
+}
+.user-navbar-dropdown:before{
+	background-color: #ffffff;
+	content: "";
+  height: 15px;
+  width: 15px;
+	left: 80%;
+	position: absolute;
+	top: -5px;
+	transform: rotate(45deg);
+	transition: all 0.1s ease 0s;
+}
+.user-nav,
+.user-nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.user-nav li > a {
+  display: block;
+  text-decoration: none;
+}
+.user-nav li > a:focus {
+  outline: 0;
+}
+.user-nav > li > a {
+  padding: 5px 0;
+}
+.user-navbar-dropdown-nav {
+  font-size: 0.875rem;
+}
+.user-navbar-dropdown-nav > li > a {
+  color: #999;
+}
+.user-navbar-dropdown-nav > li > a:focus,
+.user-navbar-dropdown-nav > li > a:hover {
+  color: #666 !important;
+}
+.user-navbar-dropdown-nav .user-nav-divider {
+  border-top: 1px solid #e5e5e5;
+}
+.user-navbar-dropdown-nav>li>a{
+	color: var(--secondary-color) !important;
+	opacity: 0.5;
+	font-weight: 600;
+	transition: all .2s ease-in-out;
+}
+.user-navbar-dropdown-nav>li>a:hover{
+	opacity: 1;
+	transition: all .2s ease-in-out;
+}
+.user-nav-divider {
+  margin: 5px 0;
+}
+.user-dropdown-nav .user-nav-divider {
+  border-top: 1px solid #e5e5e5;
+}
 @media (max-width:640px) {
   .display-nav {
     display: none;

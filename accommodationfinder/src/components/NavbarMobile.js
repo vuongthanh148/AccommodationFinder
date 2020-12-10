@@ -1,24 +1,10 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  NavLink,
-} from "react-router-dom";
 import { Icon, InlineIcon } from "@iconify/react";
 import bars from "@iconify-icons/fa-solid/bars";
 import search from "@iconify-icons/fa-solid/search";
 import user from "@iconify-icons/fa-solid/user";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFacebookF,
-  faTwitter,
-  faYoutube,
-  faInstagram,
-  faLinkedin,
-} from "@fortawesome/free-brands-svg-icons";
-import logo from "../image/logo_ngang_trang.png";
+import {faFacebookF,faTwitter,faYoutube,faLinkedin} from "@fortawesome/free-brands-svg-icons";
 import logo_den from "../image/logo_ngang.png";
 import "../css/NavbarMobile.css";
 import avatar from "../image/avatar.png";

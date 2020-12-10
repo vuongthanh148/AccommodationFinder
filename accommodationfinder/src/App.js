@@ -8,9 +8,7 @@ import SignupRenter from "./components/SignupRenter";
 // import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Navbar1 from "./components/Navbar1";
-import NavbarMobile from "./components/NavbarMobile";
-import NavbarMobile1 from "./components/NavbarMobile1";
+// import Navbar1 from "./components/Navbar1";
 import Profile from './components/Profile';
 
 
@@ -60,7 +58,7 @@ class App extends Component {
               <Home changeState = {this.changeState}/>
             </Route>
             <Route path="/">
-               <Redirect to="/home"/>
+              <Redirect to="/home"/>
             </Route>
           </Switch>
       </Router>

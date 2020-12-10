@@ -9,13 +9,12 @@ import chevronDown from '@iconify-icons/fa-solid/chevron-down';
 import chevronUp from '@iconify-icons/fa-solid/chevron-up';
 import envelope from '@iconify-icons/fa-solid/envelope';
 import bell from '@iconify-icons/fa-solid/bell';
-import logo_den from "../image/logo_ngang.png";
 
 class Navbar extends Component {
   constructor(props){
     super(props);
     this.state = ({
-      loggedIn: false
+      loggedIn: true
     })
   }
   render() {
@@ -79,8 +78,8 @@ class Bar extends Component {
               </li>
             </ul>
           </div>}
-          {this.props.loggedIn === true && <div className="navbar1-right">
-            <ul className="navbar1-subnav navbar1-subnav-divider navbar1-right-element">
+          {this.props.loggedIn === true && <div className="navbar-right">
+            <ul className="navbar-subnav navbar1-subnav-divider navbar-right-element">
               <li>
                 <NavLink  activeStyle={{color:'#fff'}} to="/home">Trang chủ</NavLink>
               </li>
