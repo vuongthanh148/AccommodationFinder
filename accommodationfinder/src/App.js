@@ -20,10 +20,10 @@ class App extends Component {
     this.state = {
       navbar: true,
     }
-    this.changeState = this.changeState.bind(this);
+    this.changeNavbarState = this.changeNavbarState.bind(this);
   }
 
-  changeState = function(newState, event){
+  changeNavbarState = function(newState, event){
     this.setState({
       navbar: newState,
     })
@@ -39,16 +39,16 @@ class App extends Component {
             renders the first one that matches the current URL. */}
           <Switch>
             <Route path="/login">
-              <Login changeState = {this.changeState} />
+              <Login changeNavbarState = {this.changeNavbarState}/>
             </Route>
             <Route path="/signup">
-              <Signup changeState = {this.changeState} />
+              <Signup changeNavbarState = {this.changeNavbarState}/>
             </Route>
             <Route path="/signupOwner">
-              <SignupOwner changeState = {this.changeState} />
+              <SignupOwner changeNavbarState = {this.changeNavbarState}/>
             </Route>
-            <Route path="/signupNonowner">
-              <SignupNonowner changeState = {this.changeState} />
+            <Route path="/signupRenter">
+              <SignupRenter changeNavbarState = {this.changeNavbarState}/>
             </Route>
             <Route path="/post">
               <Post />
@@ -57,7 +57,7 @@ class App extends Component {
               <Profile />
             </Route>
             <Route path="/home">
-              <Home changeState = {this.changeState} />
+              <Home changeNavbarState = {this.changeNavbarState}/>
             </Route>
             <Route path="/">
                <Redirect to="/home"/>
