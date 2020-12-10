@@ -138,3 +138,16 @@ small{
 .navbar-subnav-divider > :nth-child(n + 2):not(.navbar-first-column)::before {
   border-left-color: #e5e5e5;
 }
+
+.display-moblie-nav {
+  display: none;
+}
+
+@media (max-width:640px) {
+  .display-nav {
+    display: none;
+  }
+  .display-moblie-nav {
+    display: block !important;
+  }
+}

@@ -146,6 +146,17 @@ small{
   padding-left: 5px;
 }
 
+.icon-padding {
+  padding-left: 10px;
+}
+.icon-messeger, .icon-notification {
+  height: 20px !important;
+  width: 20px !important;
+  color:rgba(255, 255, 255, 0.5);
+}
+.icon-messeger:hover, .icon-notification:hover {
+  color: #fff;
+}
 .click-button {
   display: flex;
   flex-wrap: wrap;
@@ -153,7 +164,7 @@ small{
   align-items: center;
 }
 
-.avatar-user {
+.navbar1-avatar-user {
   vertical-align: center;
   width: 30px !important;
   height: 30px;
@@ -161,8 +172,9 @@ small{
   margin-right: 10px;
   padding: 0px !important;
 }
-.user-name {
+.navbar1-user-name {
   display: inline-block;
+  font-size: 0.875rem !important;
 }
 
 /* /////////////////////////////////// */
@@ -252,4 +264,17 @@ small{
 }
 .user-dropdown-nav .user-nav-divider {
   border-top: 1px solid #e5e5e5;
+}
+
+.display-moblie-nav1 {
+  display: none;
+}
+
+@media (max-width:640px) {
+  .display-nav1 {
+    display: none;
+  }
+  .display-moblie-nav1 {
+    display: block !important;
+  }
 }

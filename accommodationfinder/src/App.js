@@ -4,7 +4,7 @@ import Login from "./components/Login";
 import Post from "./components/Post";
 import Signup from "./components/Signup";
 import SignupOwner from "./components/SignupOwner";
-import SignupNonowner from "./components/SignupNonowner";
+import SignupRenter from "./components/SignupRenter";
 // import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -34,21 +34,21 @@ class App extends Component {
     return (
       // this.renderedScreen(this.state.screen)
       <Router>
-          {this.state.navbar? <NavbarMobile1 />: null}
+          {this.state.navbar? <Navbar />: null}
           {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
           <Switch>
             <Route path="/login">
-              <Login changeState = {this.changeState} />
+              <Login changeState = {this.changeState}/>
             </Route>
             <Route path="/signup">
-              <Signup changeState = {this.changeState} />
+              <Signup changeState = {this.changeState}/>
             </Route>
             <Route path="/signupOwner">
-              <SignupOwner changeState = {this.changeState} />
+              <SignupOwner changeState = {this.changeState}/>
             </Route>
-            <Route path="/signupNonowner">
-              <SignupNonowner changeState = {this.changeState} />
+            <Route path="/signupRenter">
+              <SignupRenter changeState = {this.changeState}/>
             </Route>
             <Route path="/post">
               <Post />
@@ -57,7 +57,7 @@ class App extends Component {
               <Profile />
             </Route>
             <Route path="/home">
-              <Home changeState = {this.changeState} />
+              <Home changeState = {this.changeState}/>
             </Route>
             <Route path="/">
                <Redirect to="/home"/>

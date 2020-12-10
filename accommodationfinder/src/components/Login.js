@@ -48,8 +48,10 @@ class Login extends Component {
                             <div className="login-margin login-text-left login-text-small">
                                 <label><input className="login-checkbox" type="checkbox"/> Nhớ mật khẩu</label>
                             </div>
-
-                            <button className="login-button login-border-pill">Đăng nhập</button>
+                            <NavLink  activeStyle={{color:'#fff'}} to="/home1">
+                                <button className="login-button login-border-pill">Đăng nhập</button>
+                            </NavLink>
+                            {/* <button className="login-button login-border-pill">Đăng nhập</button> */}
 
                             <div className="login-margin login-text-small">
                             Bạn chưa có tài khoản? <NavLink className="login-link-primary login-text-bold" activeStyle={{color:'#fff'}} to="/signup" onClick = {this.props.changeState}>Đăng ký</NavLink>

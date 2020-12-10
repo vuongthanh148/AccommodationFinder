@@ -4,15 +4,20 @@ import { BrowserRouter as Router, Switch, Route, Link, NavLink } from "react-rou
 // import { faFacebookF, faTwitter, faYoutube, faInstagram} from '@fortawesome/free-brands-svg-icons';
 import logo from '../image/logo_ngang_trang.png';
 // import { FaPhone } from 'react-icons/fa';
+import NavbarMobile from './NavbarMobile';
 import "../css/Navbar.css";
 
 class Navbar extends Component {
-  constructor(props){
-    super(props);
-  }
   render() {
     return (
-      <Bar changeState = {this.props.changeState}/>
+      <div>
+        <div className="display-nav">
+          <Bar />
+        </div>       
+        <div className="display-moblie-nav">
+          <NavbarMobile />
+        </div>        
+      </div> 
     );
   }
 }
