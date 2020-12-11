@@ -4,14 +4,12 @@ import Login from "./components/Login";
 import Post from "./components/Post";
 import Signup from "./components/Signup";
 import SignupOwner from "./components/SignupOwner";
-import SignupNonowner from "./components/SignupNonowner";
+import SignupRenter from "./components/SignupRenter";
 // import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Navbar1 from "./components/Navbar1";
-import NavbarMobile from "./components/NavbarMobile";
-import NavbarMobile1 from "./components/NavbarMobile1";
-import Profile from "./components/Profile"
+// import Navbar1 from "./components/Navbar1";
+import Profile from './components/Profile';
 
 
 class App extends Component {
@@ -19,36 +17,48 @@ class App extends Component {
     super();
     this.state = {
       navbar: true,
+      isLoggedIn: false,
+      userData: {}
     }
-    this.changeState = this.changeState.bind(this);
+    this.changeNavbarState = this.changeNavbarState.bind(this);
+    this.updateLoginState = this.updateLoginState.bind(this);
   }
 
-  changeState = function(newState, event){
+  updateLoginState = function(userData, isLoggedIn, event){
+    this.setState({
+      userData: userData,
+      isLoggedIn: isLoggedIn
+    })
+    if(event){}
+  }
+
+  changeNavbarState = function(newState, event){
     this.setState({
       navbar: newState,
     })
     if(event){}
   }
 
+
   render() {
     return (
       // this.renderedScreen(this.state.screen)
       <Router>
-          {this.state.navbar? <NavbarMobile1 />: null}
+          {this.state.navbar? <Navbar updateLoginState = {this.updateLoginState} isLoggedIn ={this.state.isLoggedIn} userData={this.state.userData}  />: null}
           {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
           <Switch>
             <Route path="/login">
-              <Login changeState = {this.changeState} />
+              <Login changeNavbarState = {this.changeNavbarState} updateLoginState = {this.updateLoginState} isLoggedIn ={this.state.isLoggedIn} userData />
             </Route>
             <Route path="/signup">
-              <Signup changeState = {this.changeState} />
+              <Signup changeNavbarState = {this.changeNavbarState}/>
             </Route>
             <Route path="/signupOwner">
-              <SignupOwner changeState = {this.changeState} />
+              <SignupOwner changeNavbarState = {this.changeNavbarState}/>
             </Route>
-            <Route path="/signupNonowner">
-              <SignupNonowner changeState = {this.changeState} />
+            <Route path="/signupRenter">
+              <SignupRenter changeNavbarState = {this.changeNavbarState}/>
             </Route>
             <Route path="/post">
               <Post />
@@ -57,10 +67,10 @@ class App extends Component {
               <Profile />
             </Route>
             <Route path="/home">
-              <Home changeState = {this.changeState} />
+              <Home changeNavbarState = {this.changeNavbarState}/>
             </Route>
             <Route path="/">
-               <Redirect to="/home"/>
+              <Redirect to="/home"/>
             </Route>
           </Switch>
       </Router>

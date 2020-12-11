@@ -10,7 +10,7 @@ class SignupOwner extends Component {
     }
 
     componentDidMount(){
-        this.props.changeState(false);
+        this.props.changeNavbarState(false);
     }
 
     render() { 
@@ -64,7 +64,7 @@ class SignupOwner extends Component {
                         <button className="signupOwner-button signupOwner-width-1-1 signupOwner-border-pill">Đăng ký</button>
         
                         <div className="signupOwner-margin signupOwner-width-1-1 signupOwner-text-small">
-                            Bạn đã có tài khoản? <NavLink className="signupOwner-link-primary signupOwner-text-bold" activeStyle={{color:'#fff'}} to="/login" onClick = {this.props.changeState}>Đăng nhập</NavLink>
+                            Bạn đã có tài khoản? <NavLink className="signupOwner-link-primary signupOwner-text-bold" activeStyle={{color:'#fff'}} to="/login" onClick = {this.props.changeNavbarState}>Đăng nhập</NavLink>
                         </div>
         
                     </form>

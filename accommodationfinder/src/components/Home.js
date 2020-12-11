@@ -25,13 +25,13 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this.props.changeState(true);
+    this.props.changeNavbarState(true);
     //Request all needed data
   }
   render() {
     return (
       // <Navbar />,
-      <div className="App">
+      <div className="App" >
         <Cover />
         <Search />
 

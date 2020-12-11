@@ -13,7 +13,7 @@ class Signup extends Component {
     }
 
     componentDidMount(){
-        this.props.changeState(false);
+        this.props.changeNavbarState(false);
     }
 
     render() { 
@@ -30,7 +30,7 @@ class Signup extends Component {
                                 <h4>Bạn có thể đăng bài viết, chat với admin, nhận được những dữ liệu thống kê về nhu cầu thuê trọ để có những chiến lược marketing hiệu quả</h4>
                             </div>
                             <div className="option-button">
-                                <NavLink className="signup-button signup-border-pill signup-text-bold signup-position-z-index" activeStyle={{color:'#fff'}} to="/signupOwner" onClick = {this.props.changeState}>Đăng ký</NavLink>
+                                <NavLink className="signup-button signup-border-pill signup-text-bold signup-position-z-index" activeStyle={{color:'#fff'}} to="/signupOwner" onClick = {this.props.changeNavbarState}>Đăng ký</NavLink>
                             </div>
                         </div>
                         <div className="signup-option">
@@ -39,7 +39,8 @@ class Signup extends Component {
                                 <h4>Bạn có thể tìm kiếm những trọ phù hợp nhất với nhu cầu của mình...</h4>
                             </div>
                             <div className="option-button">
-                                <NavLink className="signup-button signup-border-pill signup-text-bold" activeStyle={{color:'#fff'}} to="/signupNonowner" onClick = {this.props.changeState}>Đăng ký</NavLink>
+                                <NavLink className="signup-button signup-border-pill signup-text-bold" activeStyle={{color:'#fff'}} to="/signupRenter" onClick = {this.props.changeNavbarState}>Đăng ký</NavLink>
+
                             </div>
                         </div>
                     </div>
