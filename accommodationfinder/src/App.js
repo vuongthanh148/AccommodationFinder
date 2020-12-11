@@ -17,8 +17,19 @@ class App extends Component {
     super();
     this.state = {
       navbar: true,
+      isLoggedIn: false,
+      userData: {}
     }
     this.changeNavbarState = this.changeNavbarState.bind(this);
+    this.updateLoginState = this.updateLoginState.bind(this);
+  }
+
+  updateLoginState = function(userData, isLoggedIn, event){
+    this.setState({
+      userData: userData,
+      isLoggedIn: isLoggedIn
+    })
+    if(event){}
   }
 
   changeNavbarState = function(newState, event){
@@ -28,16 +39,17 @@ class App extends Component {
     if(event){}
   }
 
+
   render() {
     return (
       // this.renderedScreen(this.state.screen)
       <Router>
-          {this.state.navbar? <Navbar />: null}
+          {this.state.navbar? <Navbar updateLoginState = {this.updateLoginState} isLoggedIn ={this.state.isLoggedIn} userData={this.state.userData}  />: null}
           {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
           <Switch>
             <Route path="/login">
-              <Login changeNavbarState = {this.changeNavbarState}/>
+              <Login changeNavbarState = {this.changeNavbarState} updateLoginState = {this.updateLoginState} isLoggedIn ={this.state.isLoggedIn} userData />
             </Route>
             <Route path="/signup">
               <Signup changeNavbarState = {this.changeNavbarState}/>

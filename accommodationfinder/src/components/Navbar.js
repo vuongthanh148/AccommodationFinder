@@ -13,18 +13,16 @@ import bell from '@iconify-icons/fa-solid/bell';
 class Navbar extends Component {
   constructor(props){
     super(props);
-    this.state = ({
-      loggedIn: false
-    })
   }
   render() {
+    console.log(this.props.isLoggedIn)
     return (
       <div>
         <div className="display-nav">
-          <Bar loggedIn={this.state.loggedIn}/>
+          <Bar isLoggedIn={this.props.isLoggedIn}/>
         </div>       
         <div className="display-moblie-nav">
-          <NavbarMobile loggedIn={this.state.loggedIn}/>
+          <NavbarMobile isLoggedIn={this.props.isLoggedIn}/>
         </div>        
       </div> 
     );
@@ -59,13 +57,12 @@ class Bar extends Component {
 
   render(){
     return(
-      <div className="ev-header-1 navbar-section-primary">
-      {/* TOP NAVBAR */}
+      <div className="ev-header-1 navbar-section-primary" >
         <nav className="navbar-container navbar-transparent navbar">
           <div className="navbar-left">
             <NavLink className="navbar-logo" activeStyle={{color:'#fff'}} to="/home"><img className="ev-logo" src={logo}/></NavLink>
           </div>
-          {this.props.loggedIn === false && <div className="navbar-right">
+          {this.props.isLoggedIn === false && <div className="navbar-right">
             <ul className="navbar-subnav navbar-subnav-divider navbar-right-element">
               <li>
                 <NavLink  activeStyle={{color:'#fff'}} to="/home">Trang chủ</NavLink>
@@ -78,7 +75,7 @@ class Bar extends Component {
               </li>
             </ul>
           </div>}
-          {this.props.loggedIn === true && <div className="navbar-right">
+          {this.props.isLoggedIn === true && <div className="navbar-right">
             <ul className="navbar-subnav navbar1-subnav-divider navbar-right-element">
               <li>
                 <NavLink  activeStyle={{color:'#fff'}} to="/home">Trang chủ</NavLink>
