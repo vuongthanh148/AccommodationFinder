@@ -193,3 +193,19 @@ h3 {
 .uk-border-rounded img {
     background-image: url(../image/bg-img-1.jpg);
 }
+
+.list-product-items {
+    display: grid !important;
+    grid-template-columns: auto auto auto;
+}
+
+.item-image {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.list-product-items > li {
+    padding: 0 10px;
+    margin: 20px 10px;
+}
