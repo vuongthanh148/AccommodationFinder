@@ -3,6 +3,7 @@ import "../css/Homepage.css";
 import "react-slideshow-image/dist/styles.css";
 import axios from "axios";
 import { StickyContainer, Sticky } from 'react-sticky';
+import Headroom from 'react-headroom'
 import {
   list_items,
   Cities,
@@ -251,6 +252,9 @@ class Search extends Component {
 
   render() {
     const { selectedOptionCity, selectedOptionDistrict, selectedOptionWard } = this.state;
+    const searchBarStart = window.innerHeight + 116;
+    let searchBackColor = 'rgba(255,255,255, 0.95)'
+    // console.log(searchBarStart)
     return (
       <>
       <div className="search-section">
@@ -259,6 +263,11 @@ class Search extends Component {
             <p>Find Your</p>
             <h3>Perfect Accommodation</h3>
           </div>
+          <Headroom
+          pinStart={window.innerHeight + 116}
+          upTolerance = {40}
+          style={{width: "90vw", margin:'auto', backgroundColor: searchBackColor, paddingTop: '10px', zIndex: '100', paddingRight: '1px', borderBottom: '1px solid #D3D3D3'}}
+        >
           <form className="search-grid-small search-grid">
             <div className="search-width">
               <div className="search-margin">
@@ -338,7 +347,7 @@ class Search extends Component {
               </div>
             </div>
 
-            <div className="search-width-1-1@s search-width-5-6@m">
+            <div className="search-width-1-1@s search-width-5-6@m" style={{height: '90px', margin: '0'}}>
               <div className="search-margin ">
                 <ul className="search-other-features">
                   <li className={this.state.className}>
@@ -359,7 +368,7 @@ class Search extends Component {
                               className="search-checkbox"
                               type="checkbox"
                             />
-                            Không chung chủ
+                            Chung chủ
                           </label>
                         </div>
 
@@ -410,9 +419,10 @@ class Search extends Component {
               </div>
             </div>
           </form>
+          </Headroom>
+          <Listing />
         </div>
       </div>
-        <Listing />
         </>
     );
   }

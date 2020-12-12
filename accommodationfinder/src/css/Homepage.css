@@ -200,7 +200,6 @@ ul > li {
 }
 
 /* Search bar */
-
 .search-section{
   background-color: #fdfdfd;
   border-bottom: 1px solid #ddd;
@@ -208,10 +207,9 @@ ul > li {
 
 .search-container{
 	margin: auto;
-	padding: 0 30px;
-  max-width: 90vw;
-  padding-top: 60px;
-	padding-bottom: 60px;
+  width: 90vw;
+  padding-top: 25px;
+	padding-bottom: 0px;
 }
 
 .search-container .search-button-primary{
@@ -228,7 +226,7 @@ ul > li {
 	transition: all .2s ease-in-out;
 }
 .search-title{
-  margin: 70px 0;
+  margin: 35px 0;
   margin-top: 0 !important;
   text-align: center !important;
 }
@@ -418,7 +416,7 @@ ul > li {
   border-radius: 5px;
 }
 .search-margin-small-top {
-  margin-top: 10px !important;
+  /* margin-top: 10px !important; */
 }
 .search-text-truncate {
   max-width: 100%;
@@ -450,8 +448,8 @@ ul > li {
 }
 
 .search-other-features{
-  margin: 20px 0 0 0;
   padding-left: 0px;
+  color: black;
 }
 .search-other-features > li {
   padding-left: 0px;
@@ -463,7 +461,7 @@ ul > li {
 }
 
 .search-other-features .search-accordion-content{
-	padding: 10px 38px;
+	padding: 0px 38px;
 }
 
 .search-other-features .search-accordion-title::after{
@@ -596,17 +594,17 @@ ul > li {
 @media (min-width: 1200px) {
   
   .search-grid {
-    margin-left: -40px;
+    /* margin-left: -40px; */
   }
   .search-grid > * {
-    padding-left: 40px;
+    /* padding-left: 40px; */
   }
   * + .search-grid-margin,
   .search-grid + .search-grid{
     margin-top: 40px;
   }
   .search-width {
-    width: 33% !important;
+    width: 16.66666666666% !important;
   }
   .search-width-1-4\@l {
     width: 25% !important;
@@ -615,6 +613,6 @@ ul > li {
 
 @media (min-width: 1366px) {
   .search-container {
-    width: 80vw;
+    width: 90vw;
   }
 }

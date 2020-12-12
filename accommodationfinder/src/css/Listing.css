@@ -58,6 +58,9 @@ body {
     border-radius: 6px;
 }
 .ev-card-1 {
+    margin-top:10px;
+    border-radius: 8px 8px 0 0;
+    overflow: hidden;
 }
 
 .ev-card-1 .uk-label {
@@ -91,26 +94,27 @@ body {
 }
 
 .ev-card-1 .uk-overlay {
-    padding: 20px !important;
+    padding: 10px !important;
 }
 
 .ev-card-1 .overlay-gradient {
     background: -moz-linear-gradient(
         top,
         rgba(0, 0, 0, 0) 0%,
-        var(--secondary-alpha-Dot85) 100%
+        var(--primary-color) 100%
     );
     background: -webkit-linear-gradient(
         top,
         rgba(0, 0, 0, 0) 0%,
-        var(--secondary-alpha-Dot85) 100%
+        var(--primary-color) 100%
     );
     background: linear-gradient(
         to bottom,
-        rgba(0, 0, 0, 0) 0%,
-        var(--secondary-alpha-Dot85) 100%
+        /* rgba(0, 0, 0, 0) 0%, */
+        var(--primary-color) 0%,
+        var(--primary-color) 100%
     );
-    border-radius: 8px 8px 0 0;
+    border-radius: 0 0 8px 8px;
 }
 
 .ev-card-1 .ev-title {
@@ -137,6 +141,7 @@ body {
     color: #ffffff !important;
     font-size: 1.4em !important;
     font-weight: 700;
+    margin: 0;
 }
 
 .ev-card-1 .ev-discount {
@@ -196,9 +201,30 @@ h3 {
 
 .list-product-items {
     display: grid !important;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: repeat(4,calc(25% - calc(2%*3/4)));
+    grid-gap: 2%;
+    padding: 0;
+    width: 100%;
+    margin: auto;
 }
-
+@media (max-width: 1200px) {
+    .list-product-items {
+        grid-template-columns: repeat(3,calc(33% - calc(2%*3/4)));
+        grid-gap: 2%;
+    }
+}
+@media (max-width: 960px) {
+    .list-product-items {
+        grid-template-columns: repeat(2,calc(50% - calc(2%*3/4)));
+        grid-gap: 2%;
+    }
+}
+@media (max-width: 640px) {
+    .list-product-items {
+        grid-template-columns: repeat(1,calc(100% - calc(2%*3/4)));
+        grid-gap: 2%;
+    }
+}
 .item-image {
     width: 100%;
     margin: 0;
@@ -208,4 +234,13 @@ h3 {
 .list-product-items > li {
     padding: 0 10px;
     margin: 20px 10px;
+}
+
+.each-slide-list{
+    width: 100%;
+    height: 150px;
+    background-repeat: no-repeat; 
+    background-size: cover;
+    background-position: 50% 50%;
+    overflow: hidden;
 }
