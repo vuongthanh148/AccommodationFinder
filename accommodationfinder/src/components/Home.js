@@ -2,6 +2,7 @@ import React, { Component, useEffect, useRef } from "react";
 import "../css/Homepage.css";
 import "react-slideshow-image/dist/styles.css";
 import axios from "axios";
+import { StickyContainer, Sticky } from 'react-sticky';
 import {
   list_items,
   Cities,
@@ -34,7 +35,6 @@ class Home extends Component {
       <div className="App" >
         <Cover />
         <Search />
-
       </div>
     );
   }
@@ -259,7 +259,6 @@ class Search extends Component {
             <p>Find Your</p>
             <h3>Perfect Accommodation</h3>
           </div>
-
           <form className="search-grid-small search-grid">
             <div className="search-width">
               <div className="search-margin">
@@ -413,8 +412,8 @@ class Search extends Component {
           </form>
         </div>
       </div>
-      <Listing />
-      </>
+        <Listing />
+        </>
     );
   }
 }
