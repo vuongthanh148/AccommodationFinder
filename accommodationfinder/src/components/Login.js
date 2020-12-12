@@ -18,7 +18,7 @@ class Login extends Component {
     }
 
     componentDidMount(){
-        this.props.changeState(false);
+        this.props.changeNavbarState(false);
     }
 
     handleSubmit(event){

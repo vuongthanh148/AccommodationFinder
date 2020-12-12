@@ -8,7 +8,7 @@ import SignupRenter from "./components/SignupRenter";
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Profile from './components/Profile';
-
+import Footer from './components/Footer';
 
 class App extends Component {
   constructor() {
@@ -54,6 +54,7 @@ class App extends Component {
             </Route>
             <Route path="/home">
               <Home changeNavbarState = {this.changeNavbarState}/>
+              <Footer />
             </Route>
             <Route path="/">
               <Redirect to="/home"/>
