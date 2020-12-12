@@ -12,9 +12,6 @@
 html{
   scroll-behavior: smooth;
 }
-body{
-	font-family: Montserrat,sans-serif !important;
-}
 
 small{
 	font-weight: 300;

@@ -6,11 +6,12 @@ import angleDoubleRight from '@iconify-icons/fa-solid/angle-double-right';
 import lockIcon from '@iconify-icons/fa-solid/lock';
 import avatar from "../image/avatar.png";
 import '../css/Profile.css';
+require('typeface-montserrat');
 
 class Profile extends Component {
   render() {
     return (
-        <div>
+        <div>           
           <Nav />
           <Info />            
         </div>
@@ -44,8 +45,8 @@ class Info extends Component {
     render() { 
         return ( 
             <div className="ev-page-container">
-                <div className="uk-grid-large">
-                    <div className="uk-width-1-4@m">
+                <div className="uk-grid-large uk-grid">
+                    <div className="uk-width-1-4">
                         <div className="uk-box-shadow-small uk-border-rounded uk-padding">
                             <div className="uk-block uk-margin-remove uk-text-center">
                                 <img className="uk-border-rounded uk-box-shadow-small uk-width-1-2" src={avatar} />
@@ -71,44 +72,55 @@ class Info extends Component {
                             </a>
                         </div>
                     </div>
-
-                    <div className="user-profile uk-width-expand@m">
-                        <h5 className="uk-heading-line"><span>My Profile</span></h5>
-
-                        <form className="uk-child-width-1-1 uk-child-width-1-2@s">
-                            <div>
-                                <label className="uk-form-label" htmlFor="form-stacked-text">First Name</label>
-                                <div className="uk-form-controls">
-                                    <input className="uk-input uk-border-rounded" type="text" defaultValue="Le" />
-                                </div>
-                            </div>
-
-                            <div>
-                                <label className="uk-form-label" htmlFor="form-stacked-text">Last Name</label>
-                                <div className="uk-form-controls">
-                                    <input className="uk-input uk-border-rounded" type="text" defaultValue="Hanh" />
-                                </div>
-                            </div>
-
-                            <div>
-                                <label className="uk-form-label" htmlFor="form-stacked-text">Phone</label>
-                                <div className="uk-form-controls">
-                                    <input className="uk-input uk-border-rounded" type="text" defaultValue="+123 456 789" />
-                                </div>
-                            </div>
-
-                            <div>
-                                <label className="uk-form-label" htmlFor="form-stacked-text">Email</label>
-                                <div className="uk-form-controls">
-                                    <input className="uk-input uk-border-rounded" type="text" defaultValue="abc@gmail.com" />
-                                </div>
-                            </div>
-                            <div>
-                                <button className="uk-button uk-button-primary uk-border-rounded" type="submit">Save Changes</button>
-                            </div>
-                        </form>
+                    <div className="user-profile">
+                        <MyProfile />
                     </div>
+                    
                 </div>
+            </div>
+        );
+    }
+}
+
+class MyProfile extends Component {
+    state = {  }
+    render() { 
+        return (
+            <div>
+                <h5 className="uk-heading-line"><span>My Profile</span></h5>
+
+                <form className="uk-grid">
+                    <div className="uk-first-column">
+                        <label className="uk-form-label">First Name</label>
+                        <div>
+                            <input className="uk-input uk-border-rounded" type="text" defaultValue="Le" />
+                        </div>
+                    </div>
+
+                    <div className="uk-second-column">
+                        <label className="uk-form-label" htmlFor="form-stacked-text">Last Name</label>
+                        <div>
+                            <input className="uk-input uk-border-rounded" type="text" defaultValue="Hanh" />
+                        </div>
+                    </div>
+
+                    <div className="uk-grid-margin uk-first-column">
+                        <label className="uk-form-label" htmlFor="form-stacked-text">Phone</label>
+                        <div>
+                            <input className="uk-input uk-border-rounded" type="text" defaultValue="+123 456 789" />
+                        </div>
+                    </div>
+
+                    <div className="uk-grid-margin uk-second-column">
+                        <label className="uk-form-label" htmlFor="form-stacked-text">Email</label>
+                        <div>
+                            <input className="uk-input uk-border-rounded" type="text" defaultValue="abc@gmail.com" />
+                        </div>
+                    </div>
+                    <div className="uk-grid-margin uk-first-column">
+                        <button className="uk-button uk-button-primary uk-border-rounded" type="submit">Save Changes</button>
+                    </div>
+                </form>
             </div>
         );
     }

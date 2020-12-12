@@ -9,6 +9,9 @@ html {
   background: #fff;
   color: #666;
 }
+body{
+	font-family: 'Montserrat',sans-serif !important;
+}
 body {
   margin: 0;
 }

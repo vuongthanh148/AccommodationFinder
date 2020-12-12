@@ -5,10 +5,8 @@ import Post from "./components/Post";
 import Signup from "./components/Signup";
 import SignupOwner from "./components/SignupOwner";
 import SignupRenter from "./components/SignupRenter";
-// import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import Navbar from "./components/Navbar";
-// import Navbar1 from "./components/Navbar1";
 import Profile from './components/Profile';
 
 
