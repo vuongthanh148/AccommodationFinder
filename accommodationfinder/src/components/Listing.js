@@ -4,14 +4,12 @@ import '../css/Listing.css';
 import List from './List';
 class Listing extends Component {
     state = {
-        houses: [{ _id: 1 }, { _id: 2 }],
+        houses: [{ _id: 1 }, { _id: 2 }, { _id: 3 }, { _id: 4 }],
     };
     render() {
         return (
             <div>
-                <ul
-                    className='uk-slider-items uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-3@l uk-grid-medium'
-                    uk-grid>
+                <ul className='uk-slider-items list-product-items' uk-grid>
                     {this.state.houses.map((house) => (
                         <List />
                     ))}

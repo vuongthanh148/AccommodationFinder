@@ -11,6 +11,7 @@ const List = (props) => {
                                 <img
                                     alt='Image'
                                     className='uk-border-rounded'
+                                    className='item-image'
                                     src={logo}></img>
 
                                 <div className='uk-overlay overlay-gradient uk-position-bottom'>
