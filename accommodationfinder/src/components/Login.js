@@ -1,5 +1,5 @@
 import react, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link, NavLink } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, NavLink, Redirect } from "react-router-dom";
 import reactDOM from 'react-dom';
 import "../css/login.css";
 import logo_trang from '../image/logo_ngang_trang.png';
@@ -8,10 +8,24 @@ import logo_trang from '../image/logo_ngang_trang.png';
 class Login extends Component {
     constructor(props){
         super(props)
+        this.state = ({
+            email: "",
+            password: "",
+            userType: "owner",
+            status: ""
+        })
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount(){
         this.props.changeState(false);
+    }
+
+    handleSubmit(event){
+        event.preventDefault();
+        // console.log()
+        console.log(this.state)
+        return <Redirect to="/home"/>
     }
 
     render(){
@@ -25,24 +39,24 @@ class Login extends Component {
                     
                         <h5 className="login-heading-line"><span>Đăng nhập</span></h5>
 
-                        <form>
+                        <form onSubmit={this.handleSubmit}>
                             <div className="login-margin">
                                 <div className="login-inline">
-                                    <input className="login-input login-border-pill" placeholder="Email" type="text" required="required"/>
+                                    <input className="login-input login-border-pill" placeholder="Email" type="text" required onChange = {event => {this.setState({email: event.target.value})}}/>
                                 </div>
                             </div>
                             <div className="login-margin">
                                 <div className="login-inline">
-                                    <input className="login-input login-border-pill" placeholder="Password" type="text" required="required"/>
+                                    <input className="login-input login-border-pill" placeholder="Password" type="password" required onChange = {event => {this.setState({password: event.target.value})}}/>
                                 </div>
                             </div>
 
                             <div className="login-margin login-text-left login-text-small">
-                                <label>
                                     Bạn là: 
-                                    <input className="login-radio margin" type="radio" name="typeUser" />Chủ trọ
-                                    <input className="login-radio margin" type="radio" name="typeUser" />Người thuê trọ
-                                </label>
+                                    <input className="login-radio margin" type="radio" name="typeUser" id = "owner" required onChange={() => this.setState({userType: "owner"})}/>
+                                    <label for="owner">Chủ trọ</label>
+                                    <input className="login-radio margin" type="radio" name="typeUser" id = "renter" onChange={() => this.setState({userType: "renter"})}/>
+                                    <label for="renter">Người thuê trọ</label>
                             </div>
 
                             <div className="login-margin login-text-left login-text-small">
