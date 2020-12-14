@@ -1,6 +1,6 @@
 
 @import "https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,900";
-
+@import "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap";
 @import "react-slideshow-image/dist/styles.css";
 
 @import url("./Style.css");
@@ -202,7 +202,6 @@ ul > li {
 /* Search bar */
 .search-section{
   background-color: #fdfdfd;
-  border-bottom: 1px solid #ddd;
 }
 
 .search-container{

@@ -11,9 +11,9 @@ class Listing extends Component {
     
     render() {
         return (
-                <div className='uk-slider-items list-product-items' uk-grid>
-                    {this.state.houses.map((house) => (
-                        <List />
+                <div className='uk-slider-items list-product-items' >
+                    {this.state.houses.map((house,index) => (
+                        <List key={index}/>
                     ))}
                 </div>
         );
