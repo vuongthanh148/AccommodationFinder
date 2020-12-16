@@ -9,20 +9,20 @@ import chevronDown from '@iconify-icons/fa-solid/chevron-down';
 import chevronUp from '@iconify-icons/fa-solid/chevron-up';
 import envelope from '@iconify-icons/fa-solid/envelope';
 import bell from '@iconify-icons/fa-solid/bell';
+import axios from "axios";
 
 class Navbar extends Component {
   constructor(props){
     super(props);
   }
   render() {
-    console.log(this.props.isLoggedIn)
     return (
       <div>
         <div className="display-nav">
-          <Bar isLoggedIn={this.props.isLoggedIn}/>
+          <Bar isLoggedIn={this.props.isLoggedIn} userData = {this.props.userData} updateLoginState ={this.props.updateLoginState} />
         </div>       
         <div className="display-moblie-nav">
-          <NavbarMobile isLoggedIn={this.props.isLoggedIn}/>
+          <NavbarMobile isLoggedIn={this.props.isLoggedIn} userData = {this.props.userData}/>
         </div>        
       </div> 
     );
@@ -37,10 +37,11 @@ class Bar extends Component {
     this.state = ({
       icon: chevronDown,
       divAppearance: "none",
+      name: "dcmm"
     })
+    this.handleLogOut = this.handleLogOut.bind(this);
   }
   changeState = () => {
-    console.log("click");
     if(this.state.divAppearance === "none") {
       this.setState({
         divAppearance: "block",
@@ -55,44 +56,59 @@ class Bar extends Component {
     }     
   }
 
+  handleLogOut = async () => {
+    const token = localStorage.getItem('token');
+    await axios({
+      method: "POST",
+      url: `https://accommodation-finder.herokuapp.com/${this.props.userData.userType}/logoutAll`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    this.props.updateLoginState({}, false);
+    localStorage.removeItem('token');
+  }
+
   render(){
+    console.log(this.props.userData)
     return(
       <div className="ev-header-1 navbar-section-primary" >
         <nav className="navbar-container navbar-transparent navbar">
           <div className="navbar-left">
             <NavLink className="navbar-logo" activeStyle={{color:'#fff'}} to="/home"><img className="ev-logo" src={logo}/></NavLink>
           </div>
-          {this.props.isLoggedIn === false && <div className="navbar-right">
+          {!this.props.isLoggedIn && <div className="navbar-right">
             <ul className="navbar-subnav navbar-subnav-divider navbar-right-element">
               <li>
                 <NavLink  activeStyle={{color:'#fff'}} to="/home">Trang chủ</NavLink>
               </li>
               <li>
-                <NavLink  activeStyle={{color:'#fff'}} to="/login" onClick = {this.props.changeState}>Đăng nhập</NavLink>
+                <NavLink  activeStyle={{color:'#fff'}} to="/login" >Đăng nhập</NavLink>
               </li>
               <li>
-              <NavLink  activeStyle={{color:'#fff'}} to="/signup" onClick = {this.props.changeState}>Đăng ký</NavLink>
+              <NavLink  activeStyle={{color:'#fff'}} to="/signup" >Đăng ký</NavLink>
               </li>
             </ul>
           </div>}
-          {this.props.isLoggedIn === true && <div className="navbar-right">
-            <ul className="navbar-subnav navbar1-subnav-divider navbar-right-element">
+          {this.props.isLoggedIn && <div className="navbar-right">
+            <ul className="navbar-subnav navbar-subnav-divider navbar-right-element">
               <li>
                 <NavLink  activeStyle={{color:'#fff'}} to="/home">Trang chủ</NavLink>
               </li>
+              <li>
+                <NavLink  activeStyle={{color:'#fff'}} to="/login">Tạo bài viết</NavLink>
+              </li>
               <li className="user-button">
-                
                 <a href="#" className="click-button" onClick={this.changeState}>
-                  <img className="navbar1-avatar-user" src={avatar}/>
-                  <div className="navbar1-user-name">Le Thi Hanh</div> 
+                  <img className="navbar1-avatar-user" src={this.props.userData.avatar}/>
+                  <div className="navbar1-user-name">{this.props.userData.name}</div> 
                   <span className="user-icon"><Icon icon={this.state.icon} /></span>
-                  
                 </a>           
                 <div className="user-navbar-dropdown" style={{display:this.state.divAppearance}}>
                   <ul className="user-nav user-navbar-dropdown-nav">
-                    <li><NavLink  activeStyle={{color:'#fff'}} to="/profile" onClick={this.changeState}>Profile</NavLink></li>
+                    <li><NavLink  activeStyle={{color:'#fff'}} to="/profile" onClick={this.changeState}>Thông tin cá nhân</NavLink></li>
                     <li className="user-nav-divider"></li>
-                    <li onClick={this.changeState}><a>Dang xuat</a></li>
+                    <li onClick={this.handleLogOut}><a>Đăng xuất</a></li>
                   </ul>
                 </div>               
               </li>

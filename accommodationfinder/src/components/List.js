@@ -140,7 +140,7 @@ class List extends Component {
                 >
                   Ở gần:{" "}
                 </p>
-                <p style={{ textAlign: "left", width: "72%", margin: "0" }}>
+                <p style={{ textAlign: "left", width: "70%", margin: "0" }}>
                   {" "}
                   Đại học Hà Nội Đại học Hà NộiĐại học Hà NộiĐại học Hà Nội
                 </p>
@@ -158,7 +158,7 @@ class List extends Component {
                 >
                   Diện tích:{" "}
                 </p>
-                <p style={{ textAlign: "left", width: "65%", margin: "0" }}>
+                <p style={{ textAlign: "left", width: "62%", margin: "0" }}>
                   {" "}
                   72m²{" "}
                 </p>

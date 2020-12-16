@@ -82,9 +82,9 @@ class NavbarMobile extends Component {
             {this.props.isLoggedIn === true && (
                 <div className="user-bar">
                   <span>
-                    <img className="avatar-user" src={avatar} />
+                    <img className="avatar-user" src={this.props.userData.avatar} />
                   </span>
-                  <span className="user-name">Le Thi Hanh</span>
+                  <span className="user-name">{this.props.userData.name}</span>
                 </div>
             )}
 

@@ -21,11 +21,11 @@
     "react-geocode": "^0.2.2",
     "react-headroom": "^3.1.0",
     "react-icons": "^3.11.0",
+    "react-loader-spinner": "^3.1.14",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.0",
     "react-select": "^3.1.0",
     "react-slideshow-image": "^3.4.2",
-    "react-sticky": "^6.0.3",
     "typeface-montserrat": "^1.1.13",
     "web-vitals": "^0.2.4"
   },
