@@ -132,7 +132,7 @@ class Search extends Component {
     maximumAge: 0,
   };
 
-  getPosition = (callback) => {
+  getPosition = (getAccomodByUserLocation, getAccomodByDefault) => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         axios
@@ -174,7 +174,7 @@ class Search extends Component {
                         },
                       });
                     }
-                    callback();
+                    getAccomodByUserLocation();
                   });
               }
             });
@@ -183,6 +183,7 @@ class Search extends Component {
       () => {
         console.log("unable to get location");
         //Get all accomod
+
       },
       this.options
     );
