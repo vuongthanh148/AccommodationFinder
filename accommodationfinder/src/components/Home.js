@@ -19,6 +19,7 @@ import {
 import Select from "react-select";
 import { Slide } from "react-slideshow-image";
 import Listing from "./Listing";
+import Loader from "react-loader-spinner";
 
 class Home extends Component {
   constructor(props) {
@@ -30,11 +31,12 @@ class Home extends Component {
     //Request all needed data
   }
   render() {
+    const randomLoader = Math.floor(Math.random() * 12);
     return (
       // <Navbar />,
       <div className="App">
         <Cover />
-        <Search />
+        <Search randomLoader={randomLoader}/>
       </div>
     );
   }
@@ -122,8 +124,10 @@ class Search extends Component {
       selectedOptionWard: null,
       accommodationInfo: {},
       facilitiesInfo: {},
+      finishFetchingAccomod: false
     };
     this.getAccomod = this.getAccomod.bind(this);
+    this.updateFetchingAccomod = this.updateFetchingAccomod.bind(this);
   }
 
   options = {
@@ -132,7 +136,14 @@ class Search extends Component {
     maximumAge: 0,
   };
 
-  getPosition = (callback) => {
+  updateFetchingAccomod = (finish, event) => {
+    this.setState({
+      finishFetchingAccomod: finish
+    })
+    if(event){}
+  }
+
+  getPosition = (getAccomod) => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         axios
@@ -170,11 +181,11 @@ class Search extends Component {
                     if (res.data.localityInfo.administrative[3] !== undefined) {
                       this.setState({
                         accommodationInfo: {
-                          ward: res.data.localityInfo.administrative[3].name,
+                          ward: res.data.localityInfo.administrative[3].name.replace("Phường ", ""),
                         },
                       });
                     }
-                    callback();
+                    getAccomod();
                   });
               }
             });
@@ -183,25 +194,32 @@ class Search extends Component {
       () => {
         console.log("unable to get location");
         //Get all accomod
+        getAccomod();
       },
       this.options
     );
   };
 
-  getAccomod = () => {
+  getAccomod = async () => {
     console.log(this.state.accommodationInfo);
     const data = {
       accommodationInfo: this.state.accommodationInfo,
       facilitiesInfo: this.state.facilitiesInfo,
     };
-    axios
+    console.log(data)
+    var that = this
+    await axios
       .post("https://accommodation-finder.herokuapp.com/accommodation", {
-        accommodationInfo: this.state.accommodationInfo,
-        facilitiesInfo: this.state.facilitiesInfo,
+        accommodationInfo: that.state.accommodationInfo,
+        facilitiesInfo: that.state.facilitiesInfo,
       })
       .then((res) => {
-        console.log("data fetched: ", res);
+        console.log("data fetched: ", res.data.allAccomod);
+        that.setState({
+          list_accomod: res.data.allAccomod
+        })
       });
+      that.updateFetchingAccomod(true);
   };
 
   removeAccents(str) {
@@ -284,6 +302,8 @@ class Search extends Component {
     } = this.state;
     const searchBarStart = window.innerHeight + 116;
     let searchBackColor = "rgba(255,255,255, 0.95)";
+    const listLoader = ["Audio", "BallTriangle","Bars", "Circles", "Grid", "Hearts", "Oval", "Puff", "Rings", "TailSpin", "ThreeDots","Plane" ]
+    const accomods = this.state.list_accomod
     return (
       <>
         <div className="search-section">
@@ -463,7 +483,15 @@ class Search extends Component {
                 </div>
               </form>
             </Headroom>
-            <Listing />
+            {this.state.finishFetchingAccomod && <Listing list_accomod={accomods} />}
+            {!this.state.finishFetchingAccomod && (
+            <div style={{position: 'relative', width: '100vw', height: '300px'}}>
+            <div style={{width: '150px', height: '150px', position: 'absolute' ,top: '0', right: '0', bottom: '0', left: '0', margin: 'auto' }}>
+              <Loader type={listLoader[this.props.randomLoader]} color="#bf7c2f" height={200} width={200}/>
+              <p style={{paddingTop: '20px', fontSize: '20px' }}>Loading data...</p>
+            </div>
+            </div>
+          )}
           </div>
         </div>
       </>
