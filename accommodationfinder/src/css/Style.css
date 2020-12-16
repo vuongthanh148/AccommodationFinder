@@ -217,13 +217,13 @@ dd {
 hr {
   overflow: visible;
   text-align: inherit;
-  margin: 0 0 20px 0;
+  margin: 0 0 5px 0;
   border: 0;
   border-top: 1px solid #e5e5e5;
 }
 
 * + hr {
-  margin-top: 20px;
+  margin-top: 5px;
 }
 address {
   font-style: normal;
@@ -301,7 +301,7 @@ template {
 }
 body{
 	--primary-color: #bf7c2f;
-	--secondary-color: #032737;
+	--secondary-color: #090a0a;
 	--primary-alpha-Dot75: rgba(191, 124, 47, 0.75);
 	--primary-alpha-Dot50: rgba(191, 124, 47, 0.50);
 	--primary-alpha-Dot10: rgba(191, 124, 47, 0.10);

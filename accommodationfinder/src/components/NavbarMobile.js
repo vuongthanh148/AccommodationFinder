@@ -64,7 +64,7 @@ class NavbarMobile extends Component {
           uk-offcanvas="overlay: true;"
         >
           <div className="sidebar-offcanvas-bar sidebar-section-primary sidebar-flex sidebar-flex-column">
-            {this.props.loggedIn === false && (
+            {this.props.isLoggedIn === false && (
                 <form className="sidebar-search sidebar-search-default">
                   <Icon className="sidebar-search-icon" icon={search} />
                   <input
@@ -79,12 +79,12 @@ class NavbarMobile extends Component {
                 </a>
                 </form>
             )}
-            {this.props.loggedIn === true && (
+            {this.props.isLoggedIn === true && (
                 <div className="user-bar">
                   <span>
-                    <img className="avatar-user" src={avatar} />
+                    <img className="avatar-user" src={this.props.userData.avatar} />
                   </span>
-                  <span className="user-name">Le Thi Hanh</span>
+                  <span className="user-name">{this.props.userData.name}</span>
                 </div>
             )}
 

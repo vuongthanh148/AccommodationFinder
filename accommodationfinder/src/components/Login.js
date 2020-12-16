@@ -1,82 +1,177 @@
-import react, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link, NavLink, Redirect } from "react-router-dom";
-import reactDOM from 'react-dom';
+import react, { Component } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  NavLink,
+  Redirect,
+} from "react-router-dom";
+import axios from "axios";
+import reactDOM from "react-dom";
 import "../css/login.css";
-import logo_trang from '../image/logo_ngang_trang.png';
-
+import logo_trang from "../image/logo_ngang_trang.png";
+import Home from "./Home";
 
 class Login extends Component {
-    constructor(props){
-        super(props)
-        this.state = ({
-            email: "",
-            password: "",
-            userType: "owner",
-            status: ""
-        })
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: "",
+      userType: "owner",
+      status: "",
+      userData: {},
+      isLoggedIn: false,
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-    componentDidMount(){
-        this.props.changeNavbarState(false);
-    }
+  componentDidMount() {
+    this.props.changeNavbarState(false);
+    //check if logged in so move to home
+    this.setState({
+        isLoggedIn: this.props.isLoggedIn,
+        userData: this.props.userData
+    })
+  }
 
-    handleSubmit(event){
-        event.preventDefault();
-        // console.log()
-        console.log(this.state)
-        return <Redirect to="/home"/>
-    }
+  async handleSubmit(event) {
+    event.preventDefault();
+    let url = "";
+    this.state.userType === "owner"
+      ? (url = "https://accommodation-finder.herokuapp.com/owner/login")
+      : (url = "https://accommodation-finder.herokuapp.com/renter/login");
+    
+    await axios
+      .post(url, { email: this.state.email, password: this.state.password })
+      .then((res) => {
+        //Saving tolken to local storage
+        localStorage.setItem(`token`,res.data[this.state.userType].tokens[res.data[this.state.userType].tokens.length - 1].token);
+        localStorage.setItem(`userType`,this.state.userType);
+        this.setState({
+          userData: {...res.data[this.state.userType], userType: this.state.userType},
+          isLoggedIn: true,
+        });
+        this.props.updateLoginState(
+          this.state.userData,
+          this.state.isLoggedIn
+        );
+      });
+      console.log('after login: ', this.state.userData)
+  }
 
-    render(){
-        return(
-            <div className="login-height-1-1">
-                <div className="login-background-cover login-height-1-1 login-flex login-light">
-                    <div className="login-overlay-secondary login-position-cover"></div>
+  render() {
+    return (
+      <>
+        {!this.state.isLoggedIn && (
+          <div className="login-height-1-1">
+            <div className="login-background-cover login-height-1-1 login-flex login-light">
+              <div className="login-overlay-secondary login-position-cover"></div>
 
-                    <div className="login-auth-2 login-position-z-index">
-                        <NavLink  activeStyle={{color:'#fff'}} to="/home"><img className="login-logo" src={logo_trang}/></NavLink>
-                    
-                        <h5 className="login-heading-line"><span>Đăng nhập</span></h5>
+              <div className="login-auth-2 login-position-z-index">
+                <NavLink activeStyle={{ color: "#fff" }} to="/home">
+                  <img className="login-logo" src={logo_trang} />
+                </NavLink>
 
-                        <form onSubmit={this.handleSubmit}>
-                            <div className="login-margin">
-                                <div className="login-inline">
-                                    <input className="login-input login-border-pill" placeholder="Email" type="text" required onChange = {event => {this.setState({email: event.target.value})}}/>
-                                </div>
-                            </div>
-                            <div className="login-margin">
-                                <div className="login-inline">
-                                    <input className="login-input login-border-pill" placeholder="Password" type="password" required onChange = {event => {this.setState({password: event.target.value})}}/>
-                                </div>
-                            </div>
+                <h5 className="login-heading-line">
+                  <span>Đăng nhập</span>
+                </h5>
 
-                            <div className="login-margin login-text-left login-text-small">
-                                    Bạn là: 
-                                    <input className="login-radio margin" type="radio" name="typeUser" id = "owner" required onChange={() => this.setState({userType: "owner"})}/>
-                                    <label for="owner">Chủ trọ</label>
-                                    <input className="login-radio margin" type="radio" name="typeUser" id = "renter" onChange={() => this.setState({userType: "renter"})}/>
-                                    <label for="renter">Người thuê trọ</label>
-                            </div>
-
-                            <div className="login-margin login-text-left login-text-small">
-                                <label><input className="login-checkbox" type="checkbox"/> Nhớ mật khẩu</label>
-                            </div>
-                            <NavLink  activeStyle={{color:'#fff'}} to="/home1">
-                                <button className="login-button login-border-pill">Đăng nhập</button>
-                            </NavLink>
-                            {/* <button className="login-button login-border-pill">Đăng nhập</button> */}
-
-                            <div className="login-margin login-text-small">
-                            Bạn chưa có tài khoản? <NavLink className="login-link-primary login-text-bold" activeStyle={{color:'#fff'}} to="/signup" onClick = {this.props.changeState}>Đăng ký</NavLink>
-                            <a className="login-margin login-display-block" href="forgot-2.html*">Quên mật khẩu?</a>
-                            </div>
-                        </form>
+                <form onSubmit={this.handleSubmit}>
+                  <div className="login-margin">
+                    <div className="login-inline">
+                      <input
+                        className="login-input login-border-pill"
+                        placeholder="Email"
+                        type="email"
+                        required
+                        onChange={(event) => {
+                          this.setState({ email: event.target.value });
+                        }}
+                      />
                     </div>
-                </div>
+                  </div>
+                  <div className="login-margin">
+                    <div className="login-inline">
+                      <input
+                        className="login-input login-border-pill"
+                        placeholder="Password"
+                        type="password"
+                        minLength="8"
+                        required
+                        onChange={(event) => {
+                          this.setState({ password: event.target.value });
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="login-margin login-text-left login-text-small">
+                    Bạn là:
+                    <input
+                      className="login-radio margin"
+                      type="radio"
+                      name="typeUser"
+                      id="owner"
+                      required
+                      onChange={() => this.setState({ userType: "owner" })}
+                    />
+                    <label>Chủ trọ</label>
+                    <input
+                      className="login-radio margin"
+                      type="radio"
+                      name="typeUser"
+                      id="renter"
+                      onChange={() => this.setState({ userType: "renter" })}
+                    />
+                    <label>Người thuê trọ</label>
+                  </div>
+
+                  <div className="login-margin login-text-left login-text-small">
+                    <label>
+                      <input className="login-checkbox" type="checkbox" /> Nhớ
+                      mật khẩu
+                    </label>
+                  </div>
+                  <button className="login-button login-border-pill">
+                    Đăng nhập
+                  </button>
+
+                  <div className="login-margin login-text-small">
+                    <p
+                      style={{
+                        fontStyle: "italic",
+                        color: "red",
+                        fontSize: "13px",
+                      }}
+                    >
+                      {this.state.status}
+                    </p>
+                    Bạn chưa có tài khoản?
+                    <NavLink
+                      className="login-link-primary login-text-bold"
+                      activeStyle={{ color: "#fff" }}
+                      to="/signup"
+                    >
+                      Đăng ký
+                    </NavLink>
+                    <a
+                      className="login-margin login-display-block"
+                      href="forgot-2.html*"
+                    >
+                      Quên mật khẩu?
+                    </a>
+                  </div>
+                </form>
+              </div>
             </div>
-        )
-    }
+          </div>
+        )}
+        {this.state.isLoggedIn && <Redirect to="/home" />}
+      </>
+    );
+  }
 }
 
 export default Login;

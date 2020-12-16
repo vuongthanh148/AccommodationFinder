@@ -87,7 +87,6 @@ small{
 }
 .navbar-subnav > * > a:focus,
 .navbar-subnav > * > a:hover {
-  color: #666;
   text-decoration: none;
   outline: 0;
 }
@@ -151,7 +150,6 @@ small{
   flex-wrap: wrap;
   text-align: center;
   align-items: center;
-  padding-left: 20px;
 }
 .display-moblie-nav {
   display: none;
@@ -169,13 +167,13 @@ small{
   font-size: 0.875rem !important;
 }
 .user-navbar-dropdown {
+  top: 100%;
   position: absolute;
-  z-index: 1020;
+  z-index: 20;
   box-sizing: border-box;
   width: 90%;
   padding: 15px;
   margin-left: 20px;
-  
   background: #fff;
   color: #666;
   border-radius: 8px;
