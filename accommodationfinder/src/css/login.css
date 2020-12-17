@@ -1,8 +1,13 @@
 @import "https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,900";
 @import url("./Style.css");
 
+a:hover {
+  text-decoration: none;
+}
+
 .login-height-1-1 {
-	height: 100vh !important;
+  height: 100vh !important;
+  font-family: Montserrat,sans-serif !important;
 }
 
 .login-background-cover {

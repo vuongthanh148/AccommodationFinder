@@ -148,7 +148,7 @@ class Login extends Component {
                     >
                       {this.state.status}
                     </p>
-                    Bạn chưa có tài khoản?
+                    Bạn chưa có tài khoản? {" "}
                     <NavLink
                       className="login-link-primary login-text-bold"
                       activeStyle={{ color: "#fff" }}
@@ -156,12 +156,7 @@ class Login extends Component {
                     >
                       Đăng ký
                     </NavLink>
-                    <a
-                      className="login-margin login-display-block"
-                      href="forgot-2.html*"
-                    >
-                      Quên mật khẩu?
-                    </a>
+                    <NavLink className="login-margin login-display-block" activeStyle={{ color: "#fff" }} to="/resetpassword">Quên mật khẩu?</NavLink>
                   </div>
                 </form>
               </div>

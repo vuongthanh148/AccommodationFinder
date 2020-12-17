@@ -234,19 +234,19 @@ h3 {
 @media (max-width: 1200px) {
     .list-product-items {
         grid-template-columns: repeat(3,calc(33% - calc(2%*3/4)));
-        grid-gap: 2%;
+        grid-column-gap: 2%;
     }
 }
 @media (max-width: 960px) {
     .list-product-items {
         grid-template-columns: repeat(2,calc(50% - calc(2%*3/4)));
-        grid-gap: 2%;
+        grid-column-gap: 2%;
     }
 }
 @media (max-width: 640px) {
     .list-product-items {
         grid-template-columns: repeat(1,calc(100% - calc(2%*3/4)));
-        grid-gap: 2%;
+        grid-column-gap: 2%;
     }
 }
 .item-image {

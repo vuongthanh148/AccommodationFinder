@@ -18,7 +18,8 @@
 }
 
 .signup-width {
-    max-width: 70vw !important;
+	max-width: 70vw !important;
+	font-family: Montserrat,sans-serif !important;
 }
 
 .signup-logo {
