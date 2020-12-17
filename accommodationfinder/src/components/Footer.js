@@ -16,7 +16,7 @@ class Footer extends Component {
                     <div className="ev-widgets uk-grid-large uk-grid">
                         <div className="uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
                             <h4 className="ev-title">About Us</h4>
-                            <p className="ev-about">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            <div className="ev-about">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
                             <ul className="ev-follow uk-iconnav">
                                 <li>
                                     <a href=""><FontAwesomeIcon icon={faFacebookF} style={{ color: "#ababab"}}/></a>

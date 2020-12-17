@@ -1,7 +1,9 @@
 .ev-footer{
+  margin-top: 30px;
 	background: var(--secondary-color);
 	padding: 50px 25px;
-	padding-bottom: 0;
+  padding-bottom: 0;
+  font-family: 'Montserrat', sans-serif !important;
 }
 
 .ev-footer .uk-input:focus{

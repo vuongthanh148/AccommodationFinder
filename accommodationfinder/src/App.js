@@ -18,6 +18,7 @@ import {
 } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Profile from "./components/Profile";
+import Footer from "./components/Footer";
 
 class App extends Component {
   constructor() {
@@ -140,6 +141,7 @@ class App extends Component {
                   userData={this.state.userData}
                   isLoggedIn={this.state.isLoggedIn}
                 />
+                <Footer />
               </Route>
               <Route path="/">
                 <Redirect to="/home" />
