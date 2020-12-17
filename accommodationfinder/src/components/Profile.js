@@ -142,20 +142,32 @@ class MyProfile extends Component {
                     <div className="profile-grid-margin profile-first-column">
                         <label className="profile-form-label">Số điện thoại</label>
                         <div>
-                            <input className="profile-input profile-border-rounded" type="text" defaultValue="+123 456 789" />
+                            <input className="profile-input profile-border-rounded" minLength="10" type="text" defaultValue="+123 456 7890" />
                         </div>
                     </div>
 
                     <div className="profile-grid-margin profile-second-column">
                         <label className="profile-form-label">Email</label>
                         <div>
-                            <input className="profile-input profile-border-rounded" type="text" defaultValue="abc@gmail.com" />
+                            <input className="profile-input profile-border-rounded" type="email" defaultValue="abc@gmail.com" />
                         </div>
                     </div>
                     <div className="profile-grid-margin profile-first-column">
-                        <button className="profile-button profile-button-primary profile-border-rounded" type="submit">Lưu thay đổi</button>
+                        <label className="profile-form-label">Chứng minh nhân dân</label>
+                        <div>
+                            <input className="profile-input profile-border-rounded" minLength="9" type="text" defaultValue="123 456 789" />
+                        </div>
                     </div>
+                    <div className="profile-grid-margin profile-second-column">
+                        <label className="profile-form-label">Địa chỉ</label>
+                        <div>
+                            <input className="profile-input profile-border-rounded" type="text" defaultValue="Hà Nội, Việt Nam" />
+                        </div>
+                    </div>                  
                 </form>
+                <div className="profile-grid-margin profile-first-column">
+                    <button className="profile-button profile-button-primary profile-border-rounded" type="submit">Lưu thay đổi</button>
+                </div>
             </div>
         );
     }
