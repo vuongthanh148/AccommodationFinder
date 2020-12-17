@@ -145,6 +145,7 @@
 }
 .profile-button:hover {
   text-decoration: none !important;
+  /* background-color: var(--secondary-color) !important; */
 }
 .profile-button:focus {
   outline: 0;
@@ -259,7 +260,7 @@ th.profile-text-truncate {
 }
 .profile-button-primary:focus,
 .profile-button-primary:hover {
-  background-color: var(--primary-color);
+  background-color: var(--secondary-color);
   color: #fff;
 }
 .profile-button-primary.profile-active,
