@@ -296,9 +296,6 @@ th.profile-text-truncate {
   .profile-second-column, .change-padding {
     margin-top: 30px;
   }
-  .change-width {
-    width: 100%;
-  }
 }
 
 @media (min-width:640px) {
