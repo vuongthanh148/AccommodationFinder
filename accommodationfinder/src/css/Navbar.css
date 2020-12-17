@@ -7,7 +7,8 @@ small{
 
 .ev-header-1 {
 	height: 10vh;
-	position: relative;
+  position: relative;
+  font-family: 'Montserrat', sans-serif !important;
 }
 
 .navbar-section-primary{

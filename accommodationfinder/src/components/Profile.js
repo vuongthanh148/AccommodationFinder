@@ -6,6 +6,7 @@ import angleDoubleRight from '@iconify-icons/fa-solid/angle-double-right';
 import lockIcon from '@iconify-icons/fa-solid/lock';
 import avatar from "../image/avatar.png";
 import '../css/Profile.css';
+import { Favorite } from "@material-ui/icons";
 require('typeface-montserrat');
 
 class Profile extends Component {
@@ -41,7 +42,36 @@ class Nav extends Component {
 }
 
 class Info extends Component {
-    state = {  }
+    constructor(props){
+        super(props)
+        this.state = ({
+          myProfile: "",
+          favorites: "none",
+          changePassword: "none"
+        })
+    }
+    changeMyProfile = () => {
+        this.setState({
+            myProfile: "",
+            favorites: "none",
+            changePassword: "none"
+        })
+    }
+    changeFavorites = () => {
+        this.setState({
+            myProfile: "none",
+            favorites: "",
+            changePassword: "none"
+        })
+    }
+    changeMyPassword = () => {
+        this.setState({
+            myProfile: "none",
+            favorites: "none",
+            changePassword: ""
+        })
+    }
+
     render() { 
         return ( 
             <div className="ev-page-container">
@@ -53,29 +83,34 @@ class Info extends Component {
                             </div>
 
                             <div className="profile-margin profile-text-center">
-                                <p className="profile-text-bold profile-margin-remove">Le Thi Hanh</p>
+                                <p className="profile-text-bold profile-margin-remove">Lê Thị Hạnh</p>
                                 <p className="profile-text-muted profile-text-small profile-margin-remove">User</p>
                             </div>
 
                             <hr />
 
                             <ul className="profile-list ev-list profile-text-small">
-                                <li><a className="ev-link-secondary" href="profile.html">My Profile</a></li>
-                                <li><a className="ev-link-secondary" href="favorites.html">Favorites</a></li>
-                                <li><a className="ev-link-secondary" href="profile.html">Change Password</a></li>
+                                <li><a className="ev-link-secondary" onClick = {this.changeMyProfile}>Hồ sơ cá nhân</a></li>
+                                <li><a className="ev-link-secondary" onClick = {this.changeFavorites}>Danh sách yêu thích</a></li>
+                                <li><a className="ev-link-secondary" onClick = {this.changeMyPassword}>Đổi mật khẩu</a></li>
                             </ul>
 
                             <hr />
 
                             <a className="profile-button profile-button-default profile-text-truncate profile-border-rounded profile-width-1-1">
-                                <Icon icon={lockIcon} className="profile-margin-small-right"/> Log Out
+                                <Icon icon={lockIcon} className="profile-margin-small-right"/> Đăng xuất
                             </a>
                         </div>
                     </div>
-                    <div className="user-profile">
+                    <div className="user-profile" style={{display: this.state.myProfile}}>
                         <MyProfile />
                     </div>
-                    
+                    <div className="user-profile" style={{display: this.state.favorites}}>
+                        <Favorites />
+                    </div>
+                    <div className="user-changepassword" style={{display: this.state.changePassword}}>
+                        <ChangePassword />
+                    </div>                   
                 </div>
             </div>
         );
@@ -87,40 +122,85 @@ class MyProfile extends Component {
     render() { 
         return (
             <div>
-                <h5 className="profile-heading-line"><span>My Profile</span></h5>
+                <h5 className="profile-heading-line"><span>Hồ sơ cá nhân</span></h5>
 
                 <form className="profile-grid">
                     <div className="profile-first-column">
-                        <label className="profile-form-label">First Name</label>
+                        <label className="profile-form-label">Họ</label>
                         <div>
                             <input className="profile-input profile-border-rounded" type="text" defaultValue="Le" />
                         </div>
                     </div>
 
                     <div className="profile-second-column">
-                        <label className="profile-form-label" htmlFor="form-stacked-text">Last Name</label>
+                        <label className="profile-form-label">Tên</label>
                         <div>
                             <input className="profile-input profile-border-rounded" type="text" defaultValue="Hanh" />
                         </div>
                     </div>
 
                     <div className="profile-grid-margin profile-first-column">
-                        <label className="profile-form-label" htmlFor="form-stacked-text">Phone</label>
+                        <label className="profile-form-label">Số điện thoại</label>
                         <div>
                             <input className="profile-input profile-border-rounded" type="text" defaultValue="+123 456 789" />
                         </div>
                     </div>
 
                     <div className="profile-grid-margin profile-second-column">
-                        <label className="profile-form-label" htmlFor="form-stacked-text">Email</label>
+                        <label className="profile-form-label">Email</label>
                         <div>
                             <input className="profile-input profile-border-rounded" type="text" defaultValue="abc@gmail.com" />
                         </div>
                     </div>
                     <div className="profile-grid-margin profile-first-column">
-                        <button className="profile-button profile-button-primary profile-border-rounded" type="submit">Save Changes</button>
+                        <button className="profile-button profile-button-primary profile-border-rounded" type="submit">Lưu thay đổi</button>
                     </div>
                 </form>
+            </div>
+        );
+    }
+}
+class Favorites extends Component {
+    state = {  }
+    render() { 
+        return (
+            <div>
+                <h5 className="profile-heading-line"><span>Danh sách yêu thích</span></h5>
+                <p>This is a list of favorites accommodation...............................................................................................</p>
+            </div>
+        );
+    }
+}
+
+class ChangePassword extends Component {
+    state = {  }
+    render() { 
+        return (
+            <div>
+                <h5 className="profile-heading-line"><span>Đổi mật khẩu</span></h5>
+                <form className="changePassword">
+                    <div className="change-width">
+                        <label className="password-form-label">Mật khẩu hiện tại</label>
+                        <div>
+                            <input className="profile-input profile-border-rounded" type="password" minLength="8" required="required"/>
+                        </div>
+                    </div>
+                    <div className="change-padding change-width">
+                        <label className="password-form-label">Mật khẩu mới</label>
+                        <div>
+                            <input className="profile-input profile-border-rounded" type="password" minLength="8" required="required"/>
+                        </div>
+                    </div>
+                    <div className="change-padding change-width">
+                        <label className="password-form-label">Nhập lại mật khẩu</label>
+                        <div>
+                            <input className="profile-input profile-border-rounded" type="password" minLength="8" required="required"/>
+                        </div>
+                    </div>
+                </form>
+                <div className="changebutton">
+                    <button className="profile-button profile-button-primary profile-border-rounded" type="submit">Đổi mật khẩu</button>
+                </div>
             </div>
         );
     }

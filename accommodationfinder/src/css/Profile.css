@@ -1,7 +1,7 @@
-
 .ev-page-title-2{
 	background-color: var(--secondary-color) !important;
-	padding: 26px 0;
+  padding: 26px 0;
+  font-family: 'Montserrat', sans-serif !important;
 }
 .ev-page-title-2 .title{
 	color: #ffffff !important;
@@ -62,7 +62,8 @@
 .ev-page-container{
 	margin: auto;
   padding: 40px 30px;
-  max-width: 1000px;  
+  max-width: 1200px;
+  font-family: 'Montserrat', sans-serif !important; 
 }
 .profile-box-shadow-small {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -107,6 +108,9 @@
 }
 .ev-link-secondary{
 	color: var(--secondary-color) !important;
+}
+.ev-link-secondary:hover {
+  text-decoration: none;
 }
 .profile-button {
   margin: 0;
@@ -215,9 +219,9 @@ th.profile-text-truncate {
 .profile-second-column {
   margin-left: auto;
 }
-.profile-form-label {
+.profile-form-label, .password-form-label {
   color: #333;
-  font-size: 0.875rem;
+  font-size: 0.975rem;
 }
 .profile-input {
   overflow: visible;
@@ -226,7 +230,7 @@ th.profile-text-truncate {
   -webkit-appearance: none;
 }
 .profile-input {
-  width: 92%;
+  width: 100%;
   border: 0 none;
   padding: 0 10px;
   background: #fff;
@@ -234,6 +238,7 @@ th.profile-text-truncate {
   border: 1px solid #e5e5e5;
   transition: 0.2s ease-in-out;
   transition-property: color, background-color, border;
+  box-sizing: border-box;
 }
 .profile-input {
   height: 40px;
@@ -265,25 +270,34 @@ th.profile-text-truncate {
 .profile-grid-margin {
   margin-top: 30px;
 }
+/* Change password */
+.changePassword {
+  display: flex;
+  flex-wrap: wrap;
+}
+.changebutton {
+  margin-top: 30px;
+}
+
 @media (max-width:640px) {
   .profile-width-1-4 {
     width: 100%;
   }
-  .user-profile {
+  .user-profile, .user-changepassword {
     max-width: 100%;
     margin-top: 40px;
   }
-  .profile-width-1-1 {
+  .profile-width-1-1, .change-width {
     width: 100%;
   }
   .profile-first-column, .profile-second-column {
     width: 100%;
   }
-  .profile-input {
-    width: calc(94% + 0.1rem)
-  }
-  .profile-second-column {
+  .profile-second-column, .change-padding {
     margin-top: 30px;
+  }
+  .change-width {
+    width: 100%;
   }
 }
 
@@ -291,7 +305,7 @@ th.profile-text-truncate {
   .profile-width-1-4 {
     width: 100%;
   }
-  .user-profile {
+  .user-profile, .user-changepassword {
     max-width: 100%;
     margin-top: 40px;
   }
@@ -299,10 +313,16 @@ th.profile-text-truncate {
     width: 100%;
   }
   .profile-first-column, .profile-second-column {
-    width: calc(45% + 0.8rem);
+    width: 47.5%;
   }
-  .profile-input {
-    width: calc(92% + 0.8rem);
+  .user-changepassword {
+    width: 100% !important;
+  }
+  .change-width {
+    width: 31% !important;
+  }
+  .change-padding {
+    margin-left: auto !important;
   }
 }
 
@@ -313,8 +333,20 @@ th.profile-text-truncate {
   .user-profile {
     max-width: 75.5%;
     padding-left: 40px;
+    margin-top: 0px;
   }
   .profile-first-column, .profile-second-column {
-    width: calc(45% + 1.15rem);
+    width: 48%;
+  }
+  .user-changepassword {
+    width: 75.5% !important;
+    padding-left: 40px;
+    margin-top: 0px;
+  }
+  .change-width {
+    width: 31%;
+  }
+  .change-padding {
+    margin-left: auto;
   }
 }
