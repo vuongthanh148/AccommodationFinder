@@ -5,6 +5,7 @@ import Post from "./components/Post";
 import Signup from "./components/Signup";
 import SignupOwner from "./components/SignupOwner";
 import SignupRenter from "./components/SignupRenter";
+import ResetPassword from "./components/ResetPassword";
 import axios from "axios";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
@@ -119,6 +120,12 @@ class App extends Component {
               </Route>
               <Route path="/signupRenter">
                 <SignupRenter
+                  changeNavbarState={this.changeNavbarState}
+                  updateLoginState={this.updateLoginState}
+                />
+              </Route>
+              <Route path="/resetpassword">
+                <ResetPassword
                   changeNavbarState={this.changeNavbarState}
                   updateLoginState={this.updateLoginState}
                 />

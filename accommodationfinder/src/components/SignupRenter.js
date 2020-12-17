@@ -73,7 +73,7 @@ class SignupRenter extends Component {
                     type="checkbox"
                     required="required"
                   />
-                  Tôi đồng ý với
+                  Tôi đồng ý với {" "}
                   <a className="signupRenter-link-primary" href="#">
                     Các điều khoản và điều kiện
                   </a>
