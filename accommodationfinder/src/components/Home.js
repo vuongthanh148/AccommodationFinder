@@ -36,7 +36,7 @@ class Home extends Component {
       // <Navbar />,
       <div className="App">
         <Cover />
-        <Search randomLoader={randomLoader}/>
+        <Search randomLoader={randomLoader} />
       </div>
     );
   }
@@ -119,15 +119,17 @@ class Search extends Component {
       list_district: [],
       list_ward: [],
       list_accomod: [],
-      selectedOptionCity: null,
-      selectedOptionDistrict: null,
-      selectedOptionWard: null,
+      selectedOptionCity: "",
+      selectedOptionDistrict: "",
+      selectedOptionWard: "",
       accommodationInfo: {},
       facilitiesInfo: {},
-      finishFetchingAccomod: false
+      finishFetchingAccomod: false,
     };
+
     this.getAccomod = this.getAccomod.bind(this);
     this.updateFetchingAccomod = this.updateFetchingAccomod.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   options = {
@@ -138,10 +140,11 @@ class Search extends Component {
 
   updateFetchingAccomod = (finish, event) => {
     this.setState({
-      finishFetchingAccomod: finish
-    })
-    if(event){}
-  }
+      finishFetchingAccomod: finish,
+    });
+    if (event) {
+    }
+  };
 
   getPosition = (getAccomod) => {
     navigator.geolocation.getCurrentPosition(
@@ -181,7 +184,10 @@ class Search extends Component {
                     if (res.data.localityInfo.administrative[3] !== undefined) {
                       this.setState({
                         accommodationInfo: {
-                          ward: res.data.localityInfo.administrative[3].name.replace("Phường ", ""),
+                          ward: res.data.localityInfo.administrative[3].name.replace(
+                            "Phường ",
+                            ""
+                          ),
                         },
                       });
                     }
@@ -201,13 +207,7 @@ class Search extends Component {
   };
 
   getAccomod = async () => {
-    console.log(this.state.accommodationInfo);
-    const data = {
-      accommodationInfo: this.state.accommodationInfo,
-      facilitiesInfo: this.state.facilitiesInfo,
-    };
-    console.log(data)
-    var that = this
+    var that = this;
     await axios
       .post("https://accommodation-finder.herokuapp.com/accommodation", {
         accommodationInfo: that.state.accommodationInfo,
@@ -216,10 +216,10 @@ class Search extends Component {
       .then((res) => {
         console.log("data fetched: ", res.data.allAccomod);
         that.setState({
-          list_accomod: res.data.allAccomod
-        })
+          list_accomod: res.data.allAccomod,
+        });
       });
-      that.updateFetchingAccomod(true);
+    that.updateFetchingAccomod(true);
   };
 
   removeAccents(str) {
@@ -228,11 +228,11 @@ class Search extends Component {
       .replace(/[\u0300-\u036f]/g, "")
       .replace(/đ/g, "d")
       .replace(/Đ/g, "D")
-      .replace(/Quan |Huyen |Thi Xa |Thanh Pho |District /g, "");
+      .replace(/Quan |Huyen |Thi Xa |Thanh Pho |District |Phuong /g, "");
   }
 
   componentDidMount() {
-    axios.get(`https://thongtindoanhnghiep.co/api/city`).then((res) => {
+      axios.get(`https://thongtindoanhnghiep.co/api/city`).then((res) => {
       const cities = res.data.LtsItem.map((item) => {
         return {
           ID: item.ID,
@@ -242,7 +242,10 @@ class Search extends Component {
         };
       });
       this.setState({ list_city: cities });
-      this.getPosition(this.getAccomod);
+      if(Object.keys(this.state.accommodationInfo).length === 0){
+        console.log("accomod: ",this.state.accommodationInfo);
+        this.getPosition(this.getAccomod);
+      }
     });
   }
 
@@ -294,6 +297,29 @@ class Search extends Component {
     });
   };
 
+  handleSubmit = async (event) => {
+    event.preventDefault();
+    this.updateFetchingAccomod(false);
+    this.setState({
+      accommodationInfo:{
+        city:
+        this.state.selectedOptionCity.label !== ""
+            ? this.state.selectedOptionCity.label.replace(/Quận |Thị Xã |Thành Phố |Huyện |Phường |District /g, "")
+            : null,
+        district:
+        this.state.selectedOptionDistrict.label !== ""
+            ? this.state.selectedOptionDistrict.label.replace(/Quận |Thị Xã |Thành Phố |Huyện |Phường |District /g, "")
+            : null,
+        ward:
+        this.state.selectedOptionWard.label !== ""
+            ? this.state.selectedOptionWard.label.replace(/Quận |Thị Xã |Thành Phố |Huyện |Phường |District /g, "")
+            : null,
+      },
+    },() => {
+      this.getAccomod()
+    })
+  };
+
   render() {
     const {
       selectedOptionCity,
@@ -302,8 +328,23 @@ class Search extends Component {
     } = this.state;
     const searchBarStart = window.innerHeight + 116;
     let searchBackColor = "rgba(255,255,255, 0.95)";
-    const listLoader = ["Audio", "BallTriangle","Bars", "Circles", "Grid", "Hearts", "Oval", "Puff", "Rings", "TailSpin", "ThreeDots","Plane" ]
-    const accomods = this.state.list_accomod
+    const listLoader = [
+      "Audio",
+      "BallTriangle",
+      "Bars",
+      "Circles",
+      "Grid",
+      "Hearts",
+      "Oval",
+      "Puff",
+      "Rings",
+      "TailSpin",
+      "ThreeDots",
+      "Plane",
+    ];
+    const accomods = this.state.list_accomod;
+    console.log("accomod to send: ", accomods);
+
     return (
       <>
         <div className="search-section">
@@ -324,10 +365,13 @@ class Search extends Component {
                 paddingRight: "1px",
                 paddingLeft: "2px",
                 borderBottom: "1px solid #D3D3D3",
-                borderRadius: '8px'
+                borderRadius: "8px",
               }}
             >
-              <form className="search-grid-small search-grid">
+              <form
+                onSubmit={this.handleSubmit}
+                className="search-grid-small search-grid"
+              >
                 <div className="search-width">
                   <div className="search-margin">
                     <div className="search-width-1-1 search-inline">
@@ -483,15 +527,37 @@ class Search extends Component {
                 </div>
               </form>
             </Headroom>
-            {this.state.finishFetchingAccomod && <Listing list_accomod={accomods} />}
+            {this.state.finishFetchingAccomod && (
+              <Listing list_accomod={accomods} />
+            )}
             {!this.state.finishFetchingAccomod && (
-            <div style={{position: 'relative', width: '90vw', height: '300px'}}>
-            <div style={{width: '150px', height: '150px', position: 'absolute' ,top: '0', right: '0', bottom: '0', left: '0', margin: 'auto' }}>
-              <Loader type={listLoader[this.props.randomLoader]} color="#bf7c2f" height={200} width={200}/>
-              <p style={{paddingTop: '20px', fontSize: '20px' }}>Loading data...</p>
-            </div>
-            </div>
-          )}
+              <div
+                style={{ position: "relative", width: "90vw", height: "300px" }}
+              >
+                <div
+                  style={{
+                    width: "150px",
+                    height: "150px",
+                    position: "absolute",
+                    top: "0",
+                    right: "0",
+                    bottom: "0",
+                    left: "0",
+                    margin: "auto",
+                  }}
+                >
+                  <Loader
+                    type={listLoader[this.props.randomLoader]}
+                    color="#bf7c2f"
+                    height={200}
+                    width={200}
+                  />
+                  <p style={{ paddingTop: "20px", fontSize: "20px" }}>
+                    Loading data...
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </>

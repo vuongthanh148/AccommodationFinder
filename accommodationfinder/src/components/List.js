@@ -22,13 +22,7 @@ class List extends Component {
       accomod: this.props.accomod
     })
   }
-  slideImages = [
-    "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/edc-web-house-tour-fuller07-1586874956.jpg",
-    "https://www.metricon.com.au/metricon/media/metricon/gallery/2020/july/0001.jpg",
-    "https://news.mogi.vn/wp-content/uploads/2019/03/cach-khac-phuc-loi-treo-dong-ho-phong-khach-chan-van-may-gia-chu-anh-4.jpg",
-  ];
   render() {
-    console.log('accomod in list: ',this.state.accomod)
     return (
       <div className="ev-card-1">
         <div>

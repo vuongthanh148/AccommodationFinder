@@ -7,10 +7,11 @@ import List from './List';
 class Listing extends Component {
     constructor(props){
         super(props)
+        // this.state=({
+        //     list_accomod: this.props.list_accomod
+        // })
     }
-    
     render() {
-        console.log(this.props.list_accomod)
         return (
                 <div className='uk-slider-items list-product-items' style={{marginBottom: '30px', height: '100%'}} >
                     {this.props.list_accomod.map((house,index) => (
