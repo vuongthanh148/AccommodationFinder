@@ -9,19 +9,79 @@ import {
 // import "../css/unikit.css";
 import "../css/SignupRenter.css";
 import logo from "../image/logo_ngang_trang.png";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 class SignupRenter extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      name: "",
+      email: "",
+      password: "",
+      userType: "renter",
+      userData: {},
+      isLoggedIn: false,
+    };
+
+    this.handleRegister = this.handleRegister.bind(this);
   }
 
   componentDidMount() {
     this.props.changeNavbarState(false);
   }
 
+  handleRegister = async (event) => {
+    event.preventDefault();
+    const { name, email, password } = this.state;
+    console.log(this.state)
+    await axios
+      .post("https://accommodation-finder.herokuapp.com/renter/signup", {
+        name,
+        email,
+        password,
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.data.response) {
+          toast.info(res.data.response.toString(), {
+            position: "bottom-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        } else {
+          toast.error(res.data.message.toString(), {
+            position: "bottom-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        }
+      })
+      .catch((err) => console.log(err));
+    //Send notification đăng ký thành công
+  };
+
   render() {
     return (
       <div className="signupRenter-background-cover signupRenter-height-1-1 signupRenter-flex signupRenter-light">
+        <ToastContainer
+          position="bottom-left"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <div className="signupRenter-overlay-secondary signupRenter-position-cover"></div>
 
         <div className="signupRenter-auth-2 signupRenter-position-z-index">
@@ -32,14 +92,17 @@ class SignupRenter extends Component {
             <span>Đăng ký</span>
           </h5>
 
-          <form>
+          <form onSubmit={this.handleRegister}>
             <div className="signupRenter-margin">
               <div className="signupRenter-width-1-1 signupRenter-inline">
                 <input
                   className="signupRenter-input signupRenter-border-pill"
                   placeholder="Name"
                   type="text"
-                  required="required"
+                  required
+                  onChange={(event) => {
+                    this.setState({ name: event.target.value });
+                  }}
                 />
               </div>
             </div>
@@ -49,7 +112,10 @@ class SignupRenter extends Component {
                   className="signupRenter-input signupRenter-border-pill"
                   placeholder="Email"
                   type="email"
-                  required="required"
+                  required
+                  onChange={(event) => {
+                    this.setState({ email: event.target.value });
+                  }}
                 />
               </div>
             </div>
@@ -60,7 +126,10 @@ class SignupRenter extends Component {
                   placeholder="Password"
                   type="password"
                   minLength="8"
-                  required="required"
+                  required
+                  onChange={(event) => {
+                    this.setState({ password: event.target.value });
+                  }}
                 />
               </div>
             </div>
@@ -71,10 +140,14 @@ class SignupRenter extends Component {
                   <input
                     className="signupRenter-checkbox"
                     type="checkbox"
-                    required="required"
+                    required
                   />
                   Tôi đồng ý với
-                  <a className="signupRenter-link-primary" href="#">
+                  <a
+                    style={{ paddingLeft: "5px" }}
+                    className="signupRenter-link-primary"
+                    href="#"
+                  >
                     Các điều khoản và điều kiện
                   </a>
                 </label>

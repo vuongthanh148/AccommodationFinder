@@ -24,7 +24,7 @@ class Signup extends Component {
                     <NavLink  activeStyle={{color:'#fff'}} to="/home"><img className="signup-logo" src={logo}/></NavLink>
                     <h5 className="signup-heading-line"><span>Sign Up</span></h5>
                     <div className="signup-option-container">
-                        <div className="signup-option signup-option-owner">
+                        <div className="signup-option signup-owner" >
                             <div className="option-content">
                                 <h2>Chủ trọ</h2>
                                 <h4>Bạn có thể đăng bài viết, chat với admin, nhận được những dữ liệu thống kê về nhu cầu thuê trọ để có những chiến lược marketing hiệu quả</h4>
@@ -33,7 +33,10 @@ class Signup extends Component {
                                 <NavLink className="signup-button signup-border-pill signup-text-bold signup-position-z-index" activeStyle={{color:'#fff'}} to="/signupOwner" onClick = {this.props.changeNavbarState}>Đăng ký</NavLink>
                             </div>
                         </div>
-                        <div className="signup-option">
+                        <div className="center-div">
+                            <div className="center-line"></div>
+                        </div>
+                        <div className="signup-option signup-renter">
                             <div className="option-content">
                                 <h2>Người thuê trọ</h2>
                                 <h4>Bạn có thể tìm kiếm những trọ phù hợp nhất với nhu cầu của mình...</h4>

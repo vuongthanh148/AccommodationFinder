@@ -485,7 +485,7 @@ class Search extends Component {
             </Headroom>
             {this.state.finishFetchingAccomod && <Listing list_accomod={accomods} />}
             {!this.state.finishFetchingAccomod && (
-            <div style={{position: 'relative', width: '100vw', height: '300px'}}>
+            <div style={{position: 'relative', width: '90vw', height: '300px'}}>
             <div style={{width: '150px', height: '150px', position: 'absolute' ,top: '0', right: '0', bottom: '0', left: '0', margin: 'auto' }}>
               <Loader type={listLoader[this.props.randomLoader]} color="#bf7c2f" height={200} width={200}/>
               <p style={{paddingTop: '20px', fontSize: '20px' }}>Loading data...</p>

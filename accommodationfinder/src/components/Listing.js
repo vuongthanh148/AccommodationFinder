@@ -12,7 +12,7 @@ class Listing extends Component {
     render() {
         console.log(this.props.list_accomod)
         return (
-                <div className='uk-slider-items list-product-items' >
+                <div className='uk-slider-items list-product-items' style={{marginBottom: '30px', height: '100%'}} >
                     {this.props.list_accomod.map((house,index) => (
                         <List accomod={house} key={index}/>
                     ))}

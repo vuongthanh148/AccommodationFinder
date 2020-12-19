@@ -82,13 +82,13 @@ class List extends Component {
             <div className="ev-body">
               <div style={{ display: "flex" }}>
                 <Rating
-                  value={this.state.accomod.avgRate}
+                  value={parseFloat(this.state.accomod.avgRate)}
                   max={5}
                   readOnly
                   onChange={(value) => console.log(`Rated with value ${value}`)}
                 />
                 <p
-                  style={{ margin: "auto 1px auto auto", paddingRight: "5px" }}
+                  style={{ margin: "auto 1px auto auto", paddingRight: "3px" }}
                 >
                   {this.state.accomod.postedDate.slice(0,10).split('-').reverse().join('/')}
                 </p>
@@ -105,7 +105,7 @@ class List extends Component {
                 <p
                   style={{ margin: "0", textAlign: "left", paddingLeft: "5px" }}
                 >
-                  Cho thuê nhà trọ giá rẻ
+                  {this.state.accomod.title}
                 </p>
               </div>
               <div className="flex-row">

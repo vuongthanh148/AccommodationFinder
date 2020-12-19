@@ -22,11 +22,11 @@ body{
 }
 
 .signup-width {
-    max-width: 70vw !important;
+    width: 100vw !important;
 }
 
 .signup-logo {
-	width: 50%;
+	width: 30%;
 	display: block;
 	position: relative;
 	margin-left: auto;
@@ -34,16 +34,19 @@ body{
 }
 
 .signup-option-container {
-	display: inline-flex;
+	display: flex;
+	flex-direction: row;
 }
+
 
 .signup-option {
 	text-align: center;
-	margin: 30px 0;
+	/* margin: 30px 0; */
     min-height: 1px;
-    padding-right: 15px;
-    padding-left: 15px;
-	width: 50%;
+    /* padding-right: 15px; */
+    /* padding-left: 15px; */
+	width: 30%;
+	margin: 0 auto
 }
 .signup-option .option-content {
 	height: 85%;
@@ -52,12 +55,15 @@ body{
 	height: 15%;
 }
 
-.signup-option-container > :first-child::before {
-	content: "";
-	height: 40%;
-	width: 17.5%;
-	position: absolute;
-	border-right: 1px solid rgba(255, 255, 255, 0.3) !important;
+.center-div{
+	width: 1px;
+	margin: 0 5px;
+}
+.center-line{
+	width: 1px;
+	margin: 0;
+	border-left: 1px solid #ffffff;
+	height: 100%
 }
 
 .signup-button {
@@ -120,7 +126,7 @@ body{
 	content: "";
 	position: absolute;
 	top: calc(50% - ((0.2px + 0.05em) / 2));
-	width: 2000px;
+	width: 500%;
 	border-bottom: calc(0.2px + 0.05em) solid #e5e5e5;
 }
 .signup-heading-line > ::before {
@@ -172,113 +178,115 @@ body{
 	border-radius: 500px;
 }
 
+/* .signup-owner{
+	margin-right: 0;
+}
+.signup-renter{
+	margin-left: 0;
+} */
+
 @media (max-width: 400px) {
-	.signup-width {
-		max-width: 90% !important;
-	}
 	.signup-logo {
 		width: 70%;
 		margin-top: 20px;
 	}
 	.signup-heading-line {
-		font-size: 1rem !important;
+		font-size: 14px !important;
 		margin-top: 20px !important;
 	}
-	.signup-option-container > :first-child::before {
-		width: 22.5%;
-		/* height: 48%; */
-	}
 	h2 {
-		font-size: 1.25rem;
+		font-size: 25px;
 	}
 	h4 {
-		font-size: 1rem;
+		font-size: 16px;
 	}
 	.signup-button {
-		font-size: 0.8rem !important;
-		width: 90% !important;
+		font-size: 14px !important;
+		width: 100% !important;
+	}
+	.signup-option{
+		width: 45%;
 	}
 }
-@media (min-width: 401px) {
-	.signup-width {
-		max-width: 90% !important;
-	}
-	.signup-logo {
-		width: 60%;
-	}
+@media (min-width: 400px) and (max-width: 640px ) {
 	.signup-heading-line {
-		font-size: 1.2rem !important;
+		font-size: 14px !important;
 		margin-top: 20px !important;
 	}
-	.signup-option-container > :first-child::before {
-		width: 22.5%;
-		height: calc(40% + 1.5em);
-	}
 	h2 {
-		font-size: 1.75rem;
+		font-size: 25px;
 	}
 	h4 {
-		font-size: 1.25rem;
+		font-size: 16px;
 	}
 	.signup-button {
-		font-size: 1rem !important;
-		width: 90% !important;
+		font-size: 14px !important;
+		width: 100% !important;
+	}
+	.signup-option{
+		width: 45%;
 	}
 }
-@media (min-width: 640px) {
-	.signup-width {
-		max-width: 70% !important;
-	}
-	.signup-logo {
-		width: 50%;
-	}
+@media (min-width: 640px) and (max-width: 860px ) {
 	.signup-heading-line {
-		font-size: 1.3rem !important;
+		font-size: 14px !important;
 		margin-top: 20px !important;
 	}
-	.signup-option-container > :first-child::before {
-		width: 17.5%;
-		height: calc(38% + 1.5em);
-	}
 	h2 {
-		font-size: 1.8rem;
+		font-size: 25px;
 	}
 	h4 {
-		font-size: 1.25rem;
+		font-size: 16px;
 	}
 	.signup-button {
-		font-size: 1rem !important;
-		width: 60% !important;
+		font-size: 14px !important;
+		width: 80% !important;
+	}
+	.signup-option{
+		width: 45%;
 	}
 }
 
-@media (min-width: 960px) {
-	.signup-width {
-		max-width: 60% !important;
-	}
-	.signup-logo {
-		width: 50%;
-	}
+@media (max-width: 1024px) {
 	.signup-heading-line {
-		font-size: 1.3rem !important;
-	}
-	.signup-option-container > :first-child::before {
-		width: 15%;
-		height: calc(35% + 1.5em);
+		font-size: 30px !important;
 	}
 	h2 {
-		font-size: 1.9rem;
+		font-size: 40px;
 	}
 	h4 {
-		font-size: 1.4rem;
+		font-size: 25px;
 	}
 	.signup-button {
-		font-size: 1rem !important;
+		font-size: 16px !important;
 		width: 60% !important;
 	}
-}
-@media (min-width: 1200px) {
-	.signup-logo {
-		width: 40%;
+	.signup-logo{
+		width: 55%;
+	}
+	.signup-owner{
+		margin: 20px auto;
+	}
+	.signup-option{
+		width: 60%;
+	}
+	.signup-width{
+		height: 63%
+	}
+	.signup-option-container{
+		flex-direction: column;
+	}
+	.center-div{
+		width: 60%;
+		margin: 5px auto;
+	}
+	.center-line{
+		height: 1px;
+		margin: 0;
+		border-top: 1px solid #ffffff;
+		width: 100%;
+	}
+	.signup-heading-line > ::after, .signup-heading-line > ::before{
+		width: 300%;
 	}
 }

@@ -11,7 +11,6 @@ import axios from "axios";
 import reactDOM from "react-dom";
 import "../css/login.css";
 import logo_trang from "../image/logo_ngang_trang.png";
-import Home from "./Home";
 
 class Login extends Component {
   constructor(props) {
