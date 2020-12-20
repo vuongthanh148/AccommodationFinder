@@ -154,6 +154,7 @@ class Search extends Component {
             `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=vi`
           )
           .then((res) => {
+            console.log(res.data.localityInfo)
             this.state.list_city.forEach((c) => {
               if (c.label === res.data.localityInfo.administrative[1].name) {
                 axios
