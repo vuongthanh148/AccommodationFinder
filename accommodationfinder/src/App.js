@@ -9,7 +9,8 @@ import ResetPassword from "./components/ResetPassword";
 import axios from "axios";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
-// import './App.css';
+import ScrollToTop from "react-scroll-to-top";
+import './css/App.css';
 import {
   BrowserRouter as Router,
   Switch,
@@ -33,6 +34,8 @@ class App extends Component {
     this.changeNavbarState = this.changeNavbarState.bind(this);
     this.updateLoginState = this.updateLoginState.bind(this);
   }
+
+  myRef = React.createRef();
 
   async componentDidMount() {
     const token = localStorage.getItem("token");
@@ -91,11 +94,14 @@ class App extends Component {
         {this.state.finishFetchUserData && (
           <Router>
             {this.state.navbar ? (
+              <>
+              <ScrollToTop smooth = "true" color = "#bf7c2f" className="scroll-to-top"/>
               <Navbar
                 updateLoginState={this.updateLoginState}
                 isLoggedIn={this.state.isLoggedIn}
                 userData={this.state.userData}
               />
+              </>
             ) : null}
             <Switch>
               <Route path="/login">

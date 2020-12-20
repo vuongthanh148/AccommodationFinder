@@ -304,19 +304,20 @@ class Search extends Component {
     this.setState({
       accommodationInfo:{
         city:
-        this.state.selectedOptionCity.label !== ""
+        this.state.selectedOptionCity.label !== undefined
             ? this.state.selectedOptionCity.label.replace(/Quận |Thị Xã |Thành Phố |Huyện |Phường |District /g, "")
-            : null,
+            : undefined,
         district:
-        this.state.selectedOptionDistrict.label !== ""
+        this.state.selectedOptionDistrict.label !== undefined
             ? this.state.selectedOptionDistrict.label.replace(/Quận |Thị Xã |Thành Phố |Huyện |Phường |District /g, "")
-            : null,
+            : undefined,
         ward:
-        this.state.selectedOptionWard.label !== ""
+        this.state.selectedOptionWard.label !== undefined
             ? this.state.selectedOptionWard.label.replace(/Quận |Thị Xã |Thành Phố |Huyện |Phường |District /g, "")
-            : null,
+            : undefined,
       },
     },() => {
+      console.log(this.state)
       this.getAccomod()
     })
   };
@@ -355,7 +356,7 @@ class Search extends Component {
               <h3>Perfect Accommodation</h3>
             </div>
             <Headroom
-              pinStart={window.innerHeight + 116}
+              pinStart={window.innerHeight + 116 + 80}
               upTolerance={40}
               style={{
                 width: "90vw",
