@@ -6,6 +6,15 @@
   font-family: Montserrat,sans-serif !important;
 }
 
+/* form {
+  height: 90vh !important;
+} */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .signupOwner-background-cover {
 	background-image: url("../image/bg-img-1.jpg");
 	background-size: cover !important;

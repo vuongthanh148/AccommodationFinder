@@ -28,7 +28,7 @@ class App extends Component {
       navbar: true,
       isLoggedIn: false,
       userData: {},
-      finishFetching: false,
+      finishFetchUserData: false,
     };
     this.changeNavbarState = this.changeNavbarState.bind(this);
     this.updateLoginState = this.updateLoginState.bind(this);
@@ -56,11 +56,11 @@ class App extends Component {
           console.log(err);
         });
       this.setState({
-        finishFetching: true,
+        finishFetchUserData: true,
       });
     } else {
       this.setState({
-        finishFetching: true,
+        finishFetchUserData: true,
       });
     }
   }
@@ -88,7 +88,7 @@ class App extends Component {
     return (
       // this.renderedScreen(this.state.screen)
       <>
-        {this.state.finishFetching && (
+        {this.state.finishFetchUserData && (
           <Router>
             {this.state.navbar ? (
               <Navbar
@@ -147,6 +147,7 @@ class App extends Component {
                   updateLoginState={this.updateLoginState}
                   userData={this.state.userData}
                   isLoggedIn={this.state.isLoggedIn}
+                  updateFetchingAccomod={this.updateFetchingAccomod}
                 />
                 <Footer />
               </Route>
@@ -156,7 +157,7 @@ class App extends Component {
             </Switch>
           </Router>
         )}
-        {!this.state.finishFetching && (
+        {!this.state.finishFetchUserData && (
           <div style={{position: 'relative', width: '100vw', height: '90vh'}}>
           <div style={{width: '200px', height: '200px', position: 'absolute' ,top: '0', right: '0', bottom: '0', left: '0', margin: 'auto' }}>
             <Loader type={listLoader[randomLoader]} color="#bf7c2f" height={200} width={200}/>

@@ -172,9 +172,8 @@ small{
   position: absolute;
   z-index: 20;
   box-sizing: border-box;
-  width: 90%;
+  width: 100%;
   padding: 15px;
-  margin-left: 20px;
   background: #fff;
   color: #666;
   border-radius: 8px;

@@ -86,7 +86,8 @@ body {
 
 .ev-body{
     border-radius: 8px;
-    border: 1px solid rgba(128,128,128,0.3);
+    /* border: 1px solid rgba(128,128,128,0.3); */
+    margin-top: 5px;
 }
 
 .ev-card-1 .uk-label-primary {
@@ -226,6 +227,7 @@ h3 {
 .list-product-items {
     display: grid !important;
     grid-template-columns: repeat(4,calc(25% - calc(2%*3/4)));
+    grid-template-rows: auto;
     grid-column-gap: 2%;
     padding: 0;
     width: 100%;

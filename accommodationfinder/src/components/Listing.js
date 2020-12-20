@@ -5,15 +5,17 @@ import "react-slideshow-image/dist/styles.css";
 
 import List from './List';
 class Listing extends Component {
-    state = {
-        houses: [{ _id: 1 }, { _id: 2 }, { _id: 3 }, { _id: 4 }, { _id: 5 }, { _id: 6 }, { _id: 7 }, { _id: 8 }, { _id: 9 }, { _id: 10 }, { _id: 11 }],
-    };
-    
+    constructor(props){
+        super(props)
+        // this.state=({
+        //     list_accomod: this.props.list_accomod
+        // })
+    }
     render() {
         return (
-                <div className='uk-slider-items list-product-items' >
-                    {this.state.houses.map((house,index) => (
-                        <List key={index}/>
+                <div className='uk-slider-items list-product-items' style={{marginBottom: '30px', height: '100%'}} >
+                    {this.props.list_accomod.map((house,index) => (
+                        <List accomod={house} key={index}/>
                     ))}
                 </div>
         );
