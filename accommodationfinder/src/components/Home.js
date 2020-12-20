@@ -122,6 +122,19 @@ class Search extends Component {
       selectedOptionCity: "",
       selectedOptionDistrict: "",
       selectedOptionWard: "",
+      livingArea: 200,
+      publicPlace: undefined,
+      price: 5000000,
+      chooseAirConditioner: false,
+      chooseElectricWaterHeater: false,
+      chooseAccomod: false,
+      chooseBathroom: false,
+      chooseSeperateKitchen: false,
+      airConditioner: true,
+      electricWaterHeater: true,
+      seperateAccommodation: true,
+      bathroom: true,
+      kitchen: true,
       accommodationInfo: {},
       facilitiesInfo: {},
       finishFetchingAccomod: false,
@@ -130,6 +143,7 @@ class Search extends Component {
     this.getAccomod = this.getAccomod.bind(this);
     this.updateFetchingAccomod = this.updateFetchingAccomod.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleLocationChange = this.handleLocationChange.bind(this);
   }
 
   options = {
@@ -154,7 +168,7 @@ class Search extends Component {
             `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=vi`
           )
           .then((res) => {
-            console.log(res.data.localityInfo)
+            console.log(res.data.localityInfo);
             this.state.list_city.forEach((c) => {
               if (c.label === res.data.localityInfo.administrative[1].name) {
                 axios
@@ -233,7 +247,7 @@ class Search extends Component {
   }
 
   componentDidMount() {
-      axios.get(`https://thongtindoanhnghiep.co/api/city`).then((res) => {
+    axios.get(`https://thongtindoanhnghiep.co/api/city`).then((res) => {
       const cities = res.data.LtsItem.map((item) => {
         return {
           ID: item.ID,
@@ -243,8 +257,8 @@ class Search extends Component {
         };
       });
       this.setState({ list_city: cities });
-      if(Object.keys(this.state.accommodationInfo).length === 0){
-        console.log("accomod: ",this.state.accommodationInfo);
+      if (Object.keys(this.state.accommodationInfo).length === 0) {
+        console.log("accomod: ", this.state.accommodationInfo);
         this.getPosition(this.getAccomod);
       }
     });
@@ -264,7 +278,7 @@ class Search extends Component {
     }
   };
 
-  handleChange = (selectedOption) => {
+  handleLocationChange = (selectedOption) => {
     let url = "",
       typeOption = "";
     if (selectedOption.type === "city") {
@@ -298,28 +312,52 @@ class Search extends Component {
     });
   };
 
+
+  handleOtherChange = (selectedOption) => {
+    
+  }
+
   handleSubmit = async (event) => {
     event.preventDefault();
     this.updateFetchingAccomod(false);
-    this.setState({
-      accommodationInfo:{
-        city:
-        this.state.selectedOptionCity.label !== undefined
-            ? this.state.selectedOptionCity.label.replace(/Quận |Thị Xã |Thành Phố |Huyện |Phường |District /g, "")
-            : undefined,
-        district:
-        this.state.selectedOptionDistrict.label !== undefined
-            ? this.state.selectedOptionDistrict.label.replace(/Quận |Thị Xã |Thành Phố |Huyện |Phường |District /g, "")
-            : undefined,
-        ward:
-        this.state.selectedOptionWard.label !== undefined
-            ? this.state.selectedOptionWard.label.replace(/Quận |Thị Xã |Thành Phố |Huyện |Phường |District /g, "")
-            : undefined,
+    this.setState(
+      {
+        accommodationInfo: {
+          city:
+            this.state.selectedOptionCity.label !== undefined
+              ? this.state.selectedOptionCity.label.replace(
+                  /Quận |Thị Xã |Thành Phố |Huyện |Phường |District /g,
+                  ""
+                )
+              : undefined,
+          district:
+            this.state.selectedOptionDistrict.label !== undefined
+              ? this.state.selectedOptionDistrict.label.replace(
+                  /Quận |Thị Xã |Thành Phố |Huyện |Phường |District /g,
+                  ""
+                )
+              : undefined,
+          ward:
+            this.state.selectedOptionWard.label !== undefined
+              ? this.state.selectedOptionWard.label.replace(
+                  /Quận |Thị Xã |Thành Phố |Huyện |Phường |District /g,
+                  ""
+                )
+              : undefined,
+          
+        },
+        facilitiesInfo: {
+          airConditioner: this.state.chooseAirConditioner?this.state.airConditioner:undefined,
+          bathroom: this.state.chooseBathroom?this.state.bathroom:undefined,
+          kitchen:this.state.chooseSeperateKitchen?(this.state.kitchen?"closed":"shared"):undefined,
+          electricWaterHeater:this.state.chooseElectricWaterHeater?this.state.electricWaterHeater:undefined
+        }
       },
-    },() => {
-      console.log(this.state)
-      this.getAccomod()
-    })
+      () => {
+        console.log(this.state);
+        this.getAccomod();
+      }
+    );
   };
 
   render() {
@@ -345,7 +383,7 @@ class Search extends Component {
       "Plane",
     ];
     const accomods = this.state.list_accomod;
-    console.log("accomod to send: ", accomods);
+    // console.log("accomod to send: ", accomods);
 
     return (
       <>
@@ -380,7 +418,7 @@ class Search extends Component {
                       <Select
                         className="list-cities"
                         value={selectedOptionCity}
-                        onChange={this.handleChange}
+                        onChange={this.handleLocationChange}
                         placeholder={"Thành phố"}
                         options={this.state.list_city}
                       />
@@ -395,7 +433,7 @@ class Search extends Component {
                         className="list-district"
                         value={selectedOptionDistrict}
                         placeholder={"Quận/Huyện"}
-                        onChange={this.handleChange}
+                        onChange={this.handleLocationChange}
                         options={this.state.list_district}
                       />
                     </div>
@@ -435,8 +473,9 @@ class Search extends Component {
                     <div className="search-width-1-1 search-inline">
                       <Select
                         className="list-price"
-                        defaultValue={list_items[4]}
+                        placeholder="Giá"
                         options={Price}
+                        onChange=
                       />
                     </div>
                   </div>
@@ -446,8 +485,8 @@ class Search extends Component {
                   <div className="search-margin">
                     <div className="search-width-1-1 search-inline">
                       <Select
-                        className="list-square"
-                        defaultValue={list_items[5]}
+                        className="list-area"
+                        placeholder="Diện tích"
                         options={Square}
                       />
                     </div>
@@ -476,39 +515,115 @@ class Search extends Component {
                               <input
                                 className="search-checkbox"
                                 type="checkbox"
+                                onChange={() => {
+                                  this.setState((prevState) => ({
+                                    chooseAccomod: !prevState.chooseAccomod,
+                                  }));
+                                }}
                               />
-                              <label>Không chung chủ</label>
+                              <label className="label-hover"
+                                onClick={() => {
+                                  this.setState({
+                                    seperateAccommodation: !this.state
+                                      .seperateAccommodation,
+                                  });
+                                }}
+                              >
+                                {this.state.seperateAccommodation
+                                  ? "Không chung chủ"
+                                  : "Chung chủ"}
+                              </label>
                             </div>
 
                             <div className="search-other-margin ">
                               <input
                                 className="search-checkbox"
                                 type="checkbox"
+                                onChange={() => {
+                                  this.setState((prevState) => ({
+                                    chooseAirConditioner: !prevState.chooseAirConditioner,
+                                  }));
+                                }}
                               />
-                              <label>Điều hòa</label>
+                              <label className="label-hover"
+                                onClick={() => {
+                                  this.setState({
+                                    airConditioner: !this.state.airConditioner,
+                                  });
+                                }}
+                              >
+                                {this.state.airConditioner
+                                  ? "Điều hoà"
+                                  : "Không điều hoà"}
+                              </label>
                             </div>
 
                             <div className="search-other-margin ">
                               <input
                                 className="search-checkbox"
                                 type="checkbox"
+                                onChange={() => {
+                                  this.setState((prevState) => ({
+                                    chooseElectricWaterHeater: !prevState.chooseElectricWaterHeater,
+                                  }));
+                                }}
                               />
-                              <label>Nóng lạnh</label>
+                              <label className="label-hover"
+                                onClick={() => {
+                                  this.setState({
+                                    electricWaterHeater: !this.state.electricWaterHeater,
+                                  });
+                                }}
+                              >
+                                {this.state.electricWaterHeater
+                                  ? "Nóng lạnh"
+                                  : "Không nóng lạnh"}
+                              </label>
                             </div>
 
                             <div className="search-other-margin ">
                               <input
                                 className="search-checkbox"
                                 type="checkbox"
+                                onChange={() => {
+                                  this.setState((prevState) => ({
+                                    chooseBathroom: !prevState.chooseBathroom,
+                                  }));
+                                }}
                               />
-                              <label>Vệ sinh riêng</label>
+                              <label className="label-hover"
+                                onClick={() => {
+                                  this.setState({
+                                    bathroom: !this.state.bathroom,
+                                  });
+                                }}
+                              >
+                                {this.state.bathroom
+                                  ? "Vệ sinh riêng"
+                                  : "Vệ sinh chung"}
+                              </label>
                             </div>
                             <div className="search-other-margin ">
                               <input
                                 className="search-checkbox"
                                 type="checkbox"
+                                onChange={() => {
+                                  this.setState((prevState) => ({
+                                    chooseSeperateKitchen: !prevState.chooseSeperateKitchen,
+                                  }));
+                                }}
                               />
-                              <label>Bếp</label>
+                              <label className="label-hover"
+                                onClick={() => {
+                                  this.setState({
+                                    kitchen: !this.state.kitchen,
+                                  });
+                                }}
+                              >
+                                {this.state.kitchen
+                                  ? "Bếp riêng"
+                                  : "Bếp chung"}
+                              </label>
                             </div>
                           </div>
                         </div>
