@@ -82,7 +82,7 @@ class List extends Component {
                   onChange={(value) => console.log(`Rated with value ${value}`)}
                 />
                 <p
-                  style={{ margin: "auto 1px auto auto", paddingRight: "3px" }}
+                  style={{ margin: "auto 0 auto auto"}}
                 >
                   {this.state.accomod.postedDate.slice(0,10).split('-').reverse().join('/')}
                 </p>

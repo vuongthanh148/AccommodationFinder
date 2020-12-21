@@ -37,23 +37,28 @@ export const Universities = [
     { value:'UEB', label: 'Đại học Kinh tế'},
     { value:'TMU', label: 'Đại học Thương mại'},
     { value:'HNUE', label: 'Đại học Sư phạm'},
-    { value:'AJC', label: 'Học viện Báo chí và Tuyên truyền'}
+    { value:'AJC', label: 'Học viện Báo chí và Tuyên truyền'},
+    { value:'HANU', label: 'Đại học Hà Nội'}
 ];
 
 export const Price = [
-    { value:'under_1m', label: 'Dưới 1 triệu'},
-    { value:'1m_to_2m', label: '1 triệu - 2 triệu'},
-    { value:'2m_to_3m', label: '2 triệu - 3 triệu'},
-    { value:'3m_to_4m', label: '3 triệu - 4 triệu'},
-    { value:'4m_to_5m', label: '4 triệu - 5 triệu'}
+    { value:'1000000', label: 'Dưới 1 triệu'},
+    { value:'2000000', label: 'Dưới 2 triệu'},
+    { value:'3000000', label: 'Dưới 3 triệu'},
+    { value:'4000000', label: 'Dưới 4 triệu'},
+    { value:'6000000', label: 'Dưới 6 triệu'},
+    { value:'8000000', label: 'Dưới 8 triệu'},
+    { value:'10000000', label: 'Dưới 10 triệu'},
 ];
 
-export const Square = [
-    { value:'under_20m2', label: 'Dưới 20m2'},
-    { value:'20m2_30m2', label: '20m2 - 30m2'},
-    { value:'30m2_50m2', label: '30m2-50m2'},
-    { value:'50m2_60m2', label: '50m2-60m2'},
-    { value:'60m2_70m2', label: '60m2-70m2'}
+export const Area = [
+    { value:'20', label: 'Dưới 20m²'},
+    { value:'40', label: 'Dưới 40m²'},
+    { value:'60', label: 'Dưới 60m²'},
+    { value:'80', label: 'Dưới 80m²'},
+    { value:'100', label: 'Dưới 100m²'},
+    { value:'150', label: 'Dưới 150m²'},
+    { value:'200', label: 'Dưới 200m²'},
 ];
 
 export const Air_conditioner = [

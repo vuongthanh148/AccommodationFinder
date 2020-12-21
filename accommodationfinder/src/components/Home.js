@@ -10,13 +10,14 @@ import {
   Stresses,
   Universities,
   Price,
-  Square,
+  Area,
   Room_type,
   Air_conditioner,
   Electric_water_heater,
   Ve_sinh,
 } from "../data/searchBar";
 import Select from "react-select";
+import CreatableSelect from 'react-select/creatable';
 import { Slide } from "react-slideshow-image";
 import Listing from "./Listing";
 import Loader from "react-loader-spinner";
@@ -122,9 +123,9 @@ class Search extends Component {
       selectedOptionCity: "",
       selectedOptionDistrict: "",
       selectedOptionWard: "",
-      livingArea: 200,
+      livingArea: { value:'200', label: 'Dưới 200m²'},
       publicPlace: undefined,
-      price: 5000000,
+      price: { value:'10000000', label: 'Dưới 10 triệu'},
       chooseAirConditioner: false,
       chooseElectricWaterHeater: false,
       chooseAccomod: false,
@@ -223,11 +224,19 @@ class Search extends Component {
 
   getAccomod = async () => {
     var that = this;
+    const data_to_send = {
+      accommodationInfo: {
+        ...that.state.accommodationInfo,
+        publicPlace: that.state.publicPlace?that.state.publicPlace.label:undefined,
+        seperateAccommodation: that.state.chooseAccomod?that.state.seperateAccommodation:undefined,
+      },
+      facilitiesInfo: that.state.facilitiesInfo,
+      price: that.state.price.value,
+      livingArea: that.state.livingArea.value,
+    }
+    console.log("data_to_send: ",data_to_send);
     await axios
-      .post("https://accommodation-finder.herokuapp.com/accommodation", {
-        accommodationInfo: that.state.accommodationInfo,
-        facilitiesInfo: that.state.facilitiesInfo,
-      })
+      .post("https://accommodation-finder.herokuapp.com/accommodation", data_to_send)
       .then((res) => {
         console.log("data fetched: ", res.data.allAccomod);
         that.setState({
@@ -281,41 +290,53 @@ class Search extends Component {
   handleLocationChange = (selectedOption) => {
     let url = "",
       typeOption = "";
-    if (selectedOption.type === "city") {
+    if (selectedOption) {
+      if (selectedOption.type === "city") {
+        this.setState({
+          selectedOptionCity: selectedOption,
+          selectedOptionDistrict: "",
+          selectedOptionWard: "",
+        });
+        url = `https://thongtindoanhnghiep.co/api/city/${selectedOption.ID}/district`;
+        typeOption = "district";
+      } else if (selectedOption.type === "district") {
+        this.setState({
+          selectedOptionDistrict: selectedOption,
+          selectedOptionWard: "",
+        });
+        url = `https://thongtindoanhnghiep.co/api/district/${selectedOption.ID}/ward`;
+        typeOption = "ward";
+      }
+      else if (selectedOption.type === "ward"){
+        this.setState({ selectedOptionWard: selectedOption })
+        return;
+      }
+      axios.get(url).then((res) => {
+        const finalData = res.data.map((item) => {
+          return {
+            ID: item.ID,
+            type: typeOption,
+            value: this.removeAccents(item.Title),
+            label: item.Title,
+          };
+        });
+        if (typeOption === "district")
+          this.setState({ list_district: finalData });
+        else if (typeOption === "ward") this.setState({ list_ward: finalData });
+      });
+    }
+    else{
       this.setState({
-        selectedOptionCity: selectedOption,
+        selectedOptionCity: "",
         selectedOptionDistrict: "",
         selectedOptionWard: "",
-      });
-      url = `https://thongtindoanhnghiep.co/api/city/${selectedOption.ID}/district`;
-      typeOption = "district";
-    } else if (selectedOption.type === "district") {
-      this.setState({
-        selectedOptionDistrict: selectedOption,
-        selectedOptionWard: "",
-      });
-      url = `https://thongtindoanhnghiep.co/api/district/${selectedOption.ID}/ward`;
-      typeOption = "ward";
+        list_district: [],
+        list_city: [],
+        list_ward: []
+      })
+      console.log("state after change: ",this.state)
     }
-    axios.get(url).then((res) => {
-      const finalData = res.data.map((item) => {
-        return {
-          ID: item.ID,
-          type: typeOption,
-          value: this.removeAccents(item.Title),
-          label: item.Title,
-        };
-      });
-      if (typeOption === "district")
-        this.setState({ list_district: finalData });
-      else if (typeOption === "ward") this.setState({ list_ward: finalData });
-    });
   };
-
-
-  handleOtherChange = (selectedOption) => {
-    
-  }
 
   handleSubmit = async (event) => {
     event.preventDefault();
@@ -324,34 +345,41 @@ class Search extends Component {
       {
         accommodationInfo: {
           city:
-            this.state.selectedOptionCity.label !== undefined
+            this.state.selectedOptionCity !== ""
               ? this.state.selectedOptionCity.label.replace(
                   /Quận |Thị Xã |Thành Phố |Huyện |Phường |District /g,
                   ""
                 )
               : undefined,
           district:
-            this.state.selectedOptionDistrict.label !== undefined
+            this.state.selectedOptionDistrict !== ""
               ? this.state.selectedOptionDistrict.label.replace(
                   /Quận |Thị Xã |Thành Phố |Huyện |Phường |District /g,
                   ""
                 )
               : undefined,
           ward:
-            this.state.selectedOptionWard.label !== undefined
+            this.state.selectedOptionWard !== ""
               ? this.state.selectedOptionWard.label.replace(
                   /Quận |Thị Xã |Thành Phố |Huyện |Phường |District /g,
                   ""
                 )
               : undefined,
-          
         },
         facilitiesInfo: {
-          airConditioner: this.state.chooseAirConditioner?this.state.airConditioner:undefined,
-          bathroom: this.state.chooseBathroom?this.state.bathroom:undefined,
-          kitchen:this.state.chooseSeperateKitchen?(this.state.kitchen?"closed":"shared"):undefined,
-          electricWaterHeater:this.state.chooseElectricWaterHeater?this.state.electricWaterHeater:undefined
-        }
+          airConditioner: this.state.chooseAirConditioner
+            ? this.state.airConditioner
+            : undefined,
+          bathroom: this.state.chooseBathroom ? this.state.bathroom : undefined,
+          kitchen: this.state.chooseSeperateKitchen
+            ? this.state.kitchen
+              ? "closed"
+              : "shared"
+            : undefined,
+          electricWaterHeater: this.state.chooseElectricWaterHeater
+            ? this.state.electricWaterHeater
+            : undefined,
+        },
       },
       () => {
         console.log(this.state);
@@ -365,6 +393,9 @@ class Search extends Component {
       selectedOptionCity,
       selectedOptionDistrict,
       selectedOptionWard,
+      price,
+      livingArea,
+      publicPlace,
     } = this.state;
     const searchBarStart = window.innerHeight + 116;
     let searchBackColor = "rgba(255,255,255, 0.95)";
@@ -416,6 +447,7 @@ class Search extends Component {
                   <div className="search-margin">
                     <div className="search-width-1-1 search-inline">
                       <Select
+                        isClearable="true"
                         className="list-cities"
                         value={selectedOptionCity}
                         onChange={this.handleLocationChange}
@@ -430,6 +462,7 @@ class Search extends Component {
                   <div className="search-margin">
                     <div className="search-width-1-1 search-inline">
                       <Select
+                        isClearable="true"
                         className="list-district"
                         value={selectedOptionDistrict}
                         placeholder={"Quận/Huyện"}
@@ -444,12 +477,11 @@ class Search extends Component {
                   <div className="search-margin">
                     <div className="search-width-1-1 search-inline">
                       <Select
+                        isClearable="true"
                         className="list-ward"
                         value={selectedOptionWard}
                         placeholder={"Phường/Xã"}
-                        onChange={(selectedOptionWard) => {
-                          this.setState({ selectedOptionWard });
-                        }}
+                        onChange={this.handleLocationChange}
                         options={this.state.list_ward}
                       />
                     </div>
@@ -460,9 +492,14 @@ class Search extends Component {
                   <div className="search-margin">
                     <div className="search-width-1-1 search-inline">
                       <Select
+                        isClearable="true"
                         className="list-universities"
-                        defaultValue={list_items[3]}
+                        placeholder="Gần địa điểm"
+                        value={publicPlace}                    
                         options={Universities}
+                        onChange={(publicPlace) =>
+                          this.setState({ publicPlace })
+                        }
                       />
                     </div>
                   </div>
@@ -472,10 +509,13 @@ class Search extends Component {
                   <div className="search-margin">
                     <div className="search-width-1-1 search-inline">
                       <Select
+                        isClearable="true"
                         className="list-price"
                         placeholder="Giá"
+                        defaultValue={Price[6]}
+                        value={price}
                         options={Price}
-                        onChange=
+                        onChange={(price) => this.setState({ price })}
                       />
                     </div>
                   </div>
@@ -485,9 +525,13 @@ class Search extends Component {
                   <div className="search-margin">
                     <div className="search-width-1-1 search-inline">
                       <Select
+                        isClearable="true"
                         className="list-area"
                         placeholder="Diện tích"
-                        options={Square}
+                        defaultValue={Area[6]}
+                        value={livingArea}
+                        options={Area}
+                        onChange={(livingArea) => this.setState({ livingArea })}
                       />
                     </div>
                   </div>
@@ -521,7 +565,8 @@ class Search extends Component {
                                   }));
                                 }}
                               />
-                              <label className="label-hover"
+                              <label
+                                className="label-hover"
                                 onClick={() => {
                                   this.setState({
                                     seperateAccommodation: !this.state
@@ -545,7 +590,8 @@ class Search extends Component {
                                   }));
                                 }}
                               />
-                              <label className="label-hover"
+                              <label
+                                className="label-hover"
                                 onClick={() => {
                                   this.setState({
                                     airConditioner: !this.state.airConditioner,
@@ -568,10 +614,12 @@ class Search extends Component {
                                   }));
                                 }}
                               />
-                              <label className="label-hover"
+                              <label
+                                className="label-hover"
                                 onClick={() => {
                                   this.setState({
-                                    electricWaterHeater: !this.state.electricWaterHeater,
+                                    electricWaterHeater: !this.state
+                                      .electricWaterHeater,
                                   });
                                 }}
                               >
@@ -591,7 +639,8 @@ class Search extends Component {
                                   }));
                                 }}
                               />
-                              <label className="label-hover"
+                              <label
+                                className="label-hover"
                                 onClick={() => {
                                   this.setState({
                                     bathroom: !this.state.bathroom,
@@ -613,16 +662,15 @@ class Search extends Component {
                                   }));
                                 }}
                               />
-                              <label className="label-hover"
+                              <label
+                                className="label-hover"
                                 onClick={() => {
                                   this.setState({
                                     kitchen: !this.state.kitchen,
                                   });
                                 }}
                               >
-                                {this.state.kitchen
-                                  ? "Bếp riêng"
-                                  : "Bếp chung"}
+                                {this.state.kitchen ? "Bếp riêng" : "Bếp chung"}
                               </label>
                             </div>
                           </div>
