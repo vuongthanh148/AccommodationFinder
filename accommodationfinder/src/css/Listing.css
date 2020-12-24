@@ -13,7 +13,7 @@ body {
 /* ----------------------------------------------------------- */
 
 body {
-    font-family: Roboto, sans-serif !important;
+    font-family: 'Montserrat', sans-serif;
 }
 .ev-container {
     margin: auto;
@@ -235,19 +235,19 @@ h3 {
 }
 @media (max-width: 1200px) {
     .list-product-items {
-        grid-template-columns: repeat(3,calc(33% - calc(2%*3/4)));
+        grid-template-columns: repeat(3,calc(calc(100%/3) - calc(2%*2/3)));
         grid-column-gap: 2%;
     }
 }
 @media (max-width: 960px) {
     .list-product-items {
-        grid-template-columns: repeat(2,calc(50% - calc(2%*3/4)));
+        grid-template-columns: repeat(2,calc(50% - calc(2%*1/2)));
         grid-column-gap: 2%;
     }
 }
 @media (max-width: 640px) {
     .list-product-items {
-        grid-template-columns: repeat(1,calc(100% - calc(2%*3/4)));
+        grid-template-columns: repeat(1,calc(100%));
         grid-column-gap: 2%;
     }
 }
@@ -290,4 +290,55 @@ h3 {
     flex-direction: row;
     font-size: 14px;
     padding: 5px;
+}
+
+.sortField{
+    margin: 7px 0 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    height: 6vh;
+}
+
+.sort-option{
+    width: 25%;
+    margin-left: auto;
+}
+
+.sort-order{
+    width: 25%;
+    margin-left: 5px;
+}
+
+.sort-submit{
+    width: 15%;
+    margin-left: 5px;
+}
+
+.sort-button{
+    width: 100%;
+    height: 38px;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    color: #fff;
+    border: 1px solid transparent;
+    background-color: var(--primary-color);
+    text-transform: uppercase;
+    outline:none;
+}
+.sort-button:hover{
+    background-color: var(--secondary-color);
+}
+
+.sort-result{
+    width: 35%;
+}
+
+.MuiPagination-root{
+    width:fit-content;
+    margin: auto;
 }

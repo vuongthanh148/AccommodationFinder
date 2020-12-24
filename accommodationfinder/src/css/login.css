@@ -7,7 +7,7 @@ a:hover {
 
 .login-height-1-1 {
   height: 100vh !important;
-  font-family: Montserrat,sans-serif !important;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .login-background-cover {

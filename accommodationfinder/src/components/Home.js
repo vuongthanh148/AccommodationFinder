@@ -3,21 +3,8 @@ import "../css/Homepage.css";
 import "react-slideshow-image/dist/styles.css";
 import axios from "axios";
 import Headroom from "react-headroom";
-import {
-  list_items,
-  Cities,
-  District,
-  Stresses,
-  Universities,
-  Price,
-  Area,
-  Room_type,
-  Air_conditioner,
-  Electric_water_heater,
-  Ve_sinh,
-} from "../data/searchBar";
-import Select from "react-select";
-import CreatableSelect from 'react-select/creatable';
+import { Price, Area } from "../data/searchBar";
+import Select, { components } from "react-select";
 import { Slide } from "react-slideshow-image";
 import Listing from "./Listing";
 import Loader from "react-loader-spinner";
@@ -29,15 +16,18 @@ class Home extends Component {
 
   componentDidMount() {
     this.props.changeNavbarState(true);
-    //Request all needed data
+    console.log(this.props.userData);
   }
   render() {
     const randomLoader = Math.floor(Math.random() * 12);
     return (
-      // <Navbar />,
       <div className="App">
         <Cover />
-        <Search randomLoader={randomLoader} />
+        <Search
+          randomLoader={randomLoader}
+          isLoggedIn={this.props.isLoggedIn}
+          userData={this.props.userData}
+        />
       </div>
     );
   }
@@ -120,12 +110,13 @@ class Search extends Component {
       list_district: [],
       list_ward: [],
       list_accomod: [],
+      list_location: [],
       selectedOptionCity: "",
       selectedOptionDistrict: "",
       selectedOptionWard: "",
-      livingArea: { value:'200', label: 'Dưới 200m²'},
+      livingArea: { value: "200", label: "Dưới 200m²" },
       publicPlace: undefined,
-      price: { value:'10000000', label: 'Dưới 10 triệu'},
+      price: { value: "10000000", label: "Dưới 10 triệu" },
       chooseAirConditioner: false,
       chooseElectricWaterHeater: false,
       chooseAccomod: false,
@@ -227,16 +218,23 @@ class Search extends Component {
     const data_to_send = {
       accommodationInfo: {
         ...that.state.accommodationInfo,
-        publicPlace: that.state.publicPlace?that.state.publicPlace.label:undefined,
-        seperateAccommodation: that.state.chooseAccomod?that.state.seperateAccommodation:undefined,
+        publicPlace: that.state.publicPlace
+          ? that.state.publicPlace.label
+          : undefined,
+        seperateAccommodation: that.state.chooseAccomod
+          ? that.state.seperateAccommodation
+          : undefined,
       },
       facilitiesInfo: that.state.facilitiesInfo,
       price: that.state.price.value,
       livingArea: that.state.livingArea.value,
-    }
-    console.log("data_to_send: ",data_to_send);
+    };
+    console.log("data_to_send: ", data_to_send);
     await axios
-      .post("https://accommodation-finder.herokuapp.com/accommodation", data_to_send)
+      .post(
+        "https://accommodation-finder.herokuapp.com/accommodation",
+        data_to_send
+      )
       .then((res) => {
         console.log("data fetched: ", res.data.allAccomod);
         that.setState({
@@ -271,6 +269,17 @@ class Search extends Component {
         this.getPosition(this.getAccomod);
       }
     });
+    axios
+      .get(`https://accommodation-finder.herokuapp.com/location`)
+      .then((res) => {
+        console.log("location: ", res.data);
+        if (res)
+          this.setState({
+            list_location: res.data.map((l) => {
+              return { value: l.name, label: l.name };
+            }),
+          });
+      });
   }
 
   changeState = () => {
@@ -306,9 +315,8 @@ class Search extends Component {
         });
         url = `https://thongtindoanhnghiep.co/api/district/${selectedOption.ID}/ward`;
         typeOption = "ward";
-      }
-      else if (selectedOption.type === "ward"){
-        this.setState({ selectedOptionWard: selectedOption })
+      } else if (selectedOption.type === "ward") {
+        this.setState({ selectedOptionWard: selectedOption });
         return;
       }
       axios.get(url).then((res) => {
@@ -324,22 +332,21 @@ class Search extends Component {
           this.setState({ list_district: finalData });
         else if (typeOption === "ward") this.setState({ list_ward: finalData });
       });
-    }
-    else{
+    } else {
       this.setState({
         selectedOptionCity: "",
         selectedOptionDistrict: "",
         selectedOptionWard: "",
         list_district: [],
-        list_city: [],
-        list_ward: []
-      })
-      console.log("state after change: ",this.state)
+        list_ward: [],
+      });
+      console.log("state after change: ", this.state);
     }
   };
 
   handleSubmit = async (event) => {
     event.preventDefault();
+    myRef.current.scrollIntoView();
     this.updateFetchingAccomod(false);
     this.setState(
       {
@@ -447,6 +454,14 @@ class Search extends Component {
                   <div className="search-margin">
                     <div className="search-width-1-1 search-inline">
                       <Select
+                        components={{
+                          Menu: (props) => (
+                            <components.Menu
+                              {...props}
+                              className="menu"
+                            ></components.Menu>
+                          ),
+                        }}
                         isClearable="true"
                         className="list-cities"
                         value={selectedOptionCity}
@@ -462,6 +477,14 @@ class Search extends Component {
                   <div className="search-margin">
                     <div className="search-width-1-1 search-inline">
                       <Select
+                        components={{
+                          Menu: (props) => (
+                            <components.Menu
+                              {...props}
+                              className="menu"
+                            ></components.Menu>
+                          ),
+                        }}
                         isClearable="true"
                         className="list-district"
                         value={selectedOptionDistrict}
@@ -477,6 +500,14 @@ class Search extends Component {
                   <div className="search-margin">
                     <div className="search-width-1-1 search-inline">
                       <Select
+                        components={{
+                          Menu: (props) => (
+                            <components.Menu
+                              {...props}
+                              className="menu"
+                            ></components.Menu>
+                          ),
+                        }}
                         isClearable="true"
                         className="list-ward"
                         value={selectedOptionWard}
@@ -492,11 +523,19 @@ class Search extends Component {
                   <div className="search-margin">
                     <div className="search-width-1-1 search-inline">
                       <Select
+                        components={{
+                          Menu: (props) => (
+                            <components.Menu
+                              {...props}
+                              className="menu"
+                            ></components.Menu>
+                          ),
+                        }}
                         isClearable="true"
-                        className="list-universities"
+                        className="list-location"
                         placeholder="Gần địa điểm"
-                        value={publicPlace}                    
-                        options={Universities}
+                        value={publicPlace}
+                        options={this.state.list_location}
                         onChange={(publicPlace) =>
                           this.setState({ publicPlace })
                         }
@@ -509,6 +548,14 @@ class Search extends Component {
                   <div className="search-margin">
                     <div className="search-width-1-1 search-inline">
                       <Select
+                        components={{
+                          Menu: (props) => (
+                            <components.Menu
+                              {...props}
+                              className="menu"
+                            ></components.Menu>
+                          ),
+                        }}
                         isClearable="true"
                         className="list-price"
                         placeholder="Giá"
@@ -525,6 +572,14 @@ class Search extends Component {
                   <div className="search-margin">
                     <div className="search-width-1-1 search-inline">
                       <Select
+                        components={{
+                          Menu: (props) => (
+                            <components.Menu
+                              {...props}
+                              className="menu"
+                            ></components.Menu>
+                          ),
+                        }}
                         isClearable="true"
                         className="list-area"
                         placeholder="Diện tích"
@@ -693,7 +748,12 @@ class Search extends Component {
               </form>
             </Headroom>
             {this.state.finishFetchingAccomod && (
-              <Listing list_accomod={accomods} />
+              <Listing
+                list_accomod={accomods}
+                myRef={myRef}
+                isLoggedIn={this.props.isLoggedIn}
+                userData={this.props.userData}
+              />
             )}
             {!this.state.finishFetchingAccomod && (
               <div

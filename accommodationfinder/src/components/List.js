@@ -17,12 +17,18 @@ import "react-slideshow-image/dist/styles.css";
 class List extends Component {
   constructor(props) {
     super(props);
-    // this.myRef = React.createRef()
     this.state=({
-      accomod: this.props.accomod
+      accomod: this.props.accomod,
+      isFollowed: false,
     })
   }
+
+  componentDidMount(){
+
+  }
+
   render() {
+    // console.log(this.state.accomod);
     return (
       <div className="ev-card-1">
         <div>
@@ -41,7 +47,7 @@ class List extends Component {
               </div>
               <div className="uk-overlay overlay-gradient">
                 <p className="ev-price">
-                {this.state.accomod.price} <small>Đ/ Tháng</small>
+                {this.state.accomod.price.toLocaleString('en')} <small>Đ/ Tháng</small>
                 </p>
                 {/* <FontAwesomeIcon
                   style={{ color: "white", fontSize: "22px", margin: "auto 0" }}
