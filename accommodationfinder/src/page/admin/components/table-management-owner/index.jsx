@@ -83,6 +83,10 @@ function TableManagementOwner(props) {
               title="Bạn có chắc muốn xoá tài khoản này?"
               okText="Đồng ý"
               cancelText="Huỷ bỏ"
+              onConfirm={() => {
+                // To do
+                // Call api delete account
+              }}
             >
               <Tooltip title="Xoá bài đăng">
                 <div className="table-icons">
@@ -96,6 +100,10 @@ function TableManagementOwner(props) {
                 title="Bạn muốn chấp thuận tài khoản này?"
                 okText="Đồng ý"
                 cancelText="Huỷ bỏ"
+                onConfirm={() => {
+                  // To do
+                  // Call api approve account
+                }}
               >
                 <Tooltip title="Chấp thuận tài khoản">
                   <div className="table-icons">
