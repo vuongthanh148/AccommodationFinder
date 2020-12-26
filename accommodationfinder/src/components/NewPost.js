@@ -27,6 +27,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// begin for upload
+
+const UploadImage = (props) => {
+  return (
+    <>
+      <Box pb={3}>
+        <input type="file" multiple={true} onChange={(event) => {
+          // console.log(event.target.files);
+        }} />
+      </Box>
+    </>
+  );
+};
+
+// end for upload
+
 // thông tin cơ bản
 const MainInfo = (props) => {
   const { formik } = props;
@@ -235,18 +251,8 @@ const Furniture = (props) => {
   );
 };
 
-// chọn ảnh
-const UploadImage = (props) => {
-  return (
-    <>
-      <Box mb={3}>
-        {/* <input type="file" multiple={true} accept="image/*" /> */}
-      </Box>
-    </>
-  );
-};
-
 const NewPost = () => {
+  const [images, setImages] = useState([]);
   const newPostValidationSchema = yup.object().shape({
     title: yup
       .string()
@@ -311,7 +317,7 @@ const NewPost = () => {
         case 1:
           return <Furniture formik={formik} />;
         case 2:
-          return <UploadImage formik={formik} />;
+          return <UploadImage />;
       }
     },
     [activeStep, formik]
@@ -363,7 +369,11 @@ const NewPost = () => {
                 Quay lại
               </Button>
               &nbsp;
-              <Button variant="contained" color="primary">
+              <Button
+                variant="contained"
+                color="primary"
+                disabled={formik.isSubmitting}
+              >
                 Hoàn tất
               </Button>
             </Box>

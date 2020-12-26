@@ -22,6 +22,7 @@ import Navbar from './components/Navbar'
 import Profile from './components/Profile'
 import Footer from './components/Footer'
 import AdminPage from './page/admin/admin'
+import NewPost from './components/NewPost'
 
 class App extends Component {
   constructor() {
