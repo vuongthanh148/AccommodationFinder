@@ -1,0 +1,10 @@
+.table-icons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.table-icons img {
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+}
