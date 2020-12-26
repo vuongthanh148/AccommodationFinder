@@ -22,6 +22,7 @@ import Navbar from './components/Navbar'
 import Profile from './components/Profile'
 import Footer from './components/Footer'
 import AdminPage from './page/admin/admin'
+import NewPost from './components/NewPost'
 
 class App extends Component {
   constructor() {
@@ -167,6 +168,16 @@ class App extends Component {
               </Route>
               <Route path="/home">
                 <Home
+                  changeNavbarState={this.changeNavbarState}
+                  updateLoginState={this.updateLoginState}
+                  userData={this.state.userData}
+                  isLoggedIn={this.state.isLoggedIn}
+                  updateFetchingAccomod={this.updateFetchingAccomod}
+                />
+                <Footer />
+              </Route>
+              <Route path="/newpost">
+                <NewPost
                   changeNavbarState={this.changeNavbarState}
                   updateLoginState={this.updateLoginState}
                   userData={this.state.userData}

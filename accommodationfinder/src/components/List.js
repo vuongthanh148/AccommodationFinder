@@ -54,6 +54,7 @@ class List extends Component {
                   icon={farHeart}
                 /> */}
                 <FontAwesomeIcon
+                onClick={()=> console.log("dcm  ")}
                   style={{
                     color: 'FireBrick',
                     fontSize: '22px',
@@ -63,6 +64,7 @@ class List extends Component {
                 />
               </div>
               <Slide
+
                 autoplay={true}
                 duration={2000}
                 pauseOnHover={true}
@@ -72,6 +74,7 @@ class List extends Component {
                 {accomod.photos.map((element, index) => (
                   <div
                     className="each-slide-list"
+                    onClick={()=> console.log("anh")}
                     style={{
                       backgroundImage: `url(${element})`,
                     }}
