@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { Table, Tooltip } from 'antd'
+import { Table, Tooltip, Popconfirm } from 'antd'
+import DeleteIcon from '../../../../image/trash_can.svg'
+import AcceptIcon from '../../../../image/tick_box.svg'
+import DescriptionIcon from '@material-ui/icons/Description'
+import { Icon } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
+
+import './index.css'
 
 function TableManagementPost(props) {
   const [posterList, setPosterList] = useState([])
@@ -138,7 +145,8 @@ function TableManagementPost(props) {
     {
       title: 'Lượt thích',
       responsive: ['md'],
-      dataIndex: ['rating', 'likedUser', 'length'],
+      align: 'center',
+      dataIndex: 'sumOfLike',
       key: '5',
       sorter: (a, b) => a.rating.likedUser.length - b.rating.likedUser.length,
     },
@@ -241,9 +249,52 @@ function TableManagementPost(props) {
       onFilter: (value, record) => record.isApproved === value,
     },
     {
-      title: 'Details',
+      title: 'Hành động',
       align: 'center',
       fixed: 'right',
+      render: (text, record, index) => {
+        return (
+          <div className="table-management-post-action">
+            {!record.isApproved && (
+              <Popconfirm
+                title="Bạn muốn chấp thuận tài khoản này?"
+                okText="Đồng ý"
+                cancelText="Huỷ bỏ"
+                onConfirm={() => {
+                  // To do
+                  // Call api approve account
+                }}
+              >
+                <Tooltip title="Chấp thuận tài khoản">
+                  <div className="table-icons">
+                    <img alt="accept-icon" src={AcceptIcon} />
+                  </div>
+                </Tooltip>
+              </Popconfirm>
+            )}
+            <Popconfirm
+              title="Bạn có chắc muốn xoá tài khoản này?"
+              okText="Đồng ý"
+              cancelText="Huỷ bỏ"
+              onConfirm={() => {
+                // To do
+                // Call api delete account
+              }}
+            >
+              <Tooltip title="Xoá bài đăng">
+                <div className="table-icons">
+                  <img alt="delete-icon" src={DeleteIcon} />
+                </div>
+              </Tooltip>
+            </Popconfirm>
+            <Link to="/home">
+              <Tooltip title="Đến chi tiết bài đăng">
+                <DescriptionIcon />
+              </Tooltip>
+            </Link>
+          </div>
+        )
+      },
     },
   ]
 
