@@ -34,33 +34,31 @@ function Chatbox(props) {
         if (type === 'owner') {
             console.log('dit me may');
             axios
-                .get('http://localhost:3002/', {
-                    _id: props.userId,
-                    name: props.userName,
-                    role: props.role.toUpperCase(),
+                .get(`http://localhost:3002/${props.userId}`, {
+                    body: {
+                        _id: props.userId,
+                        name: props.userName,
+                        role: props.role.toUpperCase(),
+                    },
                 })
                 .then((result) => {
-                    const { chatboxes, userName, userId } = result.data;
-                    console.log(chatboxes, userName, userId);
+                    const { chatboxes } = result.data;
+                    console.log(chatboxes);
                     setChatboxList(chatboxes);
-                    setName(userName);
-                    setUserId(userId);
+                    setName(props.userName);
+                    setUserId(props.userId);
                     setChatboxId(chatboxes[0]._id);
                 })
                 .catch((error) => console.log(error));
         } else if (type === 'admin') {
             axios
-                .get('http://localhost:3002/', {
-                    _id: props.userId,
-                    name: props.userName,
-                    role: props.role.toUpperCase(),
-                })
+                .get(`http://localhost:3002/`, {})
                 .then((result) => {
-                    const { chatboxes, userName, userId } = result.data;
-                    console.log({ chatboxes, userName, userId });
+                    const { chatboxes } = result.data;
+                    console.log({ chatboxes });
                     setChatboxList(chatboxes);
-                    setName(userName);
-                    setUserId(userId);
+                    setName('ADMIN');
+                    setUserId('');
                     setChatboxId(chatboxes[0]._id);
                 })
                 .catch((error) => console.log(error));
