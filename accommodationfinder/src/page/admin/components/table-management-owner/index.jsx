@@ -76,7 +76,7 @@ function TableManagementOwner(props) {
       fixed: 'right',
       width: 100,
       render: (text, record, index) => {
-        console.log(record)
+        //record)
         return (
           <div
             style={{

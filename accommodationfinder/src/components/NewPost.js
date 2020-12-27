@@ -34,7 +34,7 @@ const UploadImage = (props) => {
     <>
       <Box pb={3}>
         <input type="file" multiple={true} onChange={(event) => {
-          // console.log(event.target.files);
+          // //event.target.files);
         }} />
       </Box>
     </>

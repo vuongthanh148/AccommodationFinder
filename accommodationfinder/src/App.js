@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Suspense } from 'react'
 import Home from './components/Home'
 import Login from './components/Login'
 import Post from './components/Post'
@@ -21,8 +21,9 @@ import {
 import Navbar from './components/Navbar'
 import Profile from './components/Profile'
 import Footer from './components/Footer'
-import AdminPage from './page/admin/admin'
-import NewPost from './components/NewPost'
+const HomeDetailPage = React.lazy(() => import('./page/house-detail'))
+const NewPost = React.lazy(() => import('./components/NewPost'))
+const AdminPage = React.lazy(() => import('./page/admin/admin'))
 
 class App extends Component {
   constructor() {
@@ -51,14 +52,13 @@ class App extends Component {
         },
       })
         .then((res) => {
-          console.log(res)
           this.setState({
             userData: { ...res.data, userType: userType },
             isLoggedIn: true,
           })
         })
         .catch((err) => {
-          console.log(err)
+          //err)
         })
       this.setState({
         finishFetchUserData: true,
@@ -105,7 +105,32 @@ class App extends Component {
     ]
     return (
       // this.renderedScreen(this.state.screen)
-      <>
+      <Suspense
+        fallback={
+          <div style={{ position: 'relative', width: '100vw', height: '90vh' }}>
+            <div
+              style={{
+                width: '200px',
+                height: '200px',
+                position: 'absolute',
+                top: '0',
+                right: '0',
+                bottom: '0',
+                left: '0',
+                margin: 'auto',
+              }}
+            >
+              <Loader
+                type={listLoader[randomLoader]}
+                color="#bf7c2f"
+                height={200}
+                width={200}
+              />
+              <p style={{ paddingTop: '20px', fontSize: '20px' }}>Loading...</p>
+            </div>
+          </div>
+        }
+      >
         {this.state.finishFetchUserData && (
           <Router>
             {this.state.navbar ? (
@@ -189,6 +214,9 @@ class App extends Component {
               <Route path="/admin" exact>
                 <AdminPage />
               </Route>
+              <Route path="/home-detail/:id">
+                <HomeDetailPage />
+              </Route>
               <Route path="/">
                 <Redirect to="/home" />
               </Route>
@@ -219,7 +247,7 @@ class App extends Component {
             </div>
           </div>
         )}
-      </>
+      </Suspense>
     )
   }
 }

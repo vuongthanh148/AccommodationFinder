@@ -70,7 +70,7 @@ class Bar extends Component {
   }
 
   render(){
-    console.log(this.props.userData)
+    //this.props.userData)
     return(
       <div className="ev-header-1 navbar-section-primary" >
         <nav className="navbar-container navbar-transparent navbar">
