@@ -1,5 +1,7 @@
 .chatScreen {
     font-family: 'Times New Roman', Times, serif;
+    height: 90vh;
+
 }
 
 .listChatbox {
@@ -7,17 +9,13 @@
 }
 
 .chatBoxCardList {
-    background-color: #cd2e2e;
-    width: 25%;
+    padding-top: 5px;
+    background-color: #ffffff;
+    width: 25vw;
     height: 100vh;
     position: fixed;
-    top: 0;
-    right: 0px;
-    border-radius: 16px;
-    margin: 6px;
     overflow: hidden;
-    box-shadow: -10px -10px 30px #ffffff,
-        10px 10px 30px rgba(174, 174, 192, 0.4);
+    border-right: 1px solid lightgray;
 }
 
 .chatBoxCardList .list {
@@ -27,7 +25,7 @@
 }
 
 .chatBoxCardList .list div:hover,
-.chatBox .position-fixed-bottom-right .sendButton:hover {
+ .position-fixed-bottom-right .sendButton:hover {
     background-color: rgb(75, 75, 75);
 }
 
@@ -43,9 +41,8 @@
 } */
 
 .chatBox {
-    width: calc(100vw - 30% - 12px);
+    width: calc(75vw);
     position: absolute;
-    left: 0;
     right: 0;
     padding-left: 20px;
 }
@@ -56,7 +53,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    left: 0px;
     padding: 0 20px;
     border-radius: 20px;
     box-shadow: inset 4px 4px 8px rgba(190, 205, 226, 0.5),
@@ -93,9 +89,18 @@
     align-items: center;
     justify-content: flex-start;
     background: yellowgreen;
-    margin: 10px;
     padding: 10px;
-    border-radius: 30px;
+    margin: 2px 2px;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.chatCard:hover{
+    background-color: lightgray;
+    border-radius: 10px;
+    margin: 2px 2px;
+    padding: 10px;
 }
 
 .chatCard .char-card-lastest {

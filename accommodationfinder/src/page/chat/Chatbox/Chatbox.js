@@ -125,7 +125,7 @@ function Chatbox(props) {
                     <div className='chatBoxCardList d-inline col-md-9'>
                         <div className='list'>
                             {chatboxList.map((item, index) => (
-                                <div
+                                <div 
                                     onClick={() => {
                                         setChatboxId(item._id);
                                         if (type === 'ADMIN') {

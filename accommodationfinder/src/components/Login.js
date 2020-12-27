@@ -46,7 +46,8 @@ class Login extends Component {
       .post(url, { email: this.state.email, password: this.state.password })
       .then((res) => {
         //Saving tolken to local storage
-        localStorage.setItem(`token`,res.data[this.state.userType].tokens[res.data[this.state.userType].tokens.length - 1].token);
+        console.log(res);
+        localStorage.setItem(`token`,res.data.user.tokens[res.data.user.tokens.length - 1].token);
         localStorage.setItem(`userType`,this.state.userType);
         this.setState({
           userData: {...res.data[this.state.userType], userType: this.state.userType},

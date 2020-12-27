@@ -5,6 +5,7 @@ import {
     Route,
     Link,
     NavLink,
+    withRouter
 } from 'react-router-dom';
 import logo from '../image/logo_ngang_trang.png';
 import NavbarMobile from './NavbarMobile';
@@ -83,9 +84,9 @@ class Bar extends Component {
         localStorage.removeItem('token');
     };
 
-    handleChat = () => {
-        console.log('dit me may');
-        axios
+    handleChat = async () => {
+        let statusCode = 0;
+         await axios
             .post(`http://localhost:3002/createChatbox`, {
                 _id: this.props.userData._id,
                 name: this.props.userData.name,
@@ -93,10 +94,13 @@ class Bar extends Component {
             })
             .then((res) => {
                 console.log(res.status);
-                if (res.status === 200) {
-                    <Redirect to='/chat' />;
-                }
+                statusCode = res.status
+                
             });
+            if (statusCode === 200) {
+                console.log("moved");
+                location.href = "/chat"
+            }
     };
 
     render() {
