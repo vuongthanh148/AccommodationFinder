@@ -1,0 +1,147 @@
+.chatScreen {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.listChatbox {
+    position: relative;
+}
+
+.chatBoxCardList {
+    background-color: #cd2e2e;
+    width: 25%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0px;
+    border-radius: 16px;
+    margin: 6px;
+    overflow: hidden;
+    box-shadow: -10px -10px 30px #ffffff,
+        10px 10px 30px rgba(174, 174, 192, 0.4);
+}
+
+.chatBoxCardList .list {
+    width: 100%;
+    transition: all 0.2s ease-out;
+    cursor: pointer;
+}
+
+.chatBoxCardList .list div:hover,
+.chatBox .position-fixed-bottom-right .sendButton:hover {
+    background-color: rgb(75, 75, 75);
+}
+
+/* .listHeader {
+	padding: 10px;
+	display: flex;
+	flex-direction: row;
+	text-align: center;
+}
+
+.listHeaderTitle {
+	margin: auto;
+} */
+
+.chatBox {
+    width: calc(100vw - 30% - 12px);
+    position: absolute;
+    left: 0;
+    right: 0;
+    padding-left: 20px;
+}
+
+.chatBox .position-fixed-bottom-right {
+    width: calc(100vw - 30% - 30px);
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    left: 0px;
+    padding: 0 20px;
+    border-radius: 20px;
+    box-shadow: inset 4px 4px 8px rgba(190, 205, 226, 0.5),
+        inset -5px -5px 30px #ffffff;
+}
+
+.chatBox .position-fixed-bottom-right .sendButton {
+    background-color: #333;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+    outline: none;
+    border: none;
+}
+
+.search-feild {
+    text-align: center;
+}
+
+.search-feild input[type='text'] {
+    background-color: rgba(149, 165, 166, 0.2);
+    width: 100%;
+    border: none;
+    margin: 10px 0px;
+    height: 30px;
+}
+
+.search-feild input[type='text']:focus {
+    outline-color: rgba(41, 128, 185, 1);
+}
+
+.chatCard {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background: yellowgreen;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 30px;
+}
+
+.chatCard .char-card-lastest {
+    margin: 0 20px;
+    color: #dddddd;
+    font-size: 12px;
+}
+
+.chatCard .char-card-lastest .chat-card-sender-name {
+    font-weight: 500;
+}
+
+.chatCard h6 {
+    margin: 0 20px;
+    font-size: 16px;
+    color: white;
+}
+
+.messageContainer {
+    margin: 35px 0;
+}
+
+.messageBox {
+    box-shadow: -10px -10px 30px #ffffff,
+        10px 10px 30px rgba(174, 174, 192, 0.4);
+    height: auto;
+    padding: 12px;
+    border: 20px 0 20px 0 !important;
+}
+
+.messageBox.backgroundBlue .messageText {
+    color: white;
+    font-weight: lighter;
+}
+
+@media screen and (max-width: 768px) {
+    .chatCard {
+        flex-direction: column;
+    }
+
+    .chatCard .d-inline {
+        margin-top: 5px;
+        font-size: 14px;
+    }
+
+    .messageBox .messageText {
+        font-size: 12px;
+    }
+}
