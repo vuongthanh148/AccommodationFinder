@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback, useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import {
@@ -16,6 +16,8 @@ import {
   Step,
   StepLabel,
   makeStyles,
+  GridList,
+  GridListTile,
 } from "@material-ui/core";
 import clsx from "clsx";
 import Select from "react-select";
@@ -25,19 +27,114 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0,
     color: theme.palette.error.main,
   },
+  gridlist: {
+    width: 600,
+    paddingBottom: 15,
+  },
+  btn: {
+    display: "inline-block",
+    marginBottom: 15,
+  },
+  imgFrame: {
+    position: "relative",
+    "& span": {
+      display: "none",
+    },
+    "&:hover": {
+      opacity: 0.5,
+    },
+    "&:hover span": {
+      display: "inline-block",
+      position: "absolute",
+      color: "#ffffff",
+      fontWeight: "bold",
+      fontSize: 40,
+      paddingRight: 15,
+      cursor: "pointer",
+      top: 0,
+      right: 0,
+    },
+  },
 }));
 
 // begin for upload
 
 const UploadImage = (props) => {
+  const { files, setFiles, imgData, setImgData } = props;
+  const classes = useStyles();
+
+  const getFile = React.useCallback((file) => {
+    return new Promise((resolve) => {
+      setFiles([...files, file]);
+      resolve();
+    });
+  }, [files]);
+
+  /**
+   * @type {(file: File) => Promise<void>}
+   */
+  const getBase64 = React.useCallback((file) => {
+    const fileReader = new FileReader();
+    return new Promise((resolve) => {
+      fileReader.onloadend = (readEvent) => {
+        const base64 = readEvent.target.result;
+        setImgData([...imgData, base64]);
+        resolve();
+      };
+      fileReader.readAsDataURL(file);
+    });
+  }, [imgData]);
+
+  /**
+   *
+   * @type {(event: React.ChangeEvent<HTMLInputElement>) => void}
+   */
+  const handleChange = React.useCallback(
+    async (event) => {
+      let fileList = event.target.files;
+      let fileListLength = fileList.length;
+      let file;
+      if (fileListLength) {
+        for (let i = 0; i < fileListLength; i++) {
+          if (files.length + i >= 5) {
+            alert(`Chỉ chọn tối đa 5 ảnh`);
+            return;
+          }
+          await getFile(fileList.item(i));
+          await getBase64(fileList.item(i));
+        }
+      }
+    },
+    [files, imgData, props.max]
+  );
+
+  /**
+   * @type {(removeIndex: number) => void}
+   */
+  const removeImage = React.useCallback(
+    (removeIndex) => {
+      setFiles(files.filter((_, fileIndex) => fileIndex !== removeIndex));
+      setImgData(imgData.filter((_, imgIndex) => imgIndex !== removeIndex));
+    },
+    [files, imgData]
+  );
+
   return (
-    <>
-      <Box pb={3}>
-        <input type="file" multiple={true} onChange={(event) => {
-          // console.log(event.target.files);
-        }} />
-      </Box>
-    </>
+    <div>
+      <label className={clsx(classes.btn)}>
+        <input min={3} max={5} type="file" multiple={true} onChange={handleChange} />
+      </label>
+      <GridList className={classes.gridlist} cols={2}>
+        {imgData.map((img, imgIndex) => {
+          return (
+            <GridListTile key={imgIndex} cols={1} className={classes.imgFrame}>
+              <img src={img} alt="" />
+              <span onClick={() => removeImage(imgIndex)}>&times;</span>
+            </GridListTile>
+          );
+        })}
+      </GridList>
+    </div>
   );
 };
 
@@ -252,7 +349,15 @@ const Furniture = (props) => {
 };
 
 const NewPost = () => {
-  const [images, setImages] = useState([]);
+   /**
+   * @type {[File[], React.Dispatch<React.SetStateAction<File[]>>]}
+   */
+  const [files, setFiles] = useState([]);
+  /**
+   * @type {[string[], React.Dispatch<React.SetStateAction<string[]>>]}
+   */
+  const [imgData, setImgData] = useState([]);
+
   const newPostValidationSchema = yup.object().shape({
     title: yup
       .string()
@@ -317,7 +422,7 @@ const NewPost = () => {
         case 1:
           return <Furniture formik={formik} />;
         case 2:
-          return <UploadImage />;
+          return <UploadImage files={files} setFiles={setFiles} imgData={imgData} setImgData={setImgData} />;
       }
     },
     [activeStep, formik]

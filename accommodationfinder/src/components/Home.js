@@ -130,6 +130,8 @@ class Search extends Component {
       accommodationInfo: {},
       facilitiesInfo: {},
       finishFetchingAccomod: false,
+      list_follow: [],
+      userToken: localStorage.getItem('token'),
     };
 
     this.getAccomod = this.getAccomod.bind(this);
@@ -230,6 +232,23 @@ class Search extends Component {
       livingArea: that.state.livingArea.value,
     };
     console.log("data_to_send: ", data_to_send);
+    if (Object.keys(this.props.userData).length !== 0) {
+      await axios({
+        method: "POST",
+        url: `https://accommodation-finder.herokuapp.com/followList`,
+        data: {
+          _id: this.props.userData._id,
+        },
+        headers: {
+          Authorization: `Bearer ${this.state.userToken}`,
+        },
+      }).then((res) => {
+        console.log(res);
+        this.setState({
+          list_follow: res.data,
+        });
+      });
+    } else console.log("Chưa đăng nhập");
     await axios
       .post(
         "https://accommodation-finder.herokuapp.com/accommodation",
@@ -241,6 +260,7 @@ class Search extends Component {
           list_accomod: res.data.allAccomod,
         });
       });
+
     that.updateFetchingAccomod(true);
   };
 
@@ -753,6 +773,7 @@ class Search extends Component {
                 myRef={myRef}
                 isLoggedIn={this.props.isLoggedIn}
                 userData={this.props.userData}
+                list_follow={this.state.list_follow}
               />
             )}
             {!this.state.finishFetchingAccomod && (
