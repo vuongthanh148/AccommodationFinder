@@ -2,7 +2,7 @@ import React from 'react'
 import TableManagementPost from './components/table-management-post'
 import { Tabs } from 'antd'
 import TableManagementComment from './components/table-management-comment'
-import TableManagementReport from './components/table-mangement-report'
+import TableManagementReport from './components/table-management-report'
 import TableManagementOwner from './components/table-management-owner'
 
 const { TabPane } = Tabs

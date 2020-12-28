@@ -27,13 +27,6 @@ function TableManagementPost(props) {
     callApi()
   }, [])
 
-  const updateColumnWidth = useCallback(
-    (width) => {
-      setWidthAddressCol(width)
-    },
-    [widthAddressCol]
-  )
-
   const columns = [
     {
       title: 'Tiêu đề',
@@ -87,26 +80,6 @@ function TableManagementPost(props) {
       align: 'center',
       dataIndex: 'address',
       responsive: ['lg'],
-      // onHeaderCell: (column) => {
-      //   let mouseDownX
-      //   let beginDrag
-      //   return {
-      //     onMouseDown: (e) => {
-      //       mouseDownX = e.clientX
-      //       beginDrag = true
-      //     },
-      //     onMouseUp: () => {
-      //       beginDrag = false
-      //     },
-      //     onMouseMove: (e) => {
-      //       if (beginDrag === true) {
-      //         updateColumnWidth(
-      //           widthAddressCol + Math.round((e.clientX - mouseDownX) * 0.05)
-      //         )
-      //       }
-      //     },
-      //   }
-      // },
       ellipsis: {
         showTitle: false,
       },
