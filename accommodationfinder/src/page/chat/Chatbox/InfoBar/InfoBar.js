@@ -7,7 +7,7 @@ const InfoBar = ({ room, avatar }) => {
     <div className='infoBar'>
         <div className='leftInnerContainer'>
             <img src={avatar} style={{width: '40px', height: '40px'}}></img>
-            <h3>{room}</h3>
+            <h3 style={{margin: 0}}>{room}</h3>
         </div>
         <div className='rightInnerContainer'></div>
     </div>

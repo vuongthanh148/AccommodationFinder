@@ -1,7 +1,7 @@
 .position-fixed-bottom-right {
-	position: fixed;
-	bottom: 0;
-	right: 0;
+	position: relative;
+	height: 8vh;
+	width: 100%;
 	background-color: #fff;
 }
 
@@ -12,9 +12,10 @@
 
 .input {
 	border: none;
-	border-radius: 0;
-	width: 80%;
+	width: 100%;
+	padding: 10px;
 	font-size: 1.2em;
+	margin-right: 5px;
 }
 
 input:focus,
@@ -27,8 +28,9 @@ select:focus {
 	color: #fff !important;
 	text-transform: uppercase;
 	text-decoration: none;
-	background: #2979ff;
+	background: #bf7c2f;
 	padding: 10px;
+	border-radius: 40px;
 	display: inline-block;
 	border: none;
 	width: 20%;

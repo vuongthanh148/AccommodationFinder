@@ -3,7 +3,6 @@ import React from 'react';
 import './message.css';
 
 import ReactEmoji from 'react-emoji';
-import Avatar from 'react-avatar';
 
 function Message({ message, userId }) {
     const { content, senderId, senderName } = message;
@@ -15,8 +14,8 @@ function Message({ message, userId }) {
 
     return isSentByCurrentUser ? (
         <div className='messageContainer justifyEnd'>
-            <p className='sentText pr-10'>{senderName}</p>
-            <div className='messageBox'>
+            {/* <p className='sentText pr-10'>{senderName}</p> */}
+            <div className='messageBox backgroundBlue'>
                 <p className='messageText colorWhite'>
                     {ReactEmoji.emojify(content)}
                 </p>
@@ -29,7 +28,7 @@ function Message({ message, userId }) {
                     {ReactEmoji.emojify(content)}
                 </p>
             </div>
-            <p className='sentText pl-10 '>{senderName}</p>
+            {/* <p className='sentText pl-10 '>{senderName}</p> */}
         </div>
     );
 }

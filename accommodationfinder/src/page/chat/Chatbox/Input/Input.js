@@ -7,7 +7,7 @@ function Input({ message, setMessage, sendMessage }) {
             <input
                 className='input'
                 type='text'
-                placeholder='Nhập tin nhắn của bạn ở đây...'
+                placeholder='Nhập tin nhắn...'
                 value={message}
                 onChange={({ target: { value } }) => setMessage(value)}
                 onKeyPress={(event) =>

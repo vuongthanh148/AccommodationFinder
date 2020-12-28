@@ -3,18 +3,22 @@
     align-items: center;
     justify-content: space-between;
     border-radius: 10px 10px 0 0;
-    height: 60px;
+    height: 10vh;
     width: 75vw;
     border-bottom: 1px solid lightgray;
-    position: fixed;
+    position: relative;
     z-index: 1;
+    text-align: center;
 }
-
+h3{
+    margin: 0;
+    padding-left: 10px;
+}
 .leftInnerContainer {
     flex: 0.5;
     display: flex;
     align-items: center;
-    margin-left: 5%;
+    margin-left: 1%;
     color: white;
 }
 
