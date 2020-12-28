@@ -272,6 +272,51 @@ class Info extends Component {
 
 class MyProfile extends Component {
   static contextType = UserContext
+  state = {
+    phoneNumber: this.context.userData.phoneNumber,
+    email: this.context.userData.email,
+    citizenId: this.context.userData.citizenId,
+    address: this.context.userData.address,
+    userToken: localStorage.getItem('token'),
+  }
+
+  handlePhoneChange = (event) => {
+    this.setState({ phoneNumber: event.target.value })
+  }
+
+  handleEmailChange = (event) => {
+    this.setState({ email: event.target.value })
+  }
+
+  handleCitizenIdChange = (event) => {
+    this.setState({ citizenId: event.target.value })
+  }
+
+  handleAddressChange = (event) => {
+    this.setState({ address: event.target.value })
+  }
+
+  handleSubmit = () => {
+    axios({
+      method: 'POST',
+      url: `https://accommodation-finder.herokuapp.com/owner/profile`,
+      data: {
+        email: this.state.email,
+        phoneNumber: this.state.phoneNumber,
+
+        address: this.state.address,
+      },
+      headers: {
+        Authorization: `Bearer ${this.state.userToken}`,
+      },
+    })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((e) => {
+        console.log(e.response.data)
+      })
+  }
 
   render() {
     const { phoneNumber, email, citizenId, address } = this.context.userData
@@ -291,6 +336,7 @@ class MyProfile extends Component {
                 type="text"
                 disabled={!phoneNumber ? true : false}
                 defaultValue={phoneNumber ? phoneNumber : ''}
+                onChange={this.handlePhoneChange}
               />
             </div>
           </div>
@@ -303,6 +349,7 @@ class MyProfile extends Component {
                 type="email"
                 defaultValue={email ?? email}
                 disabled={!email ? true : false}
+                onChange={this.handleEmailChange}
               />
             </div>
           </div>
@@ -315,6 +362,7 @@ class MyProfile extends Component {
                 type="text"
                 defaultValue={citizenId ?? citizenId}
                 disabled={!citizenId ? true : false}
+                onChange={this.handleCitizenIdChange}
               />
             </div>
           </div>
@@ -326,6 +374,7 @@ class MyProfile extends Component {
                 type="text"
                 disabled={!address ? true : false}
                 defaultValue={address ?? address}
+                onChange={this.handleAddressChange}
               />
             </div>
           </div>
@@ -334,6 +383,7 @@ class MyProfile extends Component {
           <button
             className="profile-button profile-button-primary profile-border-rounded"
             type="submit"
+            onClick={this.handleSubmit}
           >
             Lưu thay đổi
           </button>
@@ -367,7 +417,57 @@ class Favorites extends Component {
 }
 
 class ChangePassword extends Component {
-  state = {}
+  static contextType = UserContext
+  state = {
+    password: '',
+    newPassWord: '',
+    newPassWord1: '',
+    userToken: localStorage.getItem('token'),
+  }
+
+  handlePasswordChange = (event) => {
+    this.setState({ password: event.target.value })
+  }
+
+  handleNewPasswordChange = (event) => {
+    this.setState({ newPassWord: event.target.value })
+  }
+
+  handleNewPassword1Change = (event) => {
+    this.setState({ newPassWord1: event.target.value })
+  }
+
+  handleSubmit = () => {
+    const email = this.context.userData.email
+    axios
+      .post('https://accommodation-finder.herokuapp.com/owner/login', {
+        email: email,
+        password: this.state.password,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          if (this.state.newPassWord === this.state.newPassWord1) {
+            axios({
+              method: 'POST',
+              url: `https://accommodation-finder.herokuapp.com/owner/profile`,
+              data: {
+                password: this.state.newPassWord,
+              },
+              headers: {
+                Authorization: `Bearer ${this.state.userToken}`,
+              },
+            })
+              .then((res) => {
+                console.log(res)
+              })
+              .catch((e) => {
+                console.log(e.response.data)
+              })
+          }
+        }
+      })
+  }
+
   render() {
     return (
       <div>
@@ -383,6 +483,7 @@ class ChangePassword extends Component {
                 type="password"
                 minLength="8"
                 required="required"
+                onChange={this.handlePasswordChange}
               />
             </div>
           </div>
@@ -394,6 +495,7 @@ class ChangePassword extends Component {
                 type="password"
                 minLength="8"
                 required="required"
+                onChange={this.handleNewPasswordChange}
               />
             </div>
           </div>
@@ -405,6 +507,7 @@ class ChangePassword extends Component {
                 type="password"
                 minLength="8"
                 required="required"
+                onChange={this.handleNewPassword1Change}
               />
             </div>
           </div>
@@ -413,6 +516,7 @@ class ChangePassword extends Component {
           <button
             className="profile-button profile-button-primary profile-border-rounded"
             type="submit"
+            onClick={this.handleSubmit}
           >
             Đổi mật khẩu
           </button>
