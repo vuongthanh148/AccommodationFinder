@@ -3,11 +3,12 @@ import Avatar from 'react-avatar';
 
 function ChatCard(props) {
     const { info, lastMessage } = props;
-    const { ownerName, isReadLastMessage, lastestSenderName } = info;
+    const { ownerName, ownerAvatar, isReadLastMessage, lastestSenderName } = info;
     let name = ownerName;
+    let avatar = ownerAvatar;
     return (
         <div className='chatCard'>
-            <Avatar name={name} size='40' round={true} />{' '}
+            <img src={avatar} style={{width: '40px', height: '40px'}}></img>
             <div className='d-inline'>
                 <h6 className='d-inline'>{name}</h6>{' '}
                 <div className='char-card-lastest'>

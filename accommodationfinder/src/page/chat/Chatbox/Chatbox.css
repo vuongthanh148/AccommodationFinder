@@ -24,7 +24,7 @@
     cursor: pointer;
 }
 
-.chatBoxCardList .list div:hover,
+
  .position-fixed-bottom-right .sendButton:hover {
     background-color: rgb(75, 75, 75);
 }
@@ -44,7 +44,7 @@
     width: calc(75vw);
     position: absolute;
     right: 0;
-    padding-left: 20px;
+    margin-top: 5px;
 }
 
 .chatBox .position-fixed-bottom-right {
@@ -88,7 +88,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    background: yellowgreen;
+    background-color: white;
     padding: 10px;
     margin: 2px 2px;
     border-radius: 10px;
@@ -97,7 +97,7 @@
 }
 
 .chatCard:hover{
-    background-color: lightgray;
+    background-color: #bf7c2f;
     border-radius: 10px;
     margin: 2px 2px;
     padding: 10px;
@@ -116,7 +116,7 @@
 .chatCard h6 {
     margin: 0 20px;
     font-size: 16px;
-    color: white;
+    color: black;
 }
 
 .messageContainer {
@@ -149,4 +149,11 @@
     .messageBox .messageText {
         font-size: 12px;
     }
+}
+
+
+.chat_list{
+    margin: 2px 2px;
+    border-radius: 10px;
+    background-color: white;
 }

@@ -18,6 +18,7 @@ import {
   Redirect,
 } from 'react-router-dom'
 import Navbar from './components/Navbar'
+import Chatbox from './page/chat/Chatbox/Chatbox'
 import Profile from './components/Profile'
 import Footer from './components/Footer'
 import { UserContext } from './context/user.context'
@@ -35,8 +36,11 @@ class App extends Component {
       userData: {},
       finishFetchUserData: false,
     }
+    this.changeNavbarState = this.changeNavbarState.bind(this)
+    this.updateLoginState = this.updateLoginState.bind(this)
+  }
 
-    myRef = React.createRef();
+  myRef = React.createRef()
 
   async componentDidMount() {
     const token = localStorage.getItem('token')
@@ -67,6 +71,7 @@ class App extends Component {
         finishFetchUserData: true,
       })
     }
+  }
 
   updateLoginState = function (userData, isLoggedIn, event) {
     this.setState({
@@ -208,6 +213,14 @@ class App extends Component {
               <Route path="/admin" exact>
                 <AdminPage />
               </Route>
+              <Route path="/chat" exact>
+                <Chatbox
+                  userId={this.state.userData._id}
+                  userName={this.state.userData.name}
+                  userAvatar={this.state.userData.avatar}
+                  role={localStorage.getItem('userType')}
+                />
+              </Route>
               <Route path="/home-detail/:id">
                 <HomeDetailPage />
               </Route>
@@ -246,4 +259,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App

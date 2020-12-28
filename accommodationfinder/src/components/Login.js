@@ -4,6 +4,8 @@ import { UserContext } from '../context/user.context'
 import axios from 'axios'
 import '../css/login.css'
 import logo_trang from '../image/logo_ngang_trang.png'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Login = (props) => {
   const [email, setEmail] = useState('')
@@ -22,38 +24,10 @@ const Login = (props) => {
     setUserData(props.userData)
   }, [])
 
-<<<<<<< HEAD
-  async handleSubmit(event) {
-    event.preventDefault();
-    let url = "";
-    this.state.userType === "owner"
-      ? (url = "https://accommodation-finder.herokuapp.com/owner/login")
-      : (url = "https://accommodation-finder.herokuapp.com/renter/login");
-    
-    await axios
-      .post(url, { email: this.state.email, password: this.state.password })
-      .then((res) => {
-        //Saving tolken to local storage
-        console.log(res);
-        localStorage.setItem(`token`,res.data.user.tokens[res.data.user.tokens.length - 1].token);
-        localStorage.setItem(`userType`,this.state.userType);
-        this.setState({
-          userData: {...res.data[this.state.userType], userType: this.state.userType},
-          isLoggedIn: true,
-        });
-        this.props.updateLoginState(
-          this.state.userData,
-          this.state.isLoggedIn
-        );
-      });
-      console.log('after login: ', this.state.userData)
-  }
-=======
   const handleSubmit = useCallback(
     async (event) => {
       event.preventDefault()
       let url = ''
->>>>>>> main
 
       userType === 'owner'
         ? (url = 'https://accommodation-finder.herokuapp.com/owner/login')
@@ -76,6 +50,16 @@ const Login = (props) => {
           props.updateLoginState({ ...res.data.user, userType: userType }, true)
           console.log(userContext)
           userContext.setUserData({ ...res.data.user, userType: userType })
+        }).catch(e => {
+          console.log(e.response)
+          toast.error(e.response.data, {
+            position: 'bottom-left',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          })
         })
     },
     [email, password, userType]
@@ -83,6 +67,17 @@ const Login = (props) => {
 
   return (
     <>
+    <ToastContainer
+            position="bottom-left"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
       {!isLoggedIn && (
         <div className="login-height-1-1">
           <div className="login-background-cover login-height-1-1 login-flex login-light">

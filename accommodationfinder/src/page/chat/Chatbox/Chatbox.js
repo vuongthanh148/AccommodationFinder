@@ -18,11 +18,14 @@ function Chatbox(props) {
     const [chatboxList, setChatboxList] = useState([]);
     const [chatboxId, setChatboxId] = useState('');
     const [room, setRoom] = useState('');
+    const [avatar, setAvatar] = useState('');
 
-    const type = props.role.toLowerCase();
+    const type = 'admin';
+    // const type = props.role.toLowerCase();
     console.log(type);
     console.log(props.userId);
     console.log(props.userName);
+    console.log(props.userAvatar);
     console.log(props.role.toUpperCase());
 
     const ENDPOINT = 'localhost:3002';
@@ -32,12 +35,12 @@ function Chatbox(props) {
             transports: ['websocket', 'polling', 'flashsocket'],
         });
         if (type === 'owner') {
-            console.log('dit me may');
             axios
                 .get(`http://localhost:3002/${props.userId}`, {
                     body: {
                         _id: props.userId,
                         name: props.userName,
+                        avatar: props.userAvatar,
                         role: props.role.toUpperCase(),
                     },
                 })
@@ -57,15 +60,15 @@ function Chatbox(props) {
                     const { chatboxes } = result.data;
                     console.log({ chatboxes });
                     setChatboxList(chatboxes);
-                    setName('ADMIN');
-                    setUserId('');
+                    setName(chatboxes[0].ownerName);
+                    setAvatar(chatboxes[0].ownerAvatar);
                     setChatboxId(chatboxes[0]._id);
                 })
                 .catch((error) => console.log(error));
         }
 
         return () => {
-            socket.emit('disconnect');
+            // socket.emit('disconnect');
             socket.off();
         };
     }, [ENDPOINT]);
@@ -109,7 +112,7 @@ function Chatbox(props) {
             <div className='chatScreen'>
                 <div className='listChatbox row'>
                     <div className='chatBox col-md-3'>
-                        <InfoBar room={room} />
+                        <InfoBar room={room} avatar={avatar}/>
                         <Messages
                             messages={messagesList}
                             userId={userId}
@@ -125,10 +128,11 @@ function Chatbox(props) {
                     <div className='chatBoxCardList d-inline col-md-9'>
                         <div className='list'>
                             {chatboxList.map((item, index) => (
-                                <div 
+                                <div className="chat_list"
                                     onClick={() => {
                                         setChatboxId(item._id);
-                                        if (type === 'ADMIN') {
+                                        if (type === 'admin') {
+                                            setAvatar(item.ownerAvatar);
                                             setRoom(item.ownerName);
                                         }
                                     }}
