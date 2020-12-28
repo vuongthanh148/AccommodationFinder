@@ -15,17 +15,18 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect,
 } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Profile from './components/Profile'
 import Footer from './components/Footer'
+import { UserContext } from './context/user.context'
 const HomeDetailPage = React.lazy(() => import('./page/house-detail'))
 const NewPost = React.lazy(() => import('./components/NewPost'))
 const AdminPage = React.lazy(() => import('./page/admin/admin'))
 
 class App extends Component {
+  static contextType = UserContext
   constructor() {
     super()
     this.state = {
@@ -56,6 +57,7 @@ class App extends Component {
             userData: { ...res.data, userType: userType },
             isLoggedIn: true,
           })
+          this.context.setUserData({ ...res.data, userType: userType })
         })
         .catch((err) => {
           //err)
@@ -75,16 +77,12 @@ class App extends Component {
       userData: userData,
       isLoggedIn: isLoggedIn,
     })
-    if (event) {
-    }
   }
 
   changeNavbarState = function (newState, event) {
     this.setState({
       navbar: newState,
     })
-    if (event) {
-    }
   }
 
   render() {

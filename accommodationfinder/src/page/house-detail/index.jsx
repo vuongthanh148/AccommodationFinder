@@ -12,39 +12,54 @@ import ContentComment from './components/ContentComment'
 
 const HomeDetailPage = () => {
   const params = useParams()
-  const userContext = useContext(UserContext)
-  console.log(userContext.getUserData())
+
   const [comment, setComment] = useState()
   const [listComment, setListComment] = useState([])
+
+  const userContext = useContext(UserContext)
+
+  const { avatar, name, userType } = userContext.userData
+
   const handleChangeComment = useCallback((event) => {
     setComment(event.target.value)
   }, [])
 
-  // const onUploadComment = async () => {
-  //   try {
-  //     axios({
-  //       method: 'POST',
-  //       url: `${devURL}/comment/create-new-comment`,
-  //     })
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
+  const getAllComments = async () => {
+    const res = await axios({
+      method: 'POST',
+      url: 'http://localhost:4000/comment/get-all-comments',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: {
+        accommodationId: params.id,
+      },
+    })
+    setListComment(res.data.comments)
+  }
 
-  useEffect(() => {
-    const getAllComments = async () => {
-      const res = await axios({
+  const onUploadComment = useCallback(async () => {
+    try {
+      await axios({
         method: 'POST',
-        url: 'http://localhost:4000/comment/get-all-comments',
+        url: `${devURL}/comment/create-new-comment`,
         headers: {
-          'Content-Type': 'application/json',
+          'Context-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
         data: {
+          content: comment,
           accommodationId: params.id,
         },
       })
-      setListComment(res.data.comments)
+      await getAllComments()
+      setComment('')
+    } catch (error) {
+      console.log(error)
     }
+  }, [comment])
+
+  useEffect(() => {
     getAllComments()
   }, [])
 
@@ -53,30 +68,33 @@ const HomeDetailPage = () => {
       <Row align="middle" justify="center">
         <Col span={20}>
           <h1>Details Section</h1>
-          <Divider />
-          <div>
-            <Row>
-              <Col span={1}>
-                <Avatar size="large" />
-              </Col>
-              <Col span={23}>
-                <Row align="middle" style={{ height: '85%' }}>
-                  <Col>
-                    <Typography>Name of user</Typography>
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-            <Row justify="end">
-              <Col span={23}>
-                <TextArea value={comment} onChange={handleChangeComment} />
-                <Row justify="end">
-                  <Button>Comment</Button>
-                </Row>
-              </Col>
-            </Row>
-          </div>
-          <Divider />
+          <Divider orientation="left">COMMENTS</Divider>
+          {userType === 'renter' && (
+            <>
+              <Row>
+                <Col span={1}>
+                  <Avatar size="large" src={avatar} />
+                </Col>
+                <Col span={23}>
+                  <Row align="middle" style={{ height: '85%' }}>
+                    <Col>
+                      <Typography>{name}</Typography>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+              <Row justify="end">
+                <Col span={23}>
+                  <TextArea value={comment} onChange={handleChangeComment} />
+                  <Row justify="end">
+                    <Button onClick={onUploadComment}>Comment</Button>
+                  </Row>
+                </Col>
+              </Row>
+              <Divider />
+            </>
+          )}
+
           <>
             {listComment.map((comment, index) => (
               <ContentComment comment={comment} key={comment._id} />
