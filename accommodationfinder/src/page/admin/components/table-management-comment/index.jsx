@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { Table, Tooltip, Popconfirm, Spin } from 'antd'
 import axios from 'axios'
 import moment from 'moment'
-import { devURL } from '../../../../constants/api'
+import { baseURL } from '../../../../constants/api'
 import AcceptIcon from '../../../../image/tick_box.svg'
 import DeleteIcon from '../../../../image/trash_can.svg'
 import Loader from '../../../../components/Loader'
@@ -19,7 +19,7 @@ function TableManagementComment() {
       setServiceLoader(true)
       const result = await axios({
         method: 'GET',
-        url: `${devURL}/comment/get-all-comments`,
+        url: `${baseURL}/comment/get-all-comments`,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -41,7 +41,7 @@ function TableManagementComment() {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
-        url: `${devURL}/comment/approve-comment`,
+        url: `${baseURL}/comment/approve-comment`,
         data: {
           commentId: id,
         },
@@ -58,7 +58,7 @@ function TableManagementComment() {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
-        url: `${devURL}/comment/delete-comment`,
+        url: `${baseURL}/comment/delete-comment`,
         data: {
           commentId: id,
         },
