@@ -3,6 +3,7 @@ import logo from "../image/bg-img-1.jpg";
 import { Slide } from "react-slideshow-image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Rating from "material-ui-rating";
+import { Link }  from 'react-router-dom';
 import {
   faHeart as fasHeart,
   faEye as fasEye,
@@ -38,11 +39,10 @@ class List extends Component {
 
   handleFollow = async () => {
     const that = this;
-    console.log("follow ne`");
     this.setState({ isFollowed: !this.state.isFollowed }),
     await axios({
       method: "POST",
-      url: `https://accommodation-finder.herokuapp.com/${this.state.userType}/follow`,
+      url: `https://accommodation-finder.herokuapp.com/followChange`,
       headers: {
         Authorization: `Bearer ${this.state.userToken}`,
       },
@@ -50,6 +50,7 @@ class List extends Component {
         accomodId: this.props.accomod._id,
       },
     }).then((res) => {
+      console.log(res)
       toast.info(res.data.isFollowed?"Thêm vào danh sách yêu thích thành công!":"Huỷ yêu thích thành công!", {
         position: "bottom-left",
         autoClose: 3000,
