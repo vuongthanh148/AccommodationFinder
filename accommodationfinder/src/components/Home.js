@@ -16,7 +16,6 @@ class Home extends Component {
 
   componentDidMount() {
     this.props.changeNavbarState(true);
-    console.log(this.props.userData);
   }
   render() {
     const randomLoader = Math.floor(Math.random() * 12);
@@ -162,7 +161,6 @@ class Search extends Component {
             `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=vi`
           )
           .then((res) => {
-            console.log(res.data.localityInfo);
             this.state.list_city.forEach((c) => {
               if (c.label === res.data.localityInfo.administrative[1].name) {
                 axios
@@ -207,7 +205,6 @@ class Search extends Component {
           });
       },
       () => {
-        console.log("unable to get location");
         //Get all accomod
         getAccomod();
       },
@@ -249,13 +246,14 @@ class Search extends Component {
         });
       });
     } else console.log("Chưa đăng nhập");
+
     await axios
       .post(
         "https://accommodation-finder.herokuapp.com/accommodation",
         data_to_send
       )
       .then((res) => {
-        console.log("data fetched: ", res.data.allAccomod);
+        // //"data fetched: ", res.data.allAccomod);
         that.setState({
           list_accomod: res.data.allAccomod,
         });
@@ -285,14 +283,14 @@ class Search extends Component {
       });
       this.setState({ list_city: cities });
       if (Object.keys(this.state.accommodationInfo).length === 0) {
-        console.log("accomod: ", this.state.accommodationInfo);
+        // //"accomod: ", this.state.accommodationInfo);
         this.getPosition(this.getAccomod);
       }
     });
     axios
       .get(`https://accommodation-finder.herokuapp.com/location`)
       .then((res) => {
-        console.log("location: ", res.data);
+        // //"location: ", res.data);
         if (res)
           this.setState({
             list_location: res.data.map((l) => {
@@ -360,7 +358,7 @@ class Search extends Component {
         list_district: [],
         list_ward: [],
       });
-      console.log("state after change: ", this.state);
+      // //"state after change: ", this.state);
     }
   };
 
@@ -409,7 +407,7 @@ class Search extends Component {
         },
       },
       () => {
-        console.log(this.state);
+        // //this.state);
         this.getAccomod();
       }
     );
@@ -441,7 +439,7 @@ class Search extends Component {
       "Plane",
     ];
     const accomods = this.state.list_accomod;
-    // console.log("accomod to send: ", accomods);
+    //"accomod to send: ", accomods);
 
     return (
       <>

@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Tooltip, Popconfirm } from 'antd'
+import { Table, Tooltip, Popconfirm, Spin } from 'antd'
 import DeleteIcon from '../../../../image/trash_can.svg'
 import AcceptIcon from '../../../../image/tick_box.svg'
 import axios from 'axios'
 
 import './index.css'
+import Loader from '../../../../components/Loader'
 
 function TableManagementOwner(props) {
   const [ownerAccountList, setOwnerAccountList] = useState([])
-
+  const [serviceLoader, setServiceLoader] = useState(false)
   useEffect(() => {
     const callApi = async () => {
+      setServiceLoader(true)
       const res = await axios({
         method: 'GET',
         url: 'http://localhost:4000/admin/management-owner',
@@ -19,6 +21,7 @@ function TableManagementOwner(props) {
         },
       })
       setOwnerAccountList(res.data.data)
+      setServiceLoader(false)
     }
     callApi()
   }, [])
@@ -76,27 +79,18 @@ function TableManagementOwner(props) {
       fixed: 'right',
       width: 100,
       render: (text, record, index) => {
-        console.log(record)
+        //record)
         return (
-          <div>
-            <Popconfirm
-              title="Bạn có chắc muốn xoá tài khoản này?"
-              okText="Đồng ý"
-              cancelText="Huỷ bỏ"
-              onConfirm={() => {
-                // To do
-                // Call api delete account
-              }}
-            >
-              <Tooltip title="Xoá bài đăng">
-                <div className="table-icons">
-                  <img alt="delete-icon" src={DeleteIcon} />
-                </div>
-              </Tooltip>
-            </Popconfirm>
-
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
             {!record.isApproved && (
               <Popconfirm
+                className="pop-confirm-admin"
                 title="Bạn muốn chấp thuận tài khoản này?"
                 okText="Đồng ý"
                 cancelText="Huỷ bỏ"
@@ -112,6 +106,22 @@ function TableManagementOwner(props) {
                 </Tooltip>
               </Popconfirm>
             )}
+            <Popconfirm
+              className="pop-confirm-admin"
+              title="Bạn có chắc muốn xoá tài khoản này?"
+              okText="Đồng ý"
+              cancelText="Huỷ bỏ"
+              onConfirm={() => {
+                // To do
+                // Call api delete account
+              }}
+            >
+              <Tooltip title="Xoá bài đăng">
+                <div className="table-icons">
+                  <img alt="delete-icon" src={DeleteIcon} />
+                </div>
+              </Tooltip>
+            </Popconfirm>
           </div>
         )
       },
@@ -120,14 +130,16 @@ function TableManagementOwner(props) {
 
   return (
     <div>
-      <Table
-        pagination={false}
-        columns={columns}
-        dataSource={ownerAccountList}
-        scroll={{ x: 1500, y: 300 }}
-        size="small"
-        rowKey="_id"
-      />
+      <Spin indicator={<Loader />} spinning={serviceLoader}>
+        <Table
+          pagination={false}
+          columns={columns}
+          dataSource={ownerAccountList}
+          scroll={{ x: 1500, y: 300 }}
+          size="small"
+          rowKey="_id"
+        />
+      </Spin>
     </div>
   )
 }

@@ -1,13 +1,21 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { Table, Tooltip } from 'antd'
+import { Table, Tooltip, Popconfirm, Spin } from 'antd'
+import DeleteIcon from '../../../../image/trash_can.svg'
+import AcceptIcon from '../../../../image/tick_box.svg'
+import DescriptionIcon from '@material-ui/icons/Description'
+import Loader from '../../../../components/Loader'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
+
+import './index.css'
 
 function TableManagementPost(props) {
   const [posterList, setPosterList] = useState([])
-  const [widthAddressCol, setWidthAddressCol] = useState(150)
+  const [serviceLoader, setServiceLoader] = useState(false)
 
   useEffect(() => {
     const callApi = async () => {
+      setServiceLoader(true)
       const res = await axios({
         method: 'GET',
         url: 'http://localhost:4000/admin/management-post',
@@ -16,16 +24,10 @@ function TableManagementPost(props) {
         },
       })
       setPosterList(res.data.data)
+      setServiceLoader(false)
     }
     callApi()
   }, [])
-
-  const updateColumnWidth = useCallback(
-    (width) => {
-      setWidthAddressCol(width)
-    },
-    [widthAddressCol]
-  )
 
   const columns = [
     {
@@ -80,26 +82,6 @@ function TableManagementPost(props) {
       align: 'center',
       dataIndex: 'address',
       responsive: ['lg'],
-      // onHeaderCell: (column) => {
-      //   let mouseDownX
-      //   let beginDrag
-      //   return {
-      //     onMouseDown: (e) => {
-      //       mouseDownX = e.clientX
-      //       beginDrag = true
-      //     },
-      //     onMouseUp: () => {
-      //       beginDrag = false
-      //     },
-      //     onMouseMove: (e) => {
-      //       if (beginDrag === true) {
-      //         updateColumnWidth(
-      //           widthAddressCol + Math.round((e.clientX - mouseDownX) * 0.05)
-      //         )
-      //       }
-      //     },
-      //   }
-      // },
       ellipsis: {
         showTitle: false,
       },
@@ -138,7 +120,8 @@ function TableManagementPost(props) {
     {
       title: 'Lượt thích',
       responsive: ['md'],
-      dataIndex: ['rating', 'likedUser', 'length'],
+      align: 'center',
+      dataIndex: 'sumOfLike',
       key: '5',
       sorter: (a, b) => a.rating.likedUser.length - b.rating.likedUser.length,
     },
@@ -149,79 +132,6 @@ function TableManagementPost(props) {
       dataIndex: 'watch',
       key: '6',
     },
-    // {
-    //   title: 'Thời gian đăng yêu cầu',
-    //   responsive: ['md'],
-    //   children: [
-    //     {
-    //       title: 'Ngày bắt đầu',
-    //       render: (text, record, index) => {
-    //         return record.availableDate[0] ? (
-    //           <span>
-    //             {moment(record.availableDate[0]).format('DD/MM/YYYY')}
-    //           </span>
-    //         ) : (
-    //           ''
-    //         )
-    //       },
-    //       sorter: (a, b) => {
-    //         const now = moment.now()
-    //         return (
-    //           moment(a.availableDate[0]).diff(now) -
-    //           moment(b.availableDate[0]).diff(now)
-    //         )
-    //       },
-    //     },
-    //     {
-    //       title: 'Ngày gỡ bài',
-    //       render: (text, record, index) => {
-    //         return record.availableDate[1] ? (
-    //           <span>
-    //             {moment(record.availableDate[1]).format('DD/MM/YYYY')}
-    //           </span>
-    //         ) : (
-    //           ''
-    //         )
-    //       },
-    //       sorter: (a, b) => {
-    //         const now = moment.now()
-    //         return (
-    //           moment(a.availableDate[1]).diff(now) -
-    //           moment(b.availableDate[1]).diff(now)
-    //         )
-    //       },
-    //     },
-    //     {
-    //       title: 'Giá đăng bài',
-    //       render: (text, record, index) => {
-    //         const dateDiff = moment(record.availableDate[1]).diff(
-    //           record.availableDate[0],
-    //           'days'
-    //         )
-    //         const dateDiffFromNow = -moment(record.postedDate).diff(
-    //           moment.now(),
-    //           'days'
-    //         )
-    //         return record.availableDate[1] && record.availableDate[0] ? (
-    //           <span>{dateDiff * 5000} đồng</span>
-    //         ) : (
-    //           <span>{dateDiffFromNow * 5000} đồng</span>
-    //         )
-    //       },
-    //       sorter: (a, b) => {
-    //         const dateDiff1 = moment(a.availableDate[1]).diff(
-    //           a.availableDate[0],
-    //           'days'
-    //         )
-    //         const dateDiff2 = moment(b.availableDate[1]).diff(
-    //           b.availableDate[0],
-    //           'days'
-    //         )
-    //         return dateDiff1 - dateDiff2
-    //       },
-    //     },
-    //   ],
-    // },
     {
       title: 'Tình trạng',
       align: 'center',
@@ -241,23 +151,70 @@ function TableManagementPost(props) {
       onFilter: (value, record) => record.isApproved === value,
     },
     {
-      title: 'Details',
+      title: 'Hành động',
       align: 'center',
       fixed: 'right',
+      render: (text, record, index) => {
+        return (
+          <div className="table-management-post-action">
+            {!record.isApproved && (
+              <Popconfirm
+                className="pop-confirm-admin"
+                title="Bạn muốn chấp thuận tài khoản này?"
+                okText="Đồng ý"
+                cancelText="Huỷ bỏ"
+                onConfirm={() => {
+                  // To do
+                  // Call api approve account
+                }}
+              >
+                <Tooltip title="Chấp thuận tài khoản">
+                  <div className="table-icons">
+                    <img alt="accept-icon" src={AcceptIcon} />
+                  </div>
+                </Tooltip>
+              </Popconfirm>
+            )}
+            <Popconfirm
+              className="pop-confirm-admin"
+              title="Bạn có chắc muốn xoá tài khoản này?"
+              okText="Đồng ý"
+              cancelText="Huỷ bỏ"
+              onConfirm={() => {
+                // To do
+                // Call api delete account
+              }}
+            >
+              <Tooltip title="Xoá bài đăng">
+                <div className="table-icons">
+                  <img alt="delete-icon" src={DeleteIcon} />
+                </div>
+              </Tooltip>
+            </Popconfirm>
+            <Link to={`/home-detail/${record.id}`}>
+              <Tooltip title="Đến chi tiết bài đăng">
+                <DescriptionIcon />
+              </Tooltip>
+            </Link>
+          </div>
+        )
+      },
     },
   ]
 
   return (
     <div>
-      <Table
-        pagination={false}
-        columns={columns}
-        dataSource={posterList}
-        scroll={{ x: 1500, y: 450 }}
-        bordered
-        size="small"
-        rowKey="_id"
-      />
+      <Spin indicator={<Loader />} spinning={serviceLoader}>
+        <Table
+          pagination={false}
+          columns={columns}
+          dataSource={posterList}
+          scroll={{ x: 1500, y: 450 }}
+          bordered
+          size="small"
+          rowKey="_id"
+        />
+      </Spin>
     </div>
   )
 }
