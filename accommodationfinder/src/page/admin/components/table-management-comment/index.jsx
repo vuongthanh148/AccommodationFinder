@@ -1,20 +1,22 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { Table, Tooltip, Popconfirm } from 'antd'
+import { Table, Tooltip, Popconfirm, Spin } from 'antd'
 import axios from 'axios'
 import moment from 'moment'
 import { devURL } from '../../../../constants/api'
 import AcceptIcon from '../../../../image/tick_box.svg'
 import DeleteIcon from '../../../../image/trash_can.svg'
+import Loader from '../../../../components/Loader'
 
 function TableManagementComment() {
   const [comments, setComments] = useState([])
-
+  const [serviceLoader, setServiceLoader] = useState(false)
   useEffect(() => {
     getAllComment()
   }, [])
 
   const getAllComment = useCallback(async () => {
     try {
+      setServiceLoader(true)
       const result = await axios({
         method: 'GET',
         url: `${devURL}/comment/get-all-comments`,
@@ -24,8 +26,10 @@ function TableManagementComment() {
         },
       })
       setComments(result.data.comments)
+      setServiceLoader(false)
     } catch (error) {
       console.log(error)
+      setServiceLoader(false)
     }
   }, [])
 
@@ -66,7 +70,7 @@ function TableManagementComment() {
   const columns = [
     {
       title: 'STT',
-      width: 50,
+      width: 35,
       fixed: 'left',
       align: 'center',
       render: (text, record, index) => {
@@ -76,7 +80,6 @@ function TableManagementComment() {
     {
       title: 'ID bài đăng',
       key: 'accommodationId',
-      fixed: 'left',
       align: 'center',
       dataIndex: 'accommodationId',
       width: 100,
@@ -124,6 +127,7 @@ function TableManagementComment() {
             {record.pending && (
               <Popconfirm
                 title="Bạn muốn chấp thuận bình luận này?"
+                className="pop-confirm-admin"
                 okText="Đồng ý"
                 cancelText="Huỷ bỏ"
                 onConfirm={() => {
@@ -139,6 +143,7 @@ function TableManagementComment() {
             )}
             <Popconfirm
               title="Bạn có chắc muốn xoá bình luận này?"
+              className="pop-confirm-admin"
               okText="Đồng ý"
               cancelText="Huỷ bỏ"
               onConfirm={() => {
@@ -155,52 +160,19 @@ function TableManagementComment() {
         )
       },
     },
-    // {
-    //   title: '',
-    //   key: 'operation',
-    //   fixed: 'right',
-    //   width: 100,
-    //   render: (text, record, index) => (
-    //     <div>
-    //       <Popconfirm
-    //         title="Bạn có chắc muốn xoá bình luận này?"
-    //         okText="Đồng ý"
-    //         cancelText="Huỷ bỏ"
-    //       >
-    //         <Tooltip title="Xoá bài đăng">
-    //           <div className="table-icons">
-    //             <img alt="delete-icon" />
-    //           </div>
-    //         </Tooltip>
-    //       </Popconfirm>
-
-    //       {!record.isApproved && (
-    //         <Popconfirm
-    //           title="Bạn muốn chấp thuận tài khoản này?"
-    //           okText="Đồng ý"
-    //           cancelText="Huỷ bỏ"
-    //         >
-    //           <Tooltip title="Chấp thuận tài khoản">
-    //             <div className="table-icons">
-    //               <img alt="accept-icon" />
-    //             </div>
-    //           </Tooltip>
-    //         </Popconfirm>
-    //       )}
-    //     </div>
-    //   ),
-    // },
   ]
   return (
     <div>
-      <Table
-        columns={columns}
-        dataSource={comments}
-        scroll={{ x: 1500, y: 500 }}
-        size="small"
-        rowKey="_id"
-        pagination={false}
-      />
+      <Spin indicator={<Loader />} spinning={serviceLoader}>
+        <Table
+          columns={columns}
+          dataSource={comments}
+          scroll={{ x: 1500, y: 500 }}
+          size="small"
+          rowKey="_id"
+          pagination={false}
+        />
+      </Spin>
     </div>
   )
 }

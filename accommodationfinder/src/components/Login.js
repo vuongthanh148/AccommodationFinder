@@ -46,7 +46,6 @@ const Login = (props) => {
           })
           setIsLoggedIn(true)
           props.updateLoginState({ ...res.data.user, userType: userType }, true)
-          console.log(userContext)
           userContext.setUserData({ ...res.data.user, userType: userType })
         })
     },

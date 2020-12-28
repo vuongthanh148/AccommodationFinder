@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Tooltip, Popconfirm } from 'antd'
+import { Table, Tooltip, Popconfirm, Spin } from 'antd'
 import { Rate } from 'antd'
+import Loader from '../../../../components/Loader'
 
 function TableManagementReport() {
   const [reportList, setReportList] = useState([])
-
+  const [serviceLoader, serServiceLoader] = useState(false)
   const columns = [
     {
       title: 'ID bài đăng',
@@ -103,13 +104,15 @@ function TableManagementReport() {
   ]
   return (
     <div>
-      <Table
-        columns={columns}
-        dataSource={reportList}
-        scroll={{ x: 1500, y: 300 }}
-        size="small"
-        rowKey="_id"
-      />
+      <Spin indicator={<Loader />} spinning={serviceLoader}>
+        <Table
+          columns={columns}
+          dataSource={reportList}
+          scroll={{ x: 1500, y: 300 }}
+          size="small"
+          rowKey="_id"
+        />
+      </Spin>
     </div>
   )
 }
