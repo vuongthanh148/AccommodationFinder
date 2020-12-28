@@ -8,7 +8,7 @@ import TableManagementOwner from './components/table-management-owner'
 const { TabPane } = Tabs
 
 function callback(key) {
-  console.log(key)
+  //key)
 }
 
 const AdminPage = () => (

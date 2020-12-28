@@ -84,7 +84,7 @@ class Listing extends Component {
         }
       );
     } else {
-      console.log("I dont see any accomod here");
+      //"I dont see any accomod here");
     }
   }
 
@@ -100,7 +100,7 @@ class Listing extends Component {
         currentPage: 1
       },
       () => {
-        console.log("Current page: ", this.state.currentPage);
+        //"Current page: ", this.state.currentPage);
         this.setState({ 
           accomod_to_render: this.state.list_accomod.slice(
             (this.state.currentPage - 1) * this.state.accomodPerPage,
@@ -112,8 +112,8 @@ class Listing extends Component {
   }
 
   handleChangePage(event, newPage) {
-    console.log(newPage);
-    console.log(this.state.list_accomod)
+    //newPage);
+    //this.state.list_accomod)
     this.setState(
       {
         finishSorting: false,
@@ -128,8 +128,8 @@ class Listing extends Component {
           finishSorting: true
         })
         this.props.myRef.current.scrollIntoView();
-        console.log("page choosing: ", this.state.currentPage);
-        console.log("page render: ", this.state.accomod_to_render);
+        //"page choosing: ", this.state.currentPage);
+        //"page render: ", this.state.accomod_to_render);
       }
     );
   }

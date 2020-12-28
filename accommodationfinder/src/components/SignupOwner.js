@@ -1,43 +1,43 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
   NavLink,
-} from "react-router-dom";
+} from 'react-router-dom'
 // import "../css/unikit.css";
-import "../css/SignupOwner.css";
-import logo from "../image/logo_ngang_trang.png";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import '../css/SignupOwner.css'
+import logo from '../image/logo_ngang_trang.png'
+import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 class SignupOwner extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      name: "",
-      address: "",
-      citizenId: "",
-      phoneNumber: "",
-      email: "",
-      password: "",
-      userType: "owner",
-      status: "",
+      name: '',
+      address: '',
+      citizenId: '',
+      phoneNumber: '',
+      email: '',
+      password: '',
+      userType: 'owner',
+      status: '',
       userData: {},
       isLoggedIn: false,
-    };
+    }
 
-    this.handleRegister = this.handleRegister.bind(this);
+    this.handleRegister = this.handleRegister.bind(this)
   }
 
   componentDidMount() {
-    this.props.changeNavbarState(false);
+    this.props.changeNavbarState(false)
   }
 
   handleRegister = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
     const {
       name,
       address,
@@ -45,9 +45,9 @@ class SignupOwner extends Component {
       phoneNumber,
       email,
       password,
-    } = this.state;
+    } = this.state
     await axios
-      .post("https://accommodation-finder.herokuapp.com/owner/signup", {
+      .post('https://accommodation-finder.herokuapp.com/owner/signup', {
         name,
         address,
         citizenId,
@@ -56,52 +56,49 @@ class SignupOwner extends Component {
         password,
       })
       .then((res) => {
-        console.log(res);
-        if(res.data.response){
+        if (res.data.response) {
           toast.info(res.data.response, {
-            position: "bottom-left",
+            position: 'bottom-left',
             autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
-            });
-        }
-        else{
+          })
+        } else {
           toast.error(res.data.message, {
-            position: "bottom-left",
+            position: 'bottom-left',
             autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
-            });
+          })
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
     //Send notification yêu cầu đăng ký thành công
-  };
+  }
 
   render() {
-    
     return (
       <>
         <div className="signupOwner-background-cover signupOwner-height-1-1 signupOwner-flex signupOwner-light">
-        <ToastContainer
-          position="bottom-left"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
+          <ToastContainer
+            position="bottom-left"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
           <div className="signupOwner-overlay-secondary signupOwner-position-cover"></div>
 
           <div className="signupOwner-auth-2 signupOwner-position-z-index">
-            <NavLink activeStyle={{ color: "#fff" }} to="/home">
+            <NavLink activeStyle={{ color: '#fff' }} to="/home">
               <img className="signupOwner-logo" src={logo} />
             </NavLink>
             <h5 className="signupOwner-heading-line">
@@ -117,7 +114,7 @@ class SignupOwner extends Component {
                     type="text"
                     required
                     onChange={(event) => {
-                      this.setState({ name: event.target.value });
+                      this.setState({ name: event.target.value })
                     }}
                   />
                 </div>
@@ -130,7 +127,7 @@ class SignupOwner extends Component {
                     type="text"
                     required
                     onChange={(event) => {
-                      this.setState({ address: event.target.value });
+                      this.setState({ address: event.target.value })
                     }}
                   />
                 </div>
@@ -145,7 +142,7 @@ class SignupOwner extends Component {
                     maxLength="10"
                     required
                     onChange={(event) => {
-                      this.setState({ phoneNumber: event.target.value });
+                      this.setState({ phoneNumber: event.target.value })
                     }}
                   />
                 </div>
@@ -160,7 +157,7 @@ class SignupOwner extends Component {
                     maxLength="12"
                     required
                     onChange={(event) => {
-                      this.setState({ citizenId: event.target.value });
+                      this.setState({ citizenId: event.target.value })
                     }}
                   />
                 </div>
@@ -174,7 +171,7 @@ class SignupOwner extends Component {
                     type="email"
                     required
                     onChange={(event) => {
-                      this.setState({ email: event.target.value });
+                      this.setState({ email: event.target.value })
                     }}
                   />
                 </div>
@@ -188,7 +185,7 @@ class SignupOwner extends Component {
                     minLength="8"
                     required
                     onChange={(event) => {
-                      this.setState({ password: event.target.value });
+                      this.setState({ password: event.target.value })
                     }}
                   />
                 </div>
@@ -203,7 +200,7 @@ class SignupOwner extends Component {
                     />
                     Tôi đồng ý với
                     <a
-                      style={{ paddingLeft: "5px" }}
+                      style={{ paddingLeft: '5px' }}
                       className="signupOwner-link-primary"
                       href="#"
                     >
@@ -223,7 +220,7 @@ class SignupOwner extends Component {
                 Bạn đã có tài khoản?
                 <NavLink
                   className="signupOwner-link-primary signupOwner-text-bold"
-                  activeStyle={{ color: "#fff" }}
+                  activeStyle={{ color: '#fff' }}
                   to="/login"
                   onClick={this.props.changeNavbarState}
                 >
@@ -234,8 +231,8 @@ class SignupOwner extends Component {
           </div>
         </div>
       </>
-    );
+    )
   }
 }
 
-export default SignupOwner;
+export default SignupOwner

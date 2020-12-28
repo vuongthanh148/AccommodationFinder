@@ -1,8 +1,17 @@
-import React, { useState, useEffect } from 'react'
-import { Table, Tooltip } from 'antd'
+import React, { useState, useEffect, useCallback } from 'react'
+import { Table, Tooltip, Popconfirm } from 'antd'
+import DeleteIcon from '../../../../image/trash_can.svg'
+import AcceptIcon from '../../../../image/tick_box.svg'
+import DescriptionIcon from '@material-ui/icons/Description'
+import { Icon } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
+
+import './index.css'
+
 function TableManagementPost(props) {
   const [posterList, setPosterList] = useState([])
+  const [widthAddressCol, setWidthAddressCol] = useState(150)
 
   useEffect(() => {
     const callApi = async () => {
@@ -18,10 +27,18 @@ function TableManagementPost(props) {
     callApi()
   }, [])
 
+  const updateColumnWidth = useCallback(
+    (width) => {
+      setWidthAddressCol(width)
+    },
+    [widthAddressCol]
+  )
+
   const columns = [
     {
       title: 'Tiêu đề',
       dataIndex: 'title',
+      align: 'center',
       key: 'name',
       fixed: 'left',
       ellipsis: {
@@ -40,59 +57,87 @@ function TableManagementPost(props) {
       title: 'Kiểu bất động sản',
       dataIndex: 'typeOfAccommodation',
       key: 'typeOfAccommodation',
+      align: 'center',
       responsive: ['lg'],
-      filters: [
-        {
-          text: 'Phòng trọ',
-          value: 'phòng trọ',
-        },
-        {
-          text: 'Chung cư mini',
-          value: 'chung cư mini',
-        },
-        {
-          text: 'Nhà nguyên căn',
-          value: 'nhà nguyên căn',
-        },
-        {
-          text: 'Chung cư nguyên căn',
-          value: 'chung cư nguyên căn',
-        },
-      ],
+      // filters: [
+      //   {
+      //     text: 'Phòng trọ',
+      //     value: 'phòng trọ',
+      //   },
+      //   {
+      //     text: 'Chung cư mini',
+      //     value: 'chung cư mini',
+      //   },
+      //   {
+      //     text: 'Nhà nguyên căn',
+      //     value: 'nhà nguyên căn',
+      //   },
+      //   {
+      //     text: 'Chung cư nguyên căn',
+      //     value: 'chung cư nguyên căn',
+      //   },
+      // ],
       width: 150,
-      onFilter: (value, record) =>
-        record.typeOfAccommodation.indexOf(value) === 0,
+      // onFilter: (value, record) =>
+      //   record.typeOfAccommodation.indexOf(value) === 0,
     },
     {
       title: 'Địa chỉ',
       key: 'address',
+      align: 'center',
       dataIndex: 'address',
       responsive: ['lg'],
-      width: 150,
+      // onHeaderCell: (column) => {
+      //   let mouseDownX
+      //   let beginDrag
+      //   return {
+      //     onMouseDown: (e) => {
+      //       mouseDownX = e.clientX
+      //       beginDrag = true
+      //     },
+      //     onMouseUp: () => {
+      //       beginDrag = false
+      //     },
+      //     onMouseMove: (e) => {
+      //       if (beginDrag === true) {
+      //         updateColumnWidth(
+      //           widthAddressCol + Math.round((e.clientX - mouseDownX) * 0.05)
+      //         )
+      //       }
+      //     },
+      //   }
+      // },
       ellipsis: {
         showTitle: false,
       },
       render: (text, record, index) => {
-        const { address, subDistrict, district, city } = record
-        const addressInDetail =
-          address + ', ' + subDistrict + ', ' + district + ', ' + city
+        const { address } = record
         return (
-          <Tooltip placement="topLeft" title={addressInDetail}>
-            {addressInDetail}
+          <Tooltip placement="topLeft" title={address}>
+            {address}
           </Tooltip>
         )
       },
     },
     {
       title: 'Giá theo tháng',
+      align: 'center',
       dataIndex: 'pricePerMonth',
       responsive: ['md'],
       key: '3',
       sorter: (a, b) => a.pricePerMonth - b.pricePerMonth,
+      render: (text, record, index) => {
+        return (
+          <div style={{ textAlign: 'center' }}>
+            {Number(text).toLocaleString('en')}
+          </div>
+        )
+      },
     },
     {
       title: 'Đánh giá',
       responsive: ['md'],
+      align: 'center',
       dataIndex: ['rating', 'rate'],
       key: '4',
       sorter: (a, b) => a.rating.rate - b.rating.rate,
@@ -100,12 +145,14 @@ function TableManagementPost(props) {
     {
       title: 'Lượt thích',
       responsive: ['md'],
-      dataIndex: ['rating', 'likedUser', 'length'],
+      align: 'center',
+      dataIndex: 'sumOfLike',
       key: '5',
       sorter: (a, b) => a.rating.likedUser.length - b.rating.likedUser.length,
     },
     {
       title: 'Lượt xem',
+      align: 'center',
       responsive: ['md'],
       dataIndex: 'watch',
       key: '6',
@@ -185,6 +232,7 @@ function TableManagementPost(props) {
     // },
     {
       title: 'Tình trạng',
+      align: 'center',
       dataIndex: 'isApproved',
       render: (text, record, index) =>
         record.isApproved ? 'Đã chấp thuận' : 'Chờ chấp thuận',
@@ -201,9 +249,52 @@ function TableManagementPost(props) {
       onFilter: (value, record) => record.isApproved === value,
     },
     {
-      title: '',
-      key: 'operation',
+      title: 'Hành động',
+      align: 'center',
       fixed: 'right',
+      render: (text, record, index) => {
+        return (
+          <div className="table-management-post-action">
+            {!record.isApproved && (
+              <Popconfirm
+                title="Bạn muốn chấp thuận tài khoản này?"
+                okText="Đồng ý"
+                cancelText="Huỷ bỏ"
+                onConfirm={() => {
+                  // To do
+                  // Call api approve account
+                }}
+              >
+                <Tooltip title="Chấp thuận tài khoản">
+                  <div className="table-icons">
+                    <img alt="accept-icon" src={AcceptIcon} />
+                  </div>
+                </Tooltip>
+              </Popconfirm>
+            )}
+            <Popconfirm
+              title="Bạn có chắc muốn xoá tài khoản này?"
+              okText="Đồng ý"
+              cancelText="Huỷ bỏ"
+              onConfirm={() => {
+                // To do
+                // Call api delete account
+              }}
+            >
+              <Tooltip title="Xoá bài đăng">
+                <div className="table-icons">
+                  <img alt="delete-icon" src={DeleteIcon} />
+                </div>
+              </Tooltip>
+            </Popconfirm>
+            <Link to="/home">
+              <Tooltip title="Đến chi tiết bài đăng">
+                <DescriptionIcon />
+              </Tooltip>
+            </Link>
+          </div>
+        )
+      },
     },
   ]
 

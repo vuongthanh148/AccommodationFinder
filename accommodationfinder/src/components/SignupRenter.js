@@ -35,7 +35,7 @@ class SignupRenter extends Component {
   handleRegister = async (event) => {
     event.preventDefault();
     const { name, email, password } = this.state;
-    console.log(this.state)
+    //this.state)
     await axios
       .post("https://accommodation-finder.herokuapp.com/renter/signup", {
         name,
@@ -43,7 +43,7 @@ class SignupRenter extends Component {
         password,
       })
       .then((res) => {
-        console.log(res);
+        //res);
         if (res.data.response) {
           toast.info(res.data.response.toString(), {
             position: "bottom-left",

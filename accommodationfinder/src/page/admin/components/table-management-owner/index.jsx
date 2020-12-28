@@ -76,26 +76,24 @@ function TableManagementOwner(props) {
       fixed: 'right',
       width: 100,
       render: (text, record, index) => {
-        console.log(record)
+        //record)
         return (
-          <div>
-            <Popconfirm
-              title="Bạn có chắc muốn xoá tài khoản này?"
-              okText="Đồng ý"
-              cancelText="Huỷ bỏ"
-            >
-              <Tooltip title="Xoá bài đăng">
-                <div className="table-icons">
-                  <img alt="delete-icon" src={DeleteIcon} />
-                </div>
-              </Tooltip>
-            </Popconfirm>
-
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
             {!record.isApproved && (
               <Popconfirm
                 title="Bạn muốn chấp thuận tài khoản này?"
                 okText="Đồng ý"
                 cancelText="Huỷ bỏ"
+                onConfirm={() => {
+                  // To do
+                  // Call api approve account
+                }}
               >
                 <Tooltip title="Chấp thuận tài khoản">
                   <div className="table-icons">
@@ -104,6 +102,21 @@ function TableManagementOwner(props) {
                 </Tooltip>
               </Popconfirm>
             )}
+            <Popconfirm
+              title="Bạn có chắc muốn xoá tài khoản này?"
+              okText="Đồng ý"
+              cancelText="Huỷ bỏ"
+              onConfirm={() => {
+                // To do
+                // Call api delete account
+              }}
+            >
+              <Tooltip title="Xoá bài đăng">
+                <div className="table-icons">
+                  <img alt="delete-icon" src={DeleteIcon} />
+                </div>
+              </Tooltip>
+            </Popconfirm>
           </div>
         )
       },

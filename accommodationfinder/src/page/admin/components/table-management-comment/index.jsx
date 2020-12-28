@@ -37,15 +37,6 @@ function TableManagementComment() {
       },
     },
     {
-      title: 'Đánh giá',
-      dataIndex: 'stars',
-      key: 'stars',
-      width: 150,
-      render: (text, record, index) => {
-        return <Rate defaultValue={text} disabled={true} />
-      },
-    },
-    {
       title: 'Bình luận',
       dataIndex: 'comment',
       key: 'comment',
@@ -53,7 +44,7 @@ function TableManagementComment() {
       width: 200,
     },
     {
-      title: 'Tình trạng',
+      title: 'Hành động',
       dataIndex: 'isApproved',
       key: 'isApproved',
       render: (text, record, index) => {
