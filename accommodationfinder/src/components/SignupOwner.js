@@ -84,17 +84,6 @@ class SignupOwner extends Component {
     return (
       <>
         <div className="signupOwner-background-cover signupOwner-height-1-1 signupOwner-flex signupOwner-light">
-          <ToastContainer
-            position="bottom-left"
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-          />
           <div className="signupOwner-overlay-secondary signupOwner-position-cover"></div>
 
           <div className="signupOwner-auth-2 signupOwner-position-z-index">

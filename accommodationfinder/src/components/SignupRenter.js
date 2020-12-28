@@ -71,17 +71,6 @@ class SignupRenter extends Component {
   render() {
     return (
       <div className="signupRenter-background-cover signupRenter-height-1-1 signupRenter-flex signupRenter-light">
-        <ToastContainer
-          position="bottom-left"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <div className="signupRenter-overlay-secondary signupRenter-position-cover"></div>
 
         <div className="signupRenter-auth-2 signupRenter-position-z-index">

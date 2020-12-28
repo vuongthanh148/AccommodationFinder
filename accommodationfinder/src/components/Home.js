@@ -422,24 +422,8 @@ class Search extends Component {
       livingArea,
       publicPlace,
     } = this.state;
-    const searchBarStart = window.innerHeight + 116;
     let searchBackColor = "rgba(255,255,255, 0.95)";
-    const listLoader = [
-      "Audio",
-      "BallTriangle",
-      "Bars",
-      "Circles",
-      "Grid",
-      "Hearts",
-      "Oval",
-      "Puff",
-      "Rings",
-      "TailSpin",
-      "ThreeDots",
-      "Plane",
-    ];
     const accomods = this.state.list_accomod;
-    //"accomod to send: ", accomods);
 
     return (
       <>
@@ -792,7 +776,7 @@ class Search extends Component {
                   }}
                 >
                   <Loader
-                    type={listLoader[this.props.randomLoader]}
+                    type={"Bars"}
                     color="#bf7c2f"
                     height={200}
                     width={200}

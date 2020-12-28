@@ -22,6 +22,8 @@ import Chatbox from './page/chat/Chatbox/Chatbox'
 import Profile from './components/Profile'
 import Footer from './components/Footer'
 import { UserContext } from './context/user.context'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const HomeDetailPage = React.lazy(() => import('./page/house-detail'))
 const NewPost = React.lazy(() => import('./components/NewPost'))
 const AdminPage = React.lazy(() => import('./page/admin/admin'))
@@ -87,23 +89,9 @@ class App extends Component {
   }
 
   render() {
-    const randomLoader = Math.floor(Math.random() * 12)
-    const listLoader = [
-      'Audio',
-      'BallTriangle',
-      'Bars',
-      'Circles',
-      'Grid',
-      'Hearts',
-      'Oval',
-      'Puff',
-      'Rings',
-      'TailSpin',
-      'ThreeDots',
-      'Plane',
-    ]
     return (
       // this.renderedScreen(this.state.screen)
+      
       <Suspense
         fallback={
           <div style={{ position: 'relative', width: '100vw', height: '90vh' }}>
@@ -120,7 +108,7 @@ class App extends Component {
               }}
             >
               <Loader
-                type={listLoader[randomLoader]}
+                type={'Bars'}
                 color="#bf7c2f"
                 height={200}
                 width={200}
@@ -130,6 +118,17 @@ class App extends Component {
           </div>
         }
       >
+        <ToastContainer
+          position="bottom-left"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         {this.state.finishFetchUserData && (
           <Router>
             {this.state.navbar ? (
@@ -245,7 +244,7 @@ class App extends Component {
               }}
             >
               <Loader
-                type={listLoader[randomLoader]}
+                type={"Bars"}
                 color="#bf7c2f"
                 height={200}
                 width={200}

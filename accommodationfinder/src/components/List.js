@@ -52,12 +52,12 @@ class List extends Component {
     }).then((res) => {
       console.log(res)
       toast.info(res.data.isFollowed?"Thêm vào danh sách yêu thích thành công!":"Huỷ yêu thích thành công!", {
-        position: "bottom-left",
+        // position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
+        pauseOnHover: false,
+        draggable: false,
         });
     });
   };
@@ -67,17 +67,6 @@ class List extends Component {
     // console.log(accomod);
     return (
       <div className="ev-card-1">
-        <ToastContainer
-          position="bottom-left"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <div>
           <div className="uk-card uk-card-default uk-card-body">
             <div

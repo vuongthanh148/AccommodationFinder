@@ -10,12 +10,13 @@ import List from './List'
 import Listing from './Listing'
 import axios from 'axios'
 import Loader from 'react-loader-spinner'
+import FormData from 'form-data'
 
 class Profile extends Component {
   render() {
     return (
       <div>
-        <Nav />
+        {/* <Nav /> */}
         <Info />
       </div>
     )
@@ -52,7 +53,7 @@ class Nav extends Component {
 
 class Info extends Component {
   static contextType = UserContext
-  
+
   state = {
     myProfile: 1,
     favorites: 2,
@@ -60,12 +61,13 @@ class Info extends Component {
     currentPage: 1,
     userData: this.context.userData,
     userToken: localStorage.getItem('token'),
-    list_follow_accmod: [],
+    list_follow_accomod: [],
     fisnishFetching: false,
+    userAvatar: this.context.userData.avatar,
+    uploadedFile: null,
   }
 
   async componentDidMount() {
-    console.log('userData in Info: ', this.state.userData)
     await axios({
       method: 'POST',
       url: `https://accommodation-finder.herokuapp.com/followList`,
@@ -76,9 +78,8 @@ class Info extends Component {
         Authorization: `Bearer ${this.state.userToken}`,
       },
     }).then(async (res) => {
-      console.log(res.data)
       let tempList = []
-      await res.data.forEach((e, index) => {
+      await res.data.forEach((e) => {
         axios
           .get(`https://accommodation-finder.herokuapp.com/accommodation/${e}`)
           .then((res2) => {
@@ -90,28 +91,83 @@ class Info extends Component {
           list_follow_accomod: tempList,
         },
         () => {
-          console.log(this.state.list_follow_accomod);
+          console.log(this.state.list_follow_accomod)
           this.setState({
-            fisnishFetching: true
+            fisnishFetching: true,
           })
         }
       )
     })
   }
 
+  onFileChange = (event) => {
+    // Update the state
+    this.setState({ selectedFile: event.target.files[0] })
+    console.log(event.target.files[0])
+
+    // let formData = new FormData()
+    // let file = URL.createObjectURL(event.target.files[0])
+    // formData.append('image', file)
+
+    var data = new FormData()
+    data.append(
+      'image',
+      event.target.files[0]
+    )
+
+    var config = {
+      method: 'post',
+      url: 'https://api.imgur.com/3/image',
+      headers: { 
+        'Authorization': 'Client-ID 546c25a59c58ad7', 
+        'Accept': "*/*",
+      },
+      data : data
+    };
+  
+    axios(config)
+      .then((res) => {
+        console.log('res: ', res.data.data.link)
+        this.setState({
+          userAvatar: res.data.data.link
+        })
+      })
+      .catch((e) => {
+        // res.send();
+      })
+  }
+
   render() {
-    if(this.state.fisnishFetching){
-      console.log(this.state.list_follow_accmod)
+    const {
+      myProfile,
+      favorites,
+      changePassword,
+      currentPage,
+      userAvatar,
+    } = this.state
+    if (this.state.fisnishFetching) {
       return (
         <div className="ev-page-container">
-          <div className="profile-grid-large profile-grid">
+          <div className="profile-grid">
             <div className="profile-width-1-4">
               <div className="profile-box-shadow-small profile-border-rounded profile-padding">
-                <div className="profile-block profile-margin-remove profile-text-center">
+                <div
+                  className="profile-block profile-margin-remove profile-text-center"
+                  style={{ position: 'relative' }}
+                >
                   <img
                     className="profile-border-rounded profile-box-shadow-small profile-width-1-2"
-                    src={avatar}
+                    src={userAvatar}
                   />
+                  <label htmlFor="files" className="change_label">
+                    Change Avatar
+                  </label>
+                  <input
+                    type="file"
+                    className="change_input"
+                    id="files"
+                    onChange={this.onFileChange}
+                  ></input>
                 </div>
                 <div className="profile-margin profile-text-center">
                   <p
@@ -138,7 +194,7 @@ class Info extends Component {
                   <li>
                     <a
                       className="ev-link-secondary"
-                      onClick={() => this.setState({currentPage: 1})}
+                      onClick={() => this.setState({ currentPage: 1 })}
                     >
                       Hồ sơ cá nhân
                     </a>
@@ -146,7 +202,7 @@ class Info extends Component {
                   <li>
                     <a
                       className="ev-link-secondary"
-                      onClick={() => this.setState({currentPage: 2})}
+                      onClick={() => this.setState({ currentPage: 2 })}
                     >
                       Danh sách yêu thích
                     </a>
@@ -154,65 +210,61 @@ class Info extends Component {
                   <li>
                     <a
                       className="ev-link-secondary"
-                      onClick={ () => this.setState({currentPage: 3})}
+                      onClick={() => this.setState({ currentPage: 3 })}
                     >
                       Đổi mật khẩu
                     </a>
                   </li>
                 </ul>
-  
+
                 <hr />
-  
+
                 <a className="profile-button profile-button-default profile-text-truncate profile-border-rounded profile-width-1-1">
-                  <Icon icon={lockIcon} className="profile-margin-small-right" />{' '}
+                  <Icon
+                    icon={lockIcon}
+                    className="profile-margin-small-right"
+                  />
                   Đăng xuất
                 </a>
               </div>
             </div>
-            {this.state.MyProfile === this.state.currentPage && <div
-              className="user-profile"
-            >
-              <MyProfile />
-            </div>}
-            {this.state.favorites === this.state.currentPage && <div
-              className="user-profile"
-            >
-              <Favorites list_accomod={this.state.list_follow_accmod} />
-            </div>}
-            {this.state.changePassword === this.state.currentPage &&
-            <div
-              className="user-changepassword"
-            >
-              <ChangePassword />
-            </div>}
+            {myProfile === currentPage && (
+              <div className="user-profile">
+                <MyProfile />
+              </div>
+            )}
+            {favorites === currentPage && (
+              <div className="user-profile">
+                <Favorites list_accomod={this.state.list_follow_accomod} />
+              </div>
+            )}
+            {changePassword === currentPage && (
+              <div className="user-changepassword">
+                <ChangePassword />
+              </div>
+            )}
           </div>
         </div>
       )
-    }
-    else{
+    } else {
       return (
         <div style={{ position: 'relative', width: '100vw', height: '90vh' }}>
-        <div
-          style={{
-            width: '200px',
-            height: '200px',
-            position: 'absolute',
-            top: '0',
-            right: '0',
-            bottom: '0',
-            left: '0',
-            margin: 'auto',
-          }}
-        >
-          <Loader
-            type={'Bars'}
-            color="#bf7c2f"
-            height={200}
-            width={200}
-          />
-          <p style={{ paddingTop: '20px', fontSize: '20px' }}>Loading...</p>
+          <div
+            style={{
+              width: '200px',
+              height: '200px',
+              position: 'absolute',
+              top: '0',
+              right: '0',
+              bottom: '0',
+              left: '0',
+              margin: 'auto',
+            }}
+          >
+            <Loader type={'Bars'} color="#bf7c2f" height={200} width={200} />
+            <p style={{ paddingTop: '20px', fontSize: '20px' }}>Loading...</p>
+          </div>
         </div>
-      </div>
       )
     }
   }
@@ -223,7 +275,6 @@ class MyProfile extends Component {
 
   render() {
     const { phoneNumber, email, citizenId, address } = this.context.userData
-    console.log(phoneNumber)
     return (
       <div>
         <h5 className="profile-heading-line">
@@ -304,10 +355,12 @@ class Favorites extends Component {
       <div>
         <h5 className="profile-heading-line">
           <span>Danh sách yêu thích</span>
+        </h5>
+        <div className="list_favorite">
           {this.state.list_accomod.map((accomod, index) => {
             return <List accomod={accomod} key={index} isFollowed={true} />
           })}
-        </h5>
+        </div>
       </div>
     )
   }
