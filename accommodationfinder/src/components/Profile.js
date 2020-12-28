@@ -177,6 +177,7 @@ class MyProfile extends Component {
   state = {}
   render() {
     const { phoneNumber, email, citizenId, address } = this.context.userData
+    console.log(phoneNumber)
     return (
       <div>
         <h5 className="profile-heading-line">
@@ -213,7 +214,7 @@ class MyProfile extends Component {
                 className="profile-input profile-border-rounded"
                 minLength="10"
                 type="text"
-                disabled={phoneNumber ? true : false}
+                disabled={!phoneNumber ? true : false}
                 defaultValue={phoneNumber ? phoneNumber : ''}
               />
             </div>
@@ -226,7 +227,7 @@ class MyProfile extends Component {
                 className="profile-input profile-border-rounded"
                 type="email"
                 defaultValue={email ?? email}
-                disabled={email ? true : false}
+                disabled={!email ? true : false}
               />
             </div>
           </div>
@@ -238,7 +239,7 @@ class MyProfile extends Component {
                 minLength="9"
                 type="text"
                 defaultValue={citizenId ?? citizenId}
-                disabled={citizenId ? true : false}
+                disabled={!citizenId ? true : false}
               />
             </div>
           </div>
@@ -248,7 +249,7 @@ class MyProfile extends Component {
               <input
                 className="profile-input profile-border-rounded"
                 type="text"
-                disabled={address ? true : false}
+                disabled={!address ? true : false}
                 defaultValue={address ?? address}
               />
             </div>
