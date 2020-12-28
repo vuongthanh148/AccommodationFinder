@@ -49,7 +49,8 @@ const Login = (props) => {
           setIsLoggedIn(true)
           props.updateLoginState({ ...res.data.user, userType: userType }, true)
           userContext.setUserData({ ...res.data.user, userType: userType })
-        }).catch(e => {
+        })
+        .catch((e) => {
           console.log(e.response)
           toast.error(e.response.data, {
             position: 'bottom-left',
@@ -66,17 +67,17 @@ const Login = (props) => {
 
   return (
     <>
-    <ToastContainer
-            position="bottom-left"
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-          />
+      <ToastContainer
+        position="bottom-left"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       {!isLoggedIn && (
         <div className="login-height-1-1">
           <div className="login-background-cover login-height-1-1 login-flex login-light">

@@ -4,8 +4,12 @@ import angleDoubleRight from '@iconify-icons/fa-solid/angle-double-right'
 import lockIcon from '@iconify-icons/fa-solid/lock'
 import avatar from '../image/avatar.png'
 import '../css/Profile.css'
-import { Favorite } from '@material-ui/icons'
+import { Favorite, TocRounded } from '@material-ui/icons'
 import { UserContext } from '../context/user.context'
+import List from './List'
+import Listing from './Listing'
+import axios from 'axios'
+import Loader from 'react-loader-spinner'
 
 class Profile extends Component {
   render() {
@@ -48,133 +52,175 @@ class Nav extends Component {
 
 class Info extends Component {
   static contextType = UserContext
-  constructor(props) {
-    super(props)
-    this.state = {
-      myProfile: '',
-      favorites: 'none',
-      changePassword: 'none',
-    }
+  
+  state = {
+    myProfile: 1,
+    favorites: 2,
+    changePassword: 3,
+    currentPage: 1,
+    userData: this.context.userData,
+    userToken: localStorage.getItem('token'),
+    list_follow_accmod: [],
+    fisnishFetching: false,
   }
-  changeMyProfile = () => {
-    this.setState({
-      myProfile: '',
-      favorites: 'none',
-      changePassword: 'none',
-    })
-  }
-  changeFavorites = () => {
-    this.setState({
-      myProfile: 'none',
-      favorites: '',
-      changePassword: 'none',
-    })
-  }
-  changeMyPassword = () => {
-    this.setState({
-      myProfile: 'none',
-      favorites: 'none',
-      changePassword: '',
+
+  async componentDidMount() {
+    console.log('userData in Info: ', this.state.userData)
+    await axios({
+      method: 'POST',
+      url: `https://accommodation-finder.herokuapp.com/followList`,
+      data: {
+        _id: this.state.userData._id,
+      },
+      headers: {
+        Authorization: `Bearer ${this.state.userToken}`,
+      },
+    }).then(async (res) => {
+      console.log(res.data)
+      let tempList = []
+      await res.data.forEach((e, index) => {
+        axios
+          .get(`https://accommodation-finder.herokuapp.com/accommodation/${e}`)
+          .then((res2) => {
+            tempList.push(res2.data)
+          })
+      })
+      this.setState(
+        {
+          list_follow_accomod: tempList,
+        },
+        () => {
+          console.log(this.state.list_follow_accomod);
+          this.setState({
+            fisnishFetching: true
+          })
+        }
+      )
     })
   }
 
   render() {
-    return (
-      <div className="ev-page-container">
-        <div className="profile-grid-large profile-grid">
-          <div className="profile-width-1-4">
-            <div className="profile-box-shadow-small profile-border-rounded profile-padding">
-              <div className="profile-block profile-margin-remove profile-text-center">
-                <img
-                  className="profile-border-rounded profile-box-shadow-small profile-width-1-2"
-                  src={avatar}
-                />
+    if(this.state.fisnishFetching){
+      console.log(this.state.list_follow_accmod)
+      return (
+        <div className="ev-page-container">
+          <div className="profile-grid-large profile-grid">
+            <div className="profile-width-1-4">
+              <div className="profile-box-shadow-small profile-border-rounded profile-padding">
+                <div className="profile-block profile-margin-remove profile-text-center">
+                  <img
+                    className="profile-border-rounded profile-box-shadow-small profile-width-1-2"
+                    src={avatar}
+                  />
+                </div>
+                <div className="profile-margin profile-text-center">
+                  <p
+                    className="profile-text-bold profile-margin-remove"
+                    style={{ fontSize: '1rem' }}
+                  >
+                    {this.context.userData.name}
+                  </p>
+                  <p className="profile-text-muted profile-text-small profile-margin-remove">
+                    {this.context.userData.userType.replace(
+                      /\w\S*/g,
+                      function (txt) {
+                        return (
+                          txt.charAt(0).toUpperCase() +
+                          txt.substr(1).toLowerCase()
+                        )
+                      }
+                    )}
+                  </p>
+                </div>
+                <hr />
+
+                <ul className="profile-list ev-list profile-text-small">
+                  <li>
+                    <a
+                      className="ev-link-secondary"
+                      onClick={() => this.setState({currentPage: 1})}
+                    >
+                      Hồ sơ cá nhân
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="ev-link-secondary"
+                      onClick={() => this.setState({currentPage: 2})}
+                    >
+                      Danh sách yêu thích
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="ev-link-secondary"
+                      onClick={ () => this.setState({currentPage: 3})}
+                    >
+                      Đổi mật khẩu
+                    </a>
+                  </li>
+                </ul>
+  
+                <hr />
+  
+                <a className="profile-button profile-button-default profile-text-truncate profile-border-rounded profile-width-1-1">
+                  <Icon icon={lockIcon} className="profile-margin-small-right" />{' '}
+                  Đăng xuất
+                </a>
               </div>
-
-              <div className="profile-margin profile-text-center">
-                <p
-                  className="profile-text-bold profile-margin-remove"
-                  style={{ fontSize: '1rem' }}
-                >
-                  {this.context.userData.name}
-                </p>
-                <p className="profile-text-muted profile-text-small profile-margin-remove">
-                  {this.context.userData.userType.replace(
-                    /\w\S*/g,
-                    function (txt) {
-                      return (
-                        txt.charAt(0).toUpperCase() +
-                        txt.substr(1).toLowerCase()
-                      )
-                    }
-                  )}
-                </p>
-              </div>
-
-              <hr />
-
-              <ul className="profile-list ev-list profile-text-small">
-                <li>
-                  <a
-                    className="ev-link-secondary"
-                    onClick={this.changeMyProfile}
-                  >
-                    Hồ sơ cá nhân
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="ev-link-secondary"
-                    onClick={this.changeFavorites}
-                  >
-                    Danh sách yêu thích
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="ev-link-secondary"
-                    onClick={this.changeMyPassword}
-                  >
-                    Đổi mật khẩu
-                  </a>
-                </li>
-              </ul>
-
-              <hr />
-
-              <a className="profile-button profile-button-default profile-text-truncate profile-border-rounded profile-width-1-1">
-                <Icon icon={lockIcon} className="profile-margin-small-right" />{' '}
-                Đăng xuất
-              </a>
             </div>
-          </div>
-          <div
-            className="user-profile"
-            style={{ display: this.state.myProfile }}
-          >
-            <MyProfile />
-          </div>
-          <div
-            className="user-profile"
-            style={{ display: this.state.favorites }}
-          >
-            <Favorites />
-          </div>
-          <div
-            className="user-changepassword"
-            style={{ display: this.state.changePassword }}
-          >
-            <ChangePassword />
+            {this.state.MyProfile === this.state.currentPage && <div
+              className="user-profile"
+            >
+              <MyProfile />
+            </div>}
+            {this.state.favorites === this.state.currentPage && <div
+              className="user-profile"
+            >
+              <Favorites list_accomod={this.state.list_follow_accmod} />
+            </div>}
+            {this.state.changePassword === this.state.currentPage &&
+            <div
+              className="user-changepassword"
+            >
+              <ChangePassword />
+            </div>}
           </div>
         </div>
+      )
+    }
+    else{
+      return (
+        <div style={{ position: 'relative', width: '100vw', height: '90vh' }}>
+        <div
+          style={{
+            width: '200px',
+            height: '200px',
+            position: 'absolute',
+            top: '0',
+            right: '0',
+            bottom: '0',
+            left: '0',
+            margin: 'auto',
+          }}
+        >
+          <Loader
+            type={'Bars'}
+            color="#bf7c2f"
+            height={200}
+            width={200}
+          />
+          <p style={{ paddingTop: '20px', fontSize: '20px' }}>Loading...</p>
+        </div>
       </div>
-    )
+      )
+    }
   }
 }
 
 class MyProfile extends Component {
   static contextType = UserContext
-  state = {}
+
   render() {
     const { phoneNumber, email, citizenId, address } = this.context.userData
     console.log(phoneNumber)
@@ -185,28 +231,6 @@ class MyProfile extends Component {
         </h5>
 
         <form className="profile-grid">
-          {/* <div className="profile-first-column">
-            <label className="profile-form-label">Họ</label>
-            <div>
-              <input
-                className="profile-input profile-border-rounded"
-                type="text"
-                defaultValue="Le"
-              />
-            </div>
-          </div>
-
-          <div className="profile-second-column">
-            <label className="profile-form-label">Tên</label>
-            <div>
-              <input
-                className="profile-input profile-border-rounded"
-                type="text"
-                defaultValue={}
-              />
-            </div>
-          </div> */}
-
           <div className="profile-grid-margin profile-first-column">
             <label className="profile-form-label">Số điện thoại</label>
             <div>
@@ -268,17 +292,22 @@ class MyProfile extends Component {
   }
 }
 class Favorites extends Component {
-  state = {}
+  constructor(props) {
+    super(props)
+    this.state = {
+      list_accomod: this.props.list_accomod,
+    }
+  }
   render() {
+    console.log(this.props.list_accomod)
     return (
       <div>
         <h5 className="profile-heading-line">
           <span>Danh sách yêu thích</span>
+          {this.state.list_accomod.map((accomod, index) => {
+            return <List accomod={accomod} key={index} isFollowed={true} />
+          })}
         </h5>
-        <p>
-          This is a list of favorites
-          accommodation...............................................................................................
-        </p>
       </div>
     )
   }

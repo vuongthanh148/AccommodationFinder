@@ -452,6 +452,7 @@ class Search extends Component {
             <Headroom
               pinStart={window.innerHeight + 116 + 80}
               upTolerance={40}
+              disable={window.innerWidth<1366?true:false}
               style={{
                 width: "90vw",
                 margin: "auto",

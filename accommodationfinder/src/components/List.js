@@ -141,7 +141,7 @@ class List extends Component {
                 ))}
               </Slide>
             </div>
-            <Link to={`/home-detail/${accomod._id}`}>
+            <Link to={`/home-detail/${accomod._id}`} style={{ textDecoration: 'none', color: 'black' }}>
               <div className="ev-body">
                 <div style={{ display: 'flex' }}>
                   <Rating
