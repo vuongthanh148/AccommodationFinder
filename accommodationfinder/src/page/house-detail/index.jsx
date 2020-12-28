@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Row, Col, Divider, Button, Avatar, Input, Typography } from 'antd'
 import { useParams } from 'react-router-dom'
 import Footer from '../../components/Footer'
-import { devURL } from '../../constants/api'
+import { baseURL } from '../../constants/api'
 import { UserContext } from '../../context/user.context'
 const { TextArea } = Input
 
@@ -27,7 +27,7 @@ const HomeDetailPage = () => {
   const getAllComments = async () => {
     const res = await axios({
       method: 'POST',
-      url: 'http://localhost:4000/comment/get-all-comments',
+      url: `${baseURL}/comment/get-all-comments`,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -38,11 +38,24 @@ const HomeDetailPage = () => {
     setListComment(res.data.comments)
   }
 
+  const analystPage = async () => {
+    await axios({
+      method: 'POST',
+      url: `${baseURL}/accommodation/analyst`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: {
+        accommodationId: params.id,
+      },
+    })
+  }
+
   const onUploadComment = useCallback(async () => {
     try {
       await axios({
         method: 'POST',
-        url: `${devURL}/comment/create-new-comment`,
+        url: `${baseURL}/comment/create-new-comment`,
         headers: {
           'Context-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -61,6 +74,7 @@ const HomeDetailPage = () => {
 
   useEffect(() => {
     getAllComments()
+    analystPage()
   }, [])
 
   return (
@@ -87,7 +101,12 @@ const HomeDetailPage = () => {
                 <Col span={23}>
                   <TextArea value={comment} onChange={handleChangeComment} />
                   <Row justify="end">
-                    <Button className="button-upload-comment" onClick={onUploadComment}>Comment</Button>
+                    <Button
+                      className="button-upload-comment"
+                      onClick={onUploadComment}
+                    >
+                      Comment
+                    </Button>
                   </Row>
                 </Col>
               </Row>
