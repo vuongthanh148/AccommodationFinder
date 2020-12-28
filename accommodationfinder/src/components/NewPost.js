@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import {
@@ -62,67 +62,53 @@ const useStyles = makeStyles((theme) => ({
 const UploadImage = (props) => {
   const { files, setFiles, imgData, setImgData } = props;
   const classes = useStyles();
-
-  const getFile = React.useCallback((file) => {
-    return new Promise((resolve) => {
-      setFiles([...files, file]);
-      resolve();
-    });
-  }, [files]);
-
-  /**
-   * @type {(file: File) => Promise<void>}
-   */
-  const getBase64 = React.useCallback((file) => {
-    const fileReader = new FileReader();
-    return new Promise((resolve) => {
-      fileReader.onloadend = (readEvent) => {
-        const base64 = readEvent.target.result;
-        setImgData([...imgData, base64]);
-        resolve();
-      };
-      fileReader.readAsDataURL(file);
-    });
-  }, [imgData]);
-
   /**
    *
    * @type {(event: React.ChangeEvent<HTMLInputElement>) => void}
    */
-  const handleChange = React.useCallback(
-    async (event) => {
+  const handleChange = useCallback(
+    (event) => {
       let fileList = event.target.files;
       let fileListLength = fileList.length;
-      let file;
       if (fileListLength) {
-        for (let i = 0; i < fileListLength; i++) {
-          if (files.length + i >= 5) {
-            alert(`Chỉ chọn tối đa 5 ảnh`);
-            return;
-          }
-          await getFile(fileList.item(i));
-          await getBase64(fileList.item(i));
-        }
+        /**
+         * @type {Promise<[string, File]>[]}
+         */
+        const filePromises = Array.from(fileList)
+          .slice(0, Math.max(5 - files.length, 0))
+          .map((file) => {
+            return new Promise((resolve) => {
+              const fileReader = new FileReader();
+              fileReader.onloadend = (readEvent) => {
+                const base64 = readEvent.target.result;
+                resolve([base64, file]);
+              };
+              fileReader.readAsDataURL(file);
+            });
+          });
+        Promise.all(filePromises).then((values) => {
+          const newImgs = values.map((value) => value[0]);
+          const newFiles = values.map((value) => value[1]);
+          setFiles([...files, ...newFiles]);
+          setImgData([...imgData, ...newImgs]);
+        });
       }
     },
-    [files, imgData, props.max]
+    [files, imgData]
   );
 
   /**
    * @type {(removeIndex: number) => void}
    */
-  const removeImage = React.useCallback(
-    (removeIndex) => {
-      setFiles(files.filter((_, fileIndex) => fileIndex !== removeIndex));
-      setImgData(imgData.filter((_, imgIndex) => imgIndex !== removeIndex));
-    },
-    [files, imgData]
-  );
+  const removeImage = useCallback((removeIndex) => {
+    setFiles(files.filter((_, fileIndex) => fileIndex !== removeIndex));
+    setImgData(imgData.filter((_,imgIndex) => imgIndex !== removeIndex));
+  }, [files, imgData]);
 
   return (
     <div>
-      <label className={clsx(classes.btn)}>
-        <input min={3} max={5} type="file" multiple={true} onChange={handleChange} />
+      <label>
+        <input type="file" multiple={true} min={3} max={5} onChange={handleChange} />
       </label>
       <GridList className={classes.gridlist} cols={2}>
         {imgData.map((img, imgIndex) => {
@@ -356,7 +342,7 @@ const NewPost = () => {
   /**
    * @type {[string[], React.Dispatch<React.SetStateAction<string[]>>]}
    */
-  const [imgData, setImgData] = useState([]);
+  const [imgData, setImgData] = useState([]); // BASE64
 
   const newPostValidationSchema = yup.object().shape({
     title: yup
