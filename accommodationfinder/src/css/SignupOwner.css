@@ -6,9 +6,6 @@
   font-family: Montserrat,sans-serif !important;
 }
 
-/* form {
-  height: 90vh !important;
-} */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -408,7 +405,7 @@ input::-webkit-inner-spin-button {
   text-decoration: none;
   cursor: pointer;
 }
-@media(max-width: 400px) {
+@media only screen and (max-width: 400px) {
   .signupOwner-auth-2{
     text-align: center;
     width: 90vw;
@@ -425,7 +422,7 @@ input::-webkit-inner-spin-button {
     margin-top: 15px !important;
   }
 }
-@media(min-width: 401px) {
+@media only screen and (min-width: 401px) {
   .signupOwner-auth-2{
     text-align: center;
     width: 70vw;
@@ -438,7 +435,7 @@ input::-webkit-inner-spin-button {
     margin-top: 20px !important;
   }
 }
-@media (min-width: 640px) {
+@media only screen and (min-width: 640px) {
   .signupOwner-auth-2{
     text-align: center;
     width: 350px;
@@ -451,7 +448,7 @@ input::-webkit-inner-spin-button {
     margin-top: 20px !important;
   }
 }
-@media (min-width: 960px) {
+@media only screen and (min-width: 960px) {
   .signupOwner-auth-2{
     text-align: center;
     width: 400px;
@@ -464,7 +461,7 @@ input::-webkit-inner-spin-button {
     margin-top: 20px !important;
   }
 }
-@media (max-height: 754px) {
+@media only screen and (max-height: 754px) {
   .signupOwner-heading-line {
     margin-top: 10px !important;
     margin-bottom: 10px !important;

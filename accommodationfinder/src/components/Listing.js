@@ -139,7 +139,7 @@ class Listing extends Component {
       <>
         <div className="sortField">
           <div className="sort-result">
-            <p style={{ fontStyle: "italic", textAlign: "left" }}>
+            <p className="result" style={{ fontStyle: "italic", textAlign: "left" }}>
               Tìm kiếm được {this.state.list_accomod.length} kết quả
             </p>
           </div>

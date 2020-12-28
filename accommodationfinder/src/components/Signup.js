@@ -22,7 +22,7 @@ class Signup extends Component {
                 <div className="signup-overlay-secondary signup-position-cover"></div>
                 <div className="signup-position-z-index signup-width">
                     <NavLink  activeStyle={{color:'#fff'}} to="/home"><img className="signup-logo" src={logo}/></NavLink>
-                    <h5 className="signup-heading-line"><span>Sign Up</span></h5>
+                    <h5 className="signup-heading-line"><span>Đăng ký</span></h5>
                     <div className="signup-option-container">
                         <div className="signup-option signup-owner" >
                             <div className="option-content">

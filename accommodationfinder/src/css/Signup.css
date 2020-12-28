@@ -181,20 +181,52 @@
 	margin-left: 0;
 } */
 
-@media (max-width: 400px) {
+@media only screen and (max-width: 450px) {
 	.signup-logo {
 		width: 70%;
+	}
+	.signup-heading-line {
+		font-size: 14px !important;
+		margin: 10px 0px !important;
+	}
+	h2 {
+		font-size: 24px;
+		margin-bottom: 15px;
+	}
+	h4 {
+		font-size: 16px;
+		margin: 15px 0px;
+	}
+	.signup-option-container {
+		flex-direction: column;
+		max-width: 80%;
+		margin: auto;
+	}
+	.signup-button {
+		font-size: 14px !important;
+		width: 80% !important;
+	}
+	.signup-option{
+		width: 100%;
+		margin: 0;
+		
+	}
+	.signup-renter {
 		margin-top: 20px;
 	}
+}
+@media only screen and (min-width: 450px) and (max-width: 640px ) {
 	.signup-heading-line {
 		font-size: 14px !important;
-		margin-top: 20px !important;
+		margin: 10px 0px !important;
 	}
 	h2 {
 		font-size: 25px;
+		margin-bottom: 15px;
 	}
 	h4 {
 		font-size: 16px;
+		margin: 15px 0px;
 	}
 	.signup-button {
 		font-size: 14px !important;
@@ -203,27 +235,11 @@
 	.signup-option{
 		width: 45%;
 	}
-}
-@media (min-width: 400px) and (max-width: 640px ) {
-	.signup-heading-line {
-		font-size: 14px !important;
-		margin-top: 20px !important;
-	}
-	h2 {
-		font-size: 25px;
-	}
-	h4 {
-		font-size: 16px;
-	}
-	.signup-button {
-		font-size: 14px !important;
-		width: 100% !important;
-	}
-	.signup-option{
-		width: 45%;
+	.signup-option .option-content {
+		height: 75%;
 	}
 }
-@media (min-width: 640px) and (max-width: 860px ) {
+@media only screen and (min-width: 640px) and (max-width: 860px ) {
 	.signup-heading-line {
 		font-size: 14px !important;
 		margin-top: 20px !important;
@@ -242,47 +258,19 @@
 		width: 45%;
 	}
 }
-
-@media (max-width: 1024px) {
-	.signup-heading-line {
-		font-size: 30px !important;
-	}
-	h2 {
-		font-size: 40px;
-	}
-	h4 {
-		font-size: 25px;
+@media only screen and (min-width: 860px) {
+	.signup-width {
+		width: 80vw !important;
 	}
 	.signup-button {
-		font-size: 16px !important;
-		width: 60% !important;
+		font-size: 14px !important;
+		width: 80% !important;
 	}
-	.signup-logo{
-		width: 55%;
+	.signup-option {
+		width: 100% !important;
 	}
-	.signup-owner{
-		margin: 20px auto;
-	}
-	.signup-option{
-		width: 60%;
-	}
-	.signup-width{
-		height: 63%
-	}
-	.signup-option-container{
-		flex-direction: column;
-	}
-	.center-div{
-		width: 60%;
-		margin: 5px auto;
-	}
-	.center-line{
-		height: 1px;
-		margin: 0;
-		border-top: 1px solid #ffffff;
-		width: 100%;
-	}
-	.signup-heading-line > ::after, .signup-heading-line > ::before{
-		width: 300%;
+	.option-content {
+		width: 90%;
+		margin: auto;
 	}
 }

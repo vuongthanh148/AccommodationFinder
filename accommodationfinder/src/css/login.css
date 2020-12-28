@@ -408,7 +408,7 @@ a:hover {
   cursor: pointer;
 }
 
-@media (max-width: 400px) {
+@media  only screen and (max-width: 450px) {
   .login-auth-2{
     text-align: center;
     width: 90vw;
@@ -421,7 +421,7 @@ a:hover {
   }
 }
 
-@media (min-width: 401px) {
+@media only screen and (min-width: 450px) {
   .login-auth-2{
     text-align: center;
     width: 65vw;
@@ -434,7 +434,7 @@ a:hover {
   }
 }
 
-@media (min-width: 640px) {
+@media only screen and (min-width: 640px) {
   .login-auth-2{
     text-align: center;
     width: 350px;
@@ -449,10 +449,14 @@ a:hover {
 @media (min-width: 960px) {
   .login-auth-2{
     text-align: center;
-    width: 400px;
+    width: 500px;
   }
   .login-logo {
     width: 80%;
+  }
+
+  .margin {
+    margin: auto;
   }
   .margin {
     margin-left: 35px !important;

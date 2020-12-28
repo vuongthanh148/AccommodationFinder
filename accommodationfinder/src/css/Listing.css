@@ -250,6 +250,9 @@ h3 {
         grid-template-columns: repeat(1,calc(100%));
         grid-column-gap: 2%;
     }
+    .result {
+        font-size: 14px !important;
+    }
 }
 .item-image {
     width: 100%;

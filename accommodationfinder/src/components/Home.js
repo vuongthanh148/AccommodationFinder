@@ -51,7 +51,7 @@ class Cover extends Component {
       <div className="slide-container">
         <div className=" homecover-text-center">
           <h1 className="homecover-text-bold" style={{ color: "white" }}>
-            Discover The Best Accommodations{" "}
+            Discover The Best Accommodations
           </h1>
           <h4 className="homecover-margin" style={{ color: "white" }}>
             Your Property, Our Priority.
@@ -594,7 +594,7 @@ class Search extends Component {
 
                 <div
                   className="search-width-1-1@s search-width-5-6@m"
-                  style={{ height: "90px", margin: "0" }}
+                  style={{ margin: "0" }}
                 >
                   <div className="search-margin ">
                     <ul className="search-other-features">

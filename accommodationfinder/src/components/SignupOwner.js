@@ -6,7 +6,6 @@ import {
   Link,
   NavLink,
 } from "react-router-dom";
-// import "../css/unikit.css";
 import "../css/SignupOwner.css";
 import logo from "../image/logo_ngang_trang.png";
 import axios from "axios";
@@ -220,7 +219,7 @@ class SignupOwner extends Component {
               </button>
 
               <div className="signupOwner-margin signupOwner-width-1-1 signupOwner-text-small">
-                Bạn đã có tài khoản?
+                Bạn đã có tài khoản? {" "}
                 <NavLink
                   className="signupOwner-link-primary signupOwner-text-bold"
                   activeStyle={{ color: "#fff" }}
