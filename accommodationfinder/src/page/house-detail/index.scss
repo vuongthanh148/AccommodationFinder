@@ -4,7 +4,32 @@
     font-size: 1rem;
   }
   .ant-divider-inner-text {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 700;
+    color: #bf7c2f;
+  }
+  textarea.ant-input {
+    &:hover,
+    &:focus {
+      border: 1px solid #bf7c2f;
+    }
+  }
+  .button-upload-comment {
+    margin-top: 1rem;
+    color: white;
+    border-color: #bf7c2f;
+    background-color: #bf7c2f;
+    font-weight: 500;
+    &:hover {
+      border-color: #bf7c2f;
+    }
+  }
+  .time-create-comment {
+    padding-bottom: 1px;
+    margin-left: 0.5rem;
+    font-size: 0.75rem;
+  }
+  .username {
+    font-size: 1rem;
   }
 }

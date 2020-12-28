@@ -13,8 +13,8 @@ const ContentComment = (props) => {
           <Row align="middle" style={{ height: '85%' }}>
             <Col>
               <Row align="bottom">
-                <Typography>{userInfo.name}</Typography>
-                <Typography style={{ marginLeft: '0.5rem' }}>
+                <Typography className="username">{userInfo.name}</Typography>
+                <Typography className="time-create-comment"style={{ marginLeft: '0.5rem' }}>
                   {new Date(String(createdAt)).toUTCString()}
                 </Typography>
               </Row>

@@ -87,7 +87,7 @@ const HomeDetailPage = () => {
                 <Col span={23}>
                   <TextArea value={comment} onChange={handleChangeComment} />
                   <Row justify="end">
-                    <Button onClick={onUploadComment}>Comment</Button>
+                    <Button className="button-upload-comment" onClick={onUploadComment}>Comment</Button>
                   </Row>
                 </Col>
               </Row>
