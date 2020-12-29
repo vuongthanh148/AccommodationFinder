@@ -33,6 +33,10 @@ class List extends Component {
 
   componentDidMount() {}
 
+  handleNavigateToHomeDetailsPage = () => {
+    const { history, accomod } = this.props
+    history.push(`/home-detail/${accomod._id}`, { accommodation: accomod })
+  }
   handleViewAccomod = () => {
     console.log('xem nha ne`')
     console.log(this.state)
@@ -93,7 +97,7 @@ class List extends Component {
                 <p className="ev-price">
                   {accomod.price.toLocaleString('en')} <small>Đ/ Tháng</small>
                 </p>
-                {!this.state.isFollowed && (
+                {!this.state.isFollowed && this.state.userType === 'renter' && (
                   <FontAwesomeIcon
                     onClick={this.handleFollow}
                     style={{
@@ -105,7 +109,7 @@ class List extends Component {
                     icon={farHeart}
                   />
                 )}
-                {this.state.isFollowed && (
+                {this.state.isFollowed && this.state.userType === 'renter' && (
                   <FontAwesomeIcon
                     onClick={this.handleFollow}
                     style={{
@@ -143,9 +147,11 @@ class List extends Component {
                   margin: '0',
                   textAlign: 'left',
                   paddingLeft: '5px',
+                  fontSize: '20px',
+                  fontWeight: '600',
                 }}
               >
-                <p>{accomod.title}</p>
+                <p style={{ margin: '0', textAlign: 'left' }}>{accomod.title}</p>
               </div>
               <div className="flex-row">
                 <FontAwesomeIcon style={{ color: '#bf7c2f' }} icon={fasMapMarkedAlt} />

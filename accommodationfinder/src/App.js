@@ -11,12 +11,7 @@ import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 import Loader from 'react-loader-spinner'
 import ScrollToTop from 'react-scroll-to-top'
 import './css/App.css'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import NavbarAdmin from './components/NavbarAdmin'
 import Chatbox from './page/chat/Chatbox/Chatbox'
@@ -129,11 +124,7 @@ class App extends Component {
           <Router>
             {this.state.navbar ? (
               <>
-                <ScrollToTop
-                  smooth="true"
-                  color="#bf7c2f"
-                  className="scroll-to-top"
-                />
+                <ScrollToTop smooth="true" color="#bf7c2f" className="scroll-to-top" />
                 <Navbar
                   updateLoginState={this.updateLoginState}
                   isLoggedIn={this.state.isLoggedIn}
@@ -151,28 +142,16 @@ class App extends Component {
                 />
               </Route>
               <Route path="/signup">
-                <Signup
-                  changeNavbarState={this.changeNavbarState}
-                  updateLoginState={this.updateLoginState}
-                />
+                <Signup changeNavbarState={this.changeNavbarState} updateLoginState={this.updateLoginState} />
               </Route>
               <Route path="/signupOwner">
-                <SignupOwner
-                  changeNavbarState={this.changeNavbarState}
-                  updateLoginState={this.updateLoginState}
-                />
+                <SignupOwner changeNavbarState={this.changeNavbarState} updateLoginState={this.updateLoginState} />
               </Route>
               <Route path="/signupRenter">
-                <SignupRenter
-                  changeNavbarState={this.changeNavbarState}
-                  updateLoginState={this.updateLoginState}
-                />
+                <SignupRenter changeNavbarState={this.changeNavbarState} updateLoginState={this.updateLoginState} />
               </Route>
               <Route path="/resetpassword">
-                <ResetPassword
-                  changeNavbarState={this.changeNavbarState}
-                  updateLoginState={this.updateLoginState}
-                />
+                <ResetPassword changeNavbarState={this.changeNavbarState} updateLoginState={this.updateLoginState} />
               </Route>
               <Route path="/post">
                 <Post />
@@ -227,9 +206,7 @@ class App extends Component {
                     role={'owner'}
                   />
                 )}
-                {this.state.userData.userType === 'renter' && (
-                  <Redirect to="/home" />
-                )}
+                {this.state.userData.userType === 'renter' && <Redirect to="/home" />}
               </Route>
               <Route path="/home-detail/:id">
                 <HomeDetailPage />

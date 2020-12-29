@@ -112,13 +112,7 @@ const UploadImage = (props) => {
   return (
     <div>
       <label>
-        <input
-          type="file"
-          multiple={true}
-          min={3}
-          max={5}
-          onChange={handleChange}
-        />
+        <input type="file" multiple={true} min={3} max={5} onChange={handleChange} />
       </label>
       <GridList className={classes.gridlist} cols={2}>
         {imgData.map((img, imgIndex) => {
@@ -167,18 +161,15 @@ const MainInfo = (props) => {
         <Box mb={2}>
           <Select
             options={[{ value: 'Ha Noi', label: 'Ha Noi' }]}
-            value={
-              values.city ? { value: values.city, label: values.city } : null
-            }
+            value={values.city ? { value: values.city, label: values.city } : null}
             onChange={(e) => {
               setFieldValue('city', e.value)
+              console.log('set district')
             }}
             placeholder="Thành phố"
             style={{ width: '100%' }}
           />
-          <FormHelperText className={clsx(classes.formHelperText)}>
-            {touched.city && errors.city}
-          </FormHelperText>
+          <FormHelperText className={clsx(classes.formHelperText)}>{touched.city && errors.city}</FormHelperText>
         </Box>
         <Box mb={2}>
           <Select
@@ -186,11 +177,7 @@ const MainInfo = (props) => {
               { value: 'Hai Ba Trung', label: 'Ha Ba Trung' },
               { value: 'Cau Giay', label: 'Cau Giay' },
             ]}
-            value={
-              values.district
-                ? { value: values.district, label: values.district }
-                : null
-            }
+            value={values.district ? { value: values.district, label: values.district } : null}
             onChange={(e) => {
               setFieldValue('district', e.value)
             }}
@@ -207,18 +194,14 @@ const MainInfo = (props) => {
               { value: 'Thanh Luong', label: 'Thanh Luong' },
               { value: 'Thanh Nhan', label: 'Thanh Nhan' },
             ]}
-            value={
-              values.ward ? { value: values.ward, label: values.ward } : null
-            }
+            value={values.ward ? { value: values.ward, label: values.ward } : null}
             onChange={(e) => {
               setFieldValue('ward', e.value)
             }}
             placeholder="Phường xã"
             style={{ width: '100%' }}
           />
-          <FormHelperText className={clsx(classes.formHelperText)}>
-            {touched.ward && errors.ward}
-          </FormHelperText>
+          <FormHelperText className={clsx(classes.formHelperText)}>{touched.ward && errors.ward}</FormHelperText>
         </Box>
         <Box mb={2}>
           <TextField
@@ -257,11 +240,8 @@ const MainInfo = (props) => {
           value={values.publicPlace}
           onChange={handleChange('publicPlace')}
           size="small"
+          type="text"
           variant="outlined"
-          helperText={touched.livingArea && errors.livingArea}
-          FormHelperTextProps={{
-            className: clsx(classes.formHelperText),
-          }}
         />
       </Box>
       {/* Living Area */}
@@ -273,6 +253,7 @@ const MainInfo = (props) => {
           value={values.livingArea}
           onChange={handleChange('livingArea')}
           size="small"
+          type="number"
           variant="outlined"
           helperText={touched.livingArea && errors.livingArea}
           FormHelperTextProps={{
@@ -304,12 +285,9 @@ const MainInfo = (props) => {
           id="price"
           value={values.price}
           onChange={handleChange('price')}
+          type="number"
           size="small"
           variant="outlined"
-          helperText={touched.price && errors.price}
-          FormHelperTextProps={{
-            className: clsx(classes.formHelperText),
-          }}
         />
       </Box>
       {/* Time to live */}
@@ -336,7 +314,7 @@ const MainInfo = (props) => {
 // cơ sở vật chất
 const Furniture = (props) => {
   const { formik } = props
-  const { values, handleChange, touched } = formik
+  const { values, handleChange, touched, setFieldValue } = formik
   const classes = useStyles()
   return (
     <>
@@ -344,109 +322,78 @@ const Furniture = (props) => {
         <Grid container>
           <Grid item lg={4} md={4} sm={6} xs={12}>
             <FormControlLabel
-              control={
-                <Checkbox
-                  checked={values.seperateAccomod}
-                  onChange={handleChange('seperateAccomod')}
-                />
-              }
+              control={<Checkbox checked={values.seperateAccomod} onChange={handleChange('seperateAccomod')} />}
               label="Chung chủ"
             />
           </Grid>
           <Grid item lg={4} md={4} sm={6} xs={12}>
             <FormControlLabel
-              control={
-                <Checkbox
-                  checked={values.bathroom}
-                  onChange={handleChange('bathroom')}
-                />
-              }
+              control={<Checkbox checked={values.bathroom} onChange={handleChange('bathroom')} />}
               label="Phòng tắm"
             />
           </Grid>
           <Grid item lg={4} md={4} sm={6} xs={12}>
             <FormControlLabel
-              control={
-                <Checkbox
-                  checked={values.airConditioner}
-                  onChange={handleChange('airConditioner')}
-                />
-              }
+              control={<Checkbox checked={values.airConditioner} onChange={handleChange('airConditioner')} />}
               label="Điều hoà"
             />
           </Grid>
           <Grid item lg={4} md={4} sm={6} xs={12}>
             <FormControlLabel
-              control={
-                <Checkbox
-                  checked={values.electricWaterHeater}
-                  onChange={handleChange('electricWaterHeater')}
-                />
-              }
+              control={<Checkbox checked={values.electricWaterHeater} onChange={handleChange('electricWaterHeater')} />}
               label="Bình nóng lạnh"
             />
           </Grid>
           <Grid item lg={4} md={4} sm={6} xs={12}>
             <FormControlLabel
-              control={
-                <Checkbox
-                  checked={values.bedroom}
-                  onChange={handleChange('bedroom')}
-                />
-              }
+              control={<Checkbox checked={values.bedroom} onChange={handleChange('bedroom')} />}
               label="Phòng ngủ"
             />
           </Grid>
+
           <Grid item lg={4} md={4} sm={6} xs={12}>
             <FormControlLabel
-              control={
-                <Checkbox
-                  checked={values.kitchen}
-                  onChange={handleChange('kitchen')}
-                />
-              }
-              label="Nhà bếp"
-            />
-          </Grid>
-          <Grid item lg={4} md={4} sm={6} xs={12}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={values.balcony}
-                  onChange={handleChange('balcony')}
-                />
-              }
+              control={<Checkbox checked={values.balcony} onChange={handleChange('balcony')} />}
               label="Ban công"
             />
           </Grid>
           <Grid item lg={4} md={4} sm={6} xs={12}>
             <FormControlLabel
-              control={
-                <Checkbox
-                  checked={values.washingMachine}
-                  onChange={handleChange('washingMachine')}
-                />
-              }
+              control={<Checkbox checked={values.washingMachine} onChange={handleChange('washingMachine')} />}
               label="Máy giặt"
             />
           </Grid>
           <Grid item lg={4} md={4} sm={6} xs={12}>
             <FormControlLabel
-              control={
-                <Checkbox
-                  checked={values.fridge}
-                  onChange={handleChange('fridge')}
-                />
-              }
+              control={<Checkbox checked={values.fridge} onChange={handleChange('fridge')} />}
               label="Tủ lạnh"
             />
           </Grid>
-          <Grid item  xs={12}>
-            <Box width='100%' mb={3} mu={3}>
+          <Grid item xs={6}>
+            <Box mb={2}>
+              <InputLabel htmlFor="kitchen">Bếp</InputLabel>
+              <Select
+                options={[
+                  { label: 'Không có bếp', value: 'Không có bếp' },
+                  { label: 'Bếp chung', value: 'Bếp chung' },
+                  { label: 'Bếp riêng', value: 'Bếp riêng' },
+                ]}
+                value={values.kitchen ? { value: values.kitchen, label: values.kitchen } : null}
+                onChange={(e) => {
+                  setFieldValue('kitchen', e.value)
+                }}
+                placeholder="Bếp"
+                style={{ width: '100%' }}
+              />
+              <FormHelperText className={clsx(classes.formHelperText)}>{touched.ward && errors.ward}</FormHelperText>
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Box width="100%" mb={3} mu={3}>
               <InputLabel htmlFor="waterPrice">Giá nước</InputLabel>
               <TextField
                 variant="outlined"
-                type="text"
+                type="number"
                 fullWidth
                 id="waterPrice"
                 size="small"
@@ -459,12 +406,12 @@ const Furniture = (props) => {
               />
             </Box>
           </Grid>
-          <Grid item  xs={12}>
-            <Box width='100%' mu={3}>
-              <InputLabel htmlFor="waterPrice">Giá điện</InputLabel>
+          <Grid item xs={12}>
+            <Box width="100%" mu={3}>
+              <InputLabel htmlFor="electricityPrice">Giá điện</InputLabel>
               <TextField
                 variant="outlined"
-                type="text"
+                type="number"
                 fullWidth
                 id="electricityPrice"
                 size="small"
@@ -483,7 +430,7 @@ const Furniture = (props) => {
   )
 }
 
-const NewPost = () => {
+const NewPost = (props) => {
   /**
    * @type {[File[], React.Dispatch<React.SetStateAction<File[]>>]}
    */
@@ -493,20 +440,50 @@ const NewPost = () => {
    */
   const [imgData, setImgData] = useState([]) // BASE64
 
+  const handleSubmit = (values) => {
+    console.log(values)
+    console.log(props.userData)
+    const data = {
+      _id: props.userData._id,
+      name: props.userData.name,
+      phoneNumber: props.userData.phoneNumber,
+      accomodInfo: {
+        houseNumber: parseInt(values.number),
+        street: values.street,
+        ward: values.ward,
+        district: values.district,
+        city: values.city,
+        publicPlace: values.publicPlace,
+        accommodationType: values.accommodationType,
+        seperateAccomodation: values.seperateAccomod,
+        livingArea: values.livingArea,
+        livingArea: values.livingArea,
+      },
+      facilitiesInfo: {
+        bathroom: values.bathroom,
+        bedroom: { seperate: values.bedroom, amount: 1 },
+        electricWaterHeater: values.electricWaterHeater,
+        kitchen: values.kitchen,
+        airConditioner: values.airConditioner,
+        balcony: values.balcony,
+        waterPrice: values.waterPrice,
+        electricityPrice: values.electricityPrice,
+        washingMachine: values.washingMachine,
+        fridge: values.fridge,
+      },
+    }
+  }
   const newPostValidationSchema = yup.object().shape({
-    title: yup
-      .string()
-      .max(50, 'Tối đa 50 kí tự')
-      .required('Không được để trống'),
+    title: yup.string().max(50, 'Tối đa 50 kí tự').required('Không được để trống'),
     city: yup.string().nullable().required('Không được để trống'),
     district: yup.string().nullable().required('Không được để trống'),
     ward: yup.string().nullable().required('Không được để trống'),
     publicPlace: yup.string().nullable().required('Không được để trống'),
     street: yup.string().nullable().required('Không được để trống'),
-    number: yup.number().nullable().integer().required('Không được để trống'),
-    livingArea: yup.number().nullable().required('Không được để trống'),
+    number: yup.string().nullable().required('Không được để trống'),
+    livingArea: yup.string().required('Không được để trống'),
     accommodationType: yup.string().nullable().required('Không được để trống'),
-    price: yup.number().nullable().required('Không được để trống'),
+    price: yup.string().required('Không được để trống'),
     week: yup.number().nullable().required('Không được để trống'),
 
     seperateAccomod: yup.number().required('Không được để trống'),
@@ -514,7 +491,7 @@ const NewPost = () => {
     airConditioner: yup.bool().required('Không được để trống'),
     electricWaterHeater: yup.bool().required('Không được để trống'),
     bedroom: yup.bool().required('Không được để trống'),
-    kitchen: yup.bool().required('Không được để trống'),
+    kitchen: yup.string().required('Không được để trống'),
     balcony: yup.bool().required('Không được để trống'),
     washingMachine: yup.bool().required('Không được để trống'),
     fridge: yup.bool().required('Không được để trống'),
@@ -529,31 +506,29 @@ const NewPost = () => {
       district: void 0,
       ward: void 0,
       publicPlace: '',
-      accommodationType: '',
       street: '',
-      number: void 0,
-      livingArea: void 0,
-      price: void 0,
-      week: void 0,
+      number: '',
+      livingArea: '',
+      accommodationType: '',
+      price: '',
+      week: '',
 
       seperateAccomod: false,
       bathroom: false,
       airConditioner: false,
       electricWaterHeater: false,
       bedroom: false,
-      kitchen: false,
+      kitchen: '',
       balcony: false,
-      waterPrice: void 0,
-      electricityPrice: void 0,
       washingMachine: false,
       fridge: false,
+      waterPrice: '',
+      electricityPrice: '',
     },
-    validationSchema: {newPostValidationSchema},
+    validationSchema: newPostValidationSchema,
     onSubmit: (values, helpers) => {
-      console.log("dcmcmcm")
       // kiểm tra và gửi
-      console.log(values);
-      console.log(helpers);
+      console.log(values)
     },
   })
 
@@ -583,14 +558,7 @@ const NewPost = () => {
         case 1:
           return <Furniture formik={formik} />
         case 2:
-          return (
-            <UploadImage
-              files={files}
-              setFiles={setFiles}
-              imgData={imgData}
-              setImgData={setImgData}
-            />
-          )
+          return <UploadImage files={files} setFiles={setFiles} imgData={imgData} setImgData={setImgData} />
       }
     },
     [activeStep, formik]
@@ -602,11 +570,7 @@ const NewPost = () => {
         case 0:
           return (
             <Box>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => handleNextStep()}
-              >
+              <Button variant="contained" color="primary" onClick={() => handleNextStep()}>
                 Tiếp theo
               </Button>
             </Box>
@@ -614,19 +578,11 @@ const NewPost = () => {
         case 1:
           return (
             <Box>
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={handlePrevStep}
-              >
+              <Button variant="outlined" color="primary" onClick={handlePrevStep}>
                 Quay lại
               </Button>
               &nbsp;
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleNextStep}
-              >
+              <Button variant="contained" color="primary" onClick={handleNextStep}>
                 Tiếp theo
               </Button>
             </Box>
@@ -634,20 +590,16 @@ const NewPost = () => {
         case 2:
           return (
             <Box>
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={handlePrevStep}
-              >
+              <Button variant="outlined" color="primary" onClick={handlePrevStep}>
                 Quay lại
               </Button>
               &nbsp;
               <Button
-                type='submit'
+                type="submit"
                 variant="contained"
                 color="primary"
                 disabled={formik.isSubmitting}
-                onClick={() => {console.log(formik)}}
+                onClick={() => handleSubmit(formik.values)}
               >
                 Hoàn tất
               </Button>
