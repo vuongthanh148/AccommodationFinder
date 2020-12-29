@@ -106,7 +106,7 @@ const HomeDetailPage = () => {
     try {
       await axios({
         method: 'POST',
-        url: `http://localhost:4000/accommodation/follow`,
+        url: `${baseURL}/accommodation/follow`,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -125,7 +125,7 @@ const HomeDetailPage = () => {
     try {
       await axios({
         method: 'POST',
-        url: `http://localhost:4000/accommodation/unfollow`,
+        url: `${baseURL}/accommodation/unfollow`,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -144,7 +144,7 @@ const HomeDetailPage = () => {
     try {
       const result = await axios({
         method: 'GET',
-        url: `http://localhost:4000/accommodations/${params.id}/info`,
+        url: `${baseURL}/accommodations/${params.id}/info`,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('token')}`,
