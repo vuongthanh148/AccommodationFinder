@@ -16,6 +16,7 @@ import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 import 'react-slideshow-image/dist/styles.css'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
+import { withRouter } from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css'
 
 class List extends Component {
@@ -57,19 +58,14 @@ class List extends Component {
           },
         }).then((res) => {
           console.log(res)
-          toast.info(
-            res.data.success
-              ? 'Thêm vào danh sách yêu thích thành công!'
-              : 'Huỷ yêu thích thành công!',
-            {
-              // position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: false,
-              draggable: false,
-            }
-          )
+          toast.info(res.data.success ? 'Thêm vào danh sách yêu thích thành công!' : 'Huỷ yêu thích thành công!', {
+            // position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+          })
         })
       }
     )
@@ -77,7 +73,6 @@ class List extends Component {
 
   render() {
     const { accomod } = this.props
-    // console.log(accomod);
     return (
       <div className="ev-card-1">
         <div>
@@ -92,9 +87,7 @@ class List extends Component {
             >
               <div className="views">
                 <FontAwesomeIcon style={{ margin: 'auto 0' }} icon={fasEye} />
-                <p style={{ paddingLeft: '8px', paddingRight: '8px' }}>
-                  {accomod.watch}
-                </p>
+                <p style={{ paddingLeft: '8px', paddingRight: '8px' }}>{accomod.watch}</p>
               </div>
               <div className="uk-overlay overlay-gradient">
                 <p className="ev-price">
@@ -125,13 +118,7 @@ class List extends Component {
                   />
                 )}
               </div>
-              <Slide
-                autoplay={true}
-                duration={2000}
-                pauseOnHover={true}
-                transitionDuration={750}
-                canSwipe={false}
-              >
+              <Slide autoplay={true} duration={2000} pauseOnHover={true} transitionDuration={750} canSwipe={false}>
                 {accomod.photos.map((element, index) => (
                   <div
                     className="each-slide-list"
@@ -143,142 +130,92 @@ class List extends Component {
                 ))}
               </Slide>
             </div>
-            <Link
-              to={`/home-detail/${accomod._id}`}
-              style={{ textDecoration: 'none', color: 'black' }}
-            >
-              <div className="ev-body">
-                <div style={{ display: 'flex' }}>
-                  <Rating
-                    value={parseFloat(accomod.avgRate)}
-                    max={5}
-                    readOnly
-                  />
-                  <p style={{ margin: 'auto 0 auto auto' }}>
-                    {accomod.postedDate
-                      .slice(0, 10)
-                      .split('-')
-                      .reverse()
-                      .join('/')}
-                  </p>
-                </div>
-                <div
-                  className="title"
+            <div className="ev-body" onClick={this.handleNavigateToHomeDetailsPage}>
+              <div style={{ display: 'flex' }}>
+                <Rating value={parseFloat(accomod.avgRate)} max={5} readOnly />
+                <p style={{ margin: 'auto 0 auto auto' }}>
+                  {accomod.postedDate.slice(0, 10).split('-').reverse().join('/')}
+                </p>
+              </div>
+              <div
+                className="title"
+                style={{
+                  margin: '0',
+                  textAlign: 'left',
+                  paddingLeft: '5px',
+                }}
+              >
+                <p>{accomod.title}</p>
+              </div>
+              <div className="flex-row">
+                <FontAwesomeIcon style={{ color: '#bf7c2f' }} icon={fasMapMarkedAlt} />
+                <p
                   style={{
-                    fontSize: '19px',
-                    fontWeight: '550',
+                    paddingRight: '5px',
+                    paddingLeft: '7px',
                     textAlign: 'left',
                     margin: '0',
+                    fontWeight: '600',
                   }}
                 >
-                  <p
-                    style={{
-                      margin: '0',
-                      textAlign: 'left',
-                      paddingLeft: '5px',
-                    }}
-                  >
-                    {accomod.title}
-                  </p>
-                </div>
-                <div className="flex-row">
-                  <FontAwesomeIcon
-                    style={{ color: '#bf7c2f' }}
-                    icon={fasMapMarkedAlt}
-                  />
-                  <p
-                    style={{
-                      paddingRight: '5px',
-                      paddingLeft: '7px',
-                      textAlign: 'left',
-                      margin: '0',
-                      fontWeight: '600',
-                    }}
-                  >
-                    Địa chỉ:
-                  </p>
-                  <p style={{ textAlign: 'left', width: '66%', margin: '0' }}>
-                    {accomod.houseNumber} {accomod.street}, {accomod.ward},{' '}
-                    {accomod.district}, {accomod.city}
-                  </p>
-                </div>
-                <div className="flex-row">
-                  <FontAwesomeIcon
-                    style={{ color: '#bf7c2f' }}
-                    icon={fasPlaceOfWorship}
-                  />
-                  <p
-                    style={{
-                      paddingRight: '5px',
-                      paddingLeft: '7px',
-                      textAlign: 'left',
-                      margin: '0',
-                      fontWeight: '600',
-                    }}
-                  >
-                    Ở gần:
-                  </p>
-                  <p style={{ textAlign: 'left', width: '70%', margin: '0' }}>
-                    {accomod.publicPlace}
-                  </p>
-                </div>
-                <div className="flex-row">
-                  <FontAwesomeIcon
-                    style={{ color: '#bf7c2f' }}
-                    icon={fasHome}
-                  />
-                  <p
-                    style={{
-                      paddingRight: '5px',
-                      paddingLeft: '7px',
-                      textAlign: 'left',
-                      margin: '0',
-                      fontWeight: '600',
-                    }}
-                  >
-                    Diện tích:
-                  </p>
-                  <p style={{ textAlign: 'left', width: '62%', margin: '0' }}>
-                    {accomod.livingArea}m²
-                  </p>
-                </div>
-                <div className="flex-row">
-                  .
-                  <FontAwesomeIcon
-                    style={{ color: '#bf7c2f' }}
-                    icon={fasBath}
-                  />
-                  <p
-                    style={{
-                      paddingRight: '5px',
-                      paddingLeft: '7px',
-                      textAlign: 'left',
-                      margin: '0',
-                      fontWeight: '600',
-                    }}
-                  >
-                    CSVC:
-                  </p>
-                  <p style={{ textAlign: 'left', width: '100%', margin: '0' }}>
-                    {accomod.seperateAccomodation
-                      ? 'Không chung chủ'
-                      : 'Chung chủ'}
-                    ,{' '}
-                    {accomod.materialFacilities.airConditional
-                      ? 'có điều hoà'
-                      : 'không có điều hoà'}
-                    ,{' '}
-                    {accomod.materialFacilities.electricWaterHeater
-                      ? 'có nóng lạnh'
-                      : 'không có nóng lạnh'}
-                    ,{' '}
-                    {accomod.materialFacilities.bathroom.seperate
-                      ? 'vệ sinh khép kin'
-                      : 'vệ sinh chung'}
-                  </p>
-                </div>
+                  Địa chỉ:
+                </p>
+                <p style={{ textAlign: 'left', width: '66%', margin: '0' }}>
+                  {accomod.houseNumber} {accomod.street}, {accomod.ward}, {accomod.district}, {accomod.city}
+                </p>
               </div>
-            </Link>
+              <div className="flex-row">
+                <FontAwesomeIcon style={{ color: '#bf7c2f' }} icon={fasPlaceOfWorship} />
+                <p
+                  style={{
+                    paddingRight: '5px',
+                    paddingLeft: '7px',
+                    textAlign: 'left',
+                    margin: '0',
+                    fontWeight: '600',
+                  }}
+                >
+                  Ở gần:
+                </p>
+                <p style={{ textAlign: 'left', width: '70%', margin: '0' }}>{accomod.publicPlace}</p>
+              </div>
+              <div className="flex-row">
+                <FontAwesomeIcon style={{ color: '#bf7c2f' }} icon={fasHome} />
+                <p
+                  style={{
+                    paddingRight: '5px',
+                    paddingLeft: '7px',
+                    textAlign: 'left',
+                    margin: '0',
+                    fontWeight: '600',
+                  }}
+                >
+                  Diện tích:
+                </p>
+                <p style={{ textAlign: 'left', width: '62%', margin: '0' }}>{accomod.livingArea}m²</p>
+              </div>
+              <div className="flex-row">
+                .
+                <FontAwesomeIcon style={{ color: '#bf7c2f' }} icon={fasBath} />
+                <p
+                  style={{
+                    paddingRight: '5px',
+                    paddingLeft: '7px',
+                    textAlign: 'left',
+                    margin: '0',
+                    fontWeight: '600',
+                  }}
+                >
+                  CSVC:
+                </p>
+                <p style={{ textAlign: 'left', width: '100%', margin: '0' }}>
+                  {accomod.seperateAccomodation ? 'Không chung chủ' : 'Chung chủ'},{' '}
+                  {accomod.materialFacilities.airConditional ? 'có điều hoà' : 'không có điều hoà'},{' '}
+                  {accomod.materialFacilities.electricWaterHeater ? 'có nóng lạnh' : 'không có nóng lạnh'},{' '}
+                  {accomod.materialFacilities.bathroom.seperate ? 'vệ sinh khép kin' : 'vệ sinh chung'}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -286,4 +223,4 @@ class List extends Component {
   }
 }
 
-export default List
+export default withRouter(List)
