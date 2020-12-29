@@ -11,8 +11,8 @@ import Listing from './Listing'
 import axios from 'axios'
 import Loader from 'react-loader-spinner'
 import FormData from 'form-data'
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 class Profile extends Component {
   render() {
@@ -25,7 +25,6 @@ class Profile extends Component {
 }
 
 export default Profile
-
 
 class Info extends Component {
   static contextType = UserContext
@@ -46,7 +45,7 @@ class Info extends Component {
   async componentDidMount() {
     await axios({
       method: 'POST',
-      url: `https://accommodation-finder.herokuapp.com/followList`,
+      url: `http://localhost:4000/followList`,
       data: {
         _id: this.state.userData._id,
       },
@@ -55,6 +54,8 @@ class Info extends Component {
       },
     }).then(async (res) => {
       let tempList = []
+      console.log('dit me may')
+      console.log(res)
       await res.data.forEach((e) => {
         axios
           .get(`https://accommodation-finder.herokuapp.com/accommodation/${e}`)
@@ -77,7 +78,7 @@ class Info extends Component {
   }
 
   onFileChange = (event) => {
-    toast.info("Changing avatar", {
+    toast.info('Changing avatar', {
       position: 'bottom-left',
       autoClose: 3000,
       hideProgressBar: false,
@@ -97,45 +98,44 @@ class Info extends Component {
       data: data,
     }
 
-    axios(config)
-      .then((res) => {
-        this.setState({
-          userAvatar: res.data.data.link,
-        })
-        axios({
-          method: 'POST',
-          url: `https://accommodation-finder.herokuapp.com/${this.state.userData.userType}/profile`,
-          data: {
-            avatar: res.data.data.link
-          },
-          headers: {
-            Authorization: `Bearer ${this.state.userToken}`,
-          },
-        })
-          .then((res2) => {
-            console.log(res2)
-            toast.success("Change avatar successfully!", {
-              position: 'bottom-left',
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-            })
-            location.href = '/profile'
-          })
-          .catch((e) => {
-            console.log(e.response.data)
-            toast.error(e.response.data, {
-              position: 'bottom-left',
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-            })
-          })
+    axios(config).then((res) => {
+      this.setState({
+        userAvatar: res.data.data.link,
       })
+      axios({
+        method: 'POST',
+        url: `https://accommodation-finder.herokuapp.com/${this.state.userData.userType}/profile`,
+        data: {
+          avatar: res.data.data.link,
+        },
+        headers: {
+          Authorization: `Bearer ${this.state.userToken}`,
+        },
+      })
+        .then((res2) => {
+          console.log(res2)
+          toast.success('Change avatar successfully!', {
+            position: 'bottom-left',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          })
+          location.href = '/profile'
+        })
+        .catch((e) => {
+          console.log(e.response.data)
+          toast.error(e.response.data, {
+            position: 'bottom-left',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          })
+        })
+    })
   }
 
   render() {
@@ -208,14 +208,16 @@ class Info extends Component {
                       Danh sách yêu thích
                     </a>
                   </li>
-                  {this.state.userData.userType === "owner" && <li>
-                    <a
-                      className="ev-link-secondary"
-                      onClick={() => this.setState({ currentPage: 4 })}
-                    >
-                      Bài đăng của tôi
-                    </a>
-                  </li>}
+                  {this.state.userData.userType === 'owner' && (
+                    <li>
+                      <a
+                        className="ev-link-secondary"
+                        onClick={() => this.setState({ currentPage: 4 })}
+                      >
+                        Bài đăng của tôi
+                      </a>
+                    </li>
+                  )}
                   <li>
                     <a
                       className="ev-link-secondary"
@@ -287,7 +289,7 @@ class MyProfile extends Component {
     citizenId: this.context.userData.citizenId,
     address: this.context.userData.address,
     userToken: localStorage.getItem('token'),
-    userData: this.context.userData
+    userData: this.context.userData,
   }
 
   handlePhoneChange = (event) => {
@@ -431,7 +433,7 @@ class ChangePassword extends Component {
     newPassWord: '',
     newPassWord1: '',
     userToken: localStorage.getItem('token'),
-    userData: this.context.userData
+    userData: this.context.userData,
   }
 
   handlePasswordChange = (event) => {
@@ -449,10 +451,13 @@ class ChangePassword extends Component {
   handleSubmit = () => {
     const email = this.context.userData.email
     axios
-      .post(`https://accommodation-finder.herokuapp.com/${this.state.userData.userType}/login`, {
-        email: email,
-        password: this.state.password,
-      })
+      .post(
+        `https://accommodation-finder.herokuapp.com/${this.state.userData.userType}/login`,
+        {
+          email: email,
+          password: this.state.password,
+        }
+      )
       .then((res) => {
         if (res.status === 200) {
           if (this.state.newPassWord === this.state.newPassWord1) {

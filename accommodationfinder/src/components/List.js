@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import logo from "../image/bg-img-1.jpg";
-import { Slide } from "react-slideshow-image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Rating from "material-ui-rating";
-import { Link }  from 'react-router-dom';
+import React, { Component } from 'react'
+import logo from '../image/bg-img-1.jpg'
+import { Slide } from 'react-slideshow-image'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Rating from 'material-ui-rating'
+import { Link } from 'react-router-dom'
 import {
   faHeart as fasHeart,
   faEye as fasEye,
@@ -11,59 +11,72 @@ import {
   faPlaceOfWorship as fasPlaceOfWorship,
   faHome as fasHome,
   faBath as fasBath,
-} from "@fortawesome/free-solid-svg-icons";
-import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
-import "react-slideshow-image/dist/styles.css";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+} from '@fortawesome/free-solid-svg-icons'
+import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
+import 'react-slideshow-image/dist/styles.css'
+import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 class List extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       isFollowed: this.props.isFollowed,
-      userToken: localStorage.getItem("token"),
-      userType: localStorage.getItem("userType"),
-    };
-    this.handleViewAccomod = this.handleViewAccomod.bind(this);
-    this.handleFollow = this.handleFollow.bind(this);
+      userToken: localStorage.getItem('token'),
+      userType: localStorage.getItem('userType'),
+    }
+    this.handleViewAccomod = this.handleViewAccomod.bind(this)
+    this.handleFollow = this.handleFollow.bind(this)
   }
 
   componentDidMount() {}
 
   handleViewAccomod = () => {
-    console.log("xem nha ne`");
-    console.log(this.state);
-  };
+    console.log('xem nha ne`')
+    console.log(this.state)
+  }
 
   handleFollow = async () => {
-    const that = this;
-    this.setState({ isFollowed: !this.state.isFollowed }),
-    await axios({
-      method: "POST",
-      url: `https://accommodation-finder.herokuapp.com/followChange`,
-      headers: {
-        Authorization: `Bearer ${this.state.userToken}`,
+    const that = this
+    this.setState(
+      {
+        isFollowed: !this.state.isFollowed,
       },
-      data: {
-        accomodId: this.props.accomod._id,
-      },
-    }).then((res) => {
-      console.log(res)
-      toast.info(res.data.isFollowed?"Thêm vào danh sách yêu thích thành công!":"Huỷ yêu thích thành công!", {
-        // position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        });
-    });
-  };
+      async () => {
+        await axios({
+          method: 'POST',
+          url: `https://accommodation-finder.herokuapp.com/accommodation/${
+            this.state.isFollowed ? 'unfollow' : 'follow'
+          }`,
+          headers: {
+            Authorization: `Bearer ${this.state.userToken}`,
+          },
+          data: {
+            accomodId: this.props.accomod._id,
+          },
+        }).then((res) => {
+          console.log(res)
+          toast.info(
+            res.data.success
+              ? 'Thêm vào danh sách yêu thích thành công!'
+              : 'Huỷ yêu thích thành công!',
+            {
+              // position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: false,
+            }
+          )
+        })
+      }
+    )
+  }
 
   render() {
-    const { accomod } = this.props;
+    const { accomod } = this.props
     // console.log(accomod);
     return (
       <div className="ev-card-1">
@@ -72,29 +85,29 @@ class List extends Component {
             <div
               className="ev-header"
               style={{
-                position: "relative",
-                overflow: "hidden",
-                borderRadius: "8px",
+                position: 'relative',
+                overflow: 'hidden',
+                borderRadius: '8px',
               }}
             >
               <div className="views">
-                <FontAwesomeIcon style={{ margin: "auto 0" }} icon={fasEye} />
-                <p style={{ paddingLeft: "8px", paddingRight: "8px" }}>
+                <FontAwesomeIcon style={{ margin: 'auto 0' }} icon={fasEye} />
+                <p style={{ paddingLeft: '8px', paddingRight: '8px' }}>
                   {accomod.watch}
                 </p>
               </div>
               <div className="uk-overlay overlay-gradient">
                 <p className="ev-price">
-                  {accomod.price.toLocaleString("en")} <small>Đ/ Tháng</small>
+                  {accomod.price.toLocaleString('en')} <small>Đ/ Tháng</small>
                 </p>
                 {!this.state.isFollowed && (
                   <FontAwesomeIcon
                     onClick={this.handleFollow}
                     style={{
-                      color: "white",
-                      fontSize: "22px",
-                      margin: "auto 0",
-                      cursor: 'pointer'
+                      color: 'white',
+                      fontSize: '22px',
+                      margin: 'auto 0',
+                      cursor: 'pointer',
                     }}
                     icon={farHeart}
                   />
@@ -103,10 +116,10 @@ class List extends Component {
                   <FontAwesomeIcon
                     onClick={this.handleFollow}
                     style={{
-                      color: "FireBrick",
-                      fontSize: "22px",
-                      margin: "auto 0",
-                      cursor: 'pointer'
+                      color: 'FireBrick',
+                      fontSize: '22px',
+                      margin: 'auto 0',
+                      cursor: 'pointer',
                     }}
                     icon={fasHeart}
                   />
@@ -130,7 +143,10 @@ class List extends Component {
                 ))}
               </Slide>
             </div>
-            <Link to={`/home-detail/${accomod._id}`} style={{ textDecoration: 'none', color: 'black' }}>
+            <Link
+              to={`/home-detail/${accomod._id}`}
+              style={{ textDecoration: 'none', color: 'black' }}
+            >
               <div className="ev-body">
                 <div style={{ display: 'flex' }}>
                   <Rating
@@ -266,8 +282,8 @@ class List extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default List;
+export default List
