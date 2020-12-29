@@ -9,7 +9,7 @@ function Input({ message, setMessage, sendMessage }) {
                 type='text'
                 placeholder='Nhập tin nhắn...'
                 value={message}
-                onChange={({ target: { value } }) => setMessage(value)}
+                onChange={event => setMessage(event.target.value)}
                 onKeyPress={(event) =>
                     event.key === 'Enter' ? sendMessage(event) : null
                 }

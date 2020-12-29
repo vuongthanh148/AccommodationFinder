@@ -205,9 +205,6 @@ class App extends Component {
                 />
                 <Footer />
               </Route>
-              <Route path="/admin" exact>
-                <AdminPage changeNavbarState={this.changeNavbarState} />
-              </Route>
               <Route path="/admin/chat" exact>
                 <NavbarAdmin />
                 <Chatbox
@@ -218,6 +215,9 @@ class App extends Component {
                   changeNavbarState={this.changeNavbarState}
                 />
               </Route>
+              <Route path="/admin" exact>
+                <AdminPage changeNavbarState={this.changeNavbarState} />
+              </Route>
               <Route path="/chat" exact>
                 {this.state.userData.userType !== 'renter' && (
                   <Chatbox
@@ -225,7 +225,6 @@ class App extends Component {
                     userName={this.state.userData.name}
                     userAvatar={this.state.userData.avatar}
                     role={'owner'}
-                   
                   />
                 )}
                 {this.state.userData.userType === 'renter' && (

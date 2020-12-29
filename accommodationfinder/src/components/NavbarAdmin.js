@@ -8,9 +8,7 @@ import {
   withRouter,
 } from 'react-router-dom'
 import logo from '../image/logo_ngang_trang.png'
-import NavbarMobile from './NavbarMobile'
 import '../css/Navbar.css'
-import avatar from '../image/avatar.png'
 import { Icon, InlineIcon } from '@iconify/react'
 import chevronDown from '@iconify-icons/fa-solid/chevron-down'
 import chevronUp from '@iconify-icons/fa-solid/chevron-up'

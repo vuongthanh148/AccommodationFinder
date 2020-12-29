@@ -6,7 +6,6 @@ function ChatCard(props) {
     const { ownerName, ownerAvatar, isReadLastMessage, lastestSenderName } = info;
     let name = ownerName;
     let avatar = ownerAvatar;
-    console.log(avatar)
     
     return (
         <div className='chatCard'>

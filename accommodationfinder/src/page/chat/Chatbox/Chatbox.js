@@ -19,14 +19,14 @@ function Chatbox(props) {
   const [chatboxId, setChatboxId] = useState('')
   const [room, setRoom] = useState('')
   const [avatar, setAvatar] = useState('')
-  
-  if(props.role ==='admin') props.changeNavbarState(false)
-//   const type = 'admin'
-  const type = props.role.toLowerCase();
+
+  //   const type = 'admin'
+  const type = props.role.toLowerCase()
 
   const ENDPOINT = 'localhost:3002'
 
   useEffect(() => {
+    if (props.role === 'admin') props.changeNavbarState(false)
     socket = io(ENDPOINT, {
       transports: ['websocket', 'polling', 'flashsocket'],
     })
@@ -58,7 +58,8 @@ function Chatbox(props) {
           const { chatboxes } = result.data
           console.log({ chatboxes })
           setChatboxList(chatboxes)
-          setName('')
+          setName('Admin')
+          setUserId('5feaa425896d970004b6a82f')
           setRoom(chatboxes[0].ownerName)
           setAvatar(chatboxes[0].ownerAvatar)
           setChatboxId(chatboxes[0]._id)
@@ -93,16 +94,16 @@ function Chatbox(props) {
   const sendMessage = (event) => {
     event.preventDefault()
     if (message) {
-      socket.emit(
-        'sendMessage',
-        {
-          content: message,
-          senderId: userId,
-          chatboxId: chatboxId,
-          senderName: name,
-        },
-        () => setMessage('')
-      )
+        socket.emit(
+          'sendMessage',
+          {
+            content: message,
+            senderId: userId,
+            chatboxId: chatboxId,
+            senderName: name,
+          },
+          () => setMessage('')
+        )
     }
   }
 
