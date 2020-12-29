@@ -19,6 +19,8 @@ import bell from '@iconify-icons/fa-solid/bell'
 import axios from 'axios'
 import Chatbox from '../page/chat/Chatbox/Chatbox'
 import { Redirect } from 'react-router'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 class Navbar extends Component {
   constructor(props) {
@@ -32,6 +34,7 @@ class Navbar extends Component {
             isLoggedIn={this.props.isLoggedIn}
             userData={this.props.userData}
             updateLoginState={this.props.updateLoginState}
+            userType={localStorage.getItem('userType')}
           />
         </div>
         <div className="display-moblie-nav">
@@ -73,6 +76,14 @@ class Bar extends Component {
 
   handleLogOut = async () => {
     const token = localStorage.getItem('token')
+    toast.info("Đang thực hiện yêu cầu đăng xuất", {
+      position: "bottom-left",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
     await axios({
       method: 'POST',
       url: `https://accommodation-finder.herokuapp.com/${this.props.userData.userType}/logoutAll`,
@@ -82,6 +93,7 @@ class Bar extends Component {
     })
     this.props.updateLoginState({}, false)
     localStorage.removeItem('token')
+    location.href = '/'
   }
 
   handleChat = async () => {
@@ -104,6 +116,7 @@ class Bar extends Component {
   }
 
   render() {
+    console.log(this.props.userData)
     return (
       <div className="ev-header-1 navbar-section-primary">
         <nav className="navbar-container navbar-transparent navbar">
@@ -189,15 +202,17 @@ class Bar extends Component {
                   </div>
                 </li>
               </ul>
-              <a>
-                <span className="icon-padding">
-                  <Icon
-                    icon={envelope}
-                    className="icon-messeger"
-                    onClick={this.handleChat}
-                  />
-                </span>
-              </a>
+              {this.props.userType === 'owner' && (
+                <a>
+                  <span className="icon-padding">
+                    <Icon
+                      icon={envelope}
+                      className="icon-messeger"
+                      onClick={this.handleChat}
+                    />
+                  </span>
+                </a>
+              )}
               <a>
                 <span className="icon-padding">
                   <Icon icon={bell} className="icon-notification" />

@@ -11,12 +11,13 @@ import Listing from './Listing'
 import axios from 'axios'
 import Loader from 'react-loader-spinner'
 import FormData from 'form-data'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 class Profile extends Component {
   render() {
     return (
       <div>
-        {/* <Nav /> */}
         <Info />
       </div>
     )
@@ -25,31 +26,6 @@ class Profile extends Component {
 
 export default Profile
 
-class Nav extends Component {
-  state = {}
-  render() {
-    return (
-      <div className="ev-page-title-2">
-        <div className="ev-container">
-          <div className="profile-flex profile-flex-center profile-flex-left@s">
-            <h5 className="title">My Profile</h5>
-          </div>
-          <div className="margin-left">
-            <ul className="profile-breadcrumb profile-flex-center profile-flex-right@s">
-              <li>
-                <a href="#">Home</a>
-              </li>
-              <li className="profile-disabled">
-                <Icon icon={angleDoubleRight} className="margin-right" />
-                <a>My Profile</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    )
-  }
-}
 
 class Info extends Component {
   static contextType = UserContext
@@ -101,39 +77,64 @@ class Info extends Component {
   }
 
   onFileChange = (event) => {
-    // Update the state
-    this.setState({ selectedFile: event.target.files[0] })
-    console.log(event.target.files[0])
-
-    // let formData = new FormData()
-    // let file = URL.createObjectURL(event.target.files[0])
-    // formData.append('image', file)
-
+    toast.info("Changing avatar", {
+      position: 'bottom-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    })
     var data = new FormData()
-    data.append(
-      'image',
-      event.target.files[0]
-    )
-
+    data.append('image', event.target.files[0])
     var config = {
       method: 'post',
       url: 'https://api.imgur.com/3/image',
-      headers: { 
-        'Authorization': 'Client-ID 546c25a59c58ad7', 
-        'Accept': "*/*",
+      headers: {
+        Authorization: 'Client-ID 546c25a59c58ad7',
+        Accept: '*/*',
       },
-      data : data
-    };
-  
+      data: data,
+    }
+
     axios(config)
       .then((res) => {
-        console.log('res: ', res.data.data.link)
         this.setState({
-          userAvatar: res.data.data.link
+          userAvatar: res.data.data.link,
         })
-      })
-      .catch((e) => {
-        // res.send();
+        axios({
+          method: 'POST',
+          url: `https://accommodation-finder.herokuapp.com/${this.state.userData.userType}/profile`,
+          data: {
+            avatar: res.data.data.link
+          },
+          headers: {
+            Authorization: `Bearer ${this.state.userToken}`,
+          },
+        })
+          .then((res2) => {
+            console.log(res2)
+            toast.success("Change avatar successfully!", {
+              position: 'bottom-left',
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            })
+            location.href = '/profile'
+          })
+          .catch((e) => {
+            console.log(e.response.data)
+            toast.error(e.response.data, {
+              position: 'bottom-left',
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            })
+          })
       })
   }
 
@@ -207,6 +208,14 @@ class Info extends Component {
                       Danh sách yêu thích
                     </a>
                   </li>
+                  {this.state.userData.userType === "owner" && <li>
+                    <a
+                      className="ev-link-secondary"
+                      onClick={() => this.setState({ currentPage: 4 })}
+                    >
+                      Bài đăng của tôi
+                    </a>
+                  </li>}
                   <li>
                     <a
                       className="ev-link-secondary"
@@ -278,6 +287,7 @@ class MyProfile extends Component {
     citizenId: this.context.userData.citizenId,
     address: this.context.userData.address,
     userToken: localStorage.getItem('token'),
+    userData: this.context.userData
   }
 
   handlePhoneChange = (event) => {
@@ -299,11 +309,9 @@ class MyProfile extends Component {
   handleSubmit = () => {
     axios({
       method: 'POST',
-      url: `https://accommodation-finder.herokuapp.com/owner/profile`,
+      url: `https://accommodation-finder.herokuapp.com/${this.state.userData.userType}/profile`,
       data: {
-        email: this.state.email,
         phoneNumber: this.state.phoneNumber,
-
         address: this.state.address,
       },
       headers: {
@@ -423,6 +431,7 @@ class ChangePassword extends Component {
     newPassWord: '',
     newPassWord1: '',
     userToken: localStorage.getItem('token'),
+    userData: this.context.userData
   }
 
   handlePasswordChange = (event) => {
@@ -440,7 +449,7 @@ class ChangePassword extends Component {
   handleSubmit = () => {
     const email = this.context.userData.email
     axios
-      .post('https://accommodation-finder.herokuapp.com/owner/login', {
+      .post(`https://accommodation-finder.herokuapp.com/${this.state.userData.userType}/login`, {
         email: email,
         password: this.state.password,
       })
@@ -449,7 +458,7 @@ class ChangePassword extends Component {
           if (this.state.newPassWord === this.state.newPassWord1) {
             axios({
               method: 'POST',
-              url: `https://accommodation-finder.herokuapp.com/owner/profile`,
+              url: `https://accommodation-finder.herokuapp.com/${this.state.userData.userType}/profile`,
               data: {
                 password: this.state.newPassWord,
               },

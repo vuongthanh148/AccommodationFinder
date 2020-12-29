@@ -65,6 +65,7 @@ class SignupOwner extends Component {
             pauseOnHover: true,
             draggable: true,
           })
+          location.href = '/'
         } else {
           toast.error(res.data.message, {
             position: 'bottom-left',
@@ -75,6 +76,7 @@ class SignupOwner extends Component {
             draggable: true,
           })
         }
+        
       })
       .catch((err) => console.log(err))
     //Send notification yêu cầu đăng ký thành công

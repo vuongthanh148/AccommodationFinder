@@ -19,14 +19,10 @@ function Chatbox(props) {
   const [chatboxId, setChatboxId] = useState('')
   const [room, setRoom] = useState('')
   const [avatar, setAvatar] = useState('')
-
+  
+  if(props.role ==='admin') props.changeNavbarState(false)
 //   const type = 'admin'
   const type = props.role.toLowerCase();
-  // console.log(type);
-  // console.log(props.userId);
-  // console.log(props.userName);
-  // console.log(props.userAvatar);
-  // console.log(props.role.toUpperCase());
 
   const ENDPOINT = 'localhost:3002'
 

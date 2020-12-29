@@ -6,6 +6,8 @@ function ChatCard(props) {
     const { ownerName, ownerAvatar, isReadLastMessage, lastestSenderName } = info;
     let name = ownerName;
     let avatar = ownerAvatar;
+    console.log(avatar)
+    
     return (
         <div className='chatCard'>
             <img src={avatar} style={{width: '40px', height: '40px'}}></img>

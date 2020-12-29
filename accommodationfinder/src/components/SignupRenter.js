@@ -45,7 +45,7 @@ class SignupRenter extends Component {
       .then((res) => {
         //res);
         if (res.data.response) {
-          toast.info(res.data.response.toString(), {
+          toast.info(res.data.response, {
             position: "bottom-left",
             autoClose: 3000,
             hideProgressBar: false,
@@ -53,8 +53,9 @@ class SignupRenter extends Component {
             pauseOnHover: true,
             draggable: true,
           });
+          location.href = '/'
         } else {
-          toast.error(res.data.message.toString(), {
+          toast.error(res.data.message, {
             position: "bottom-left",
             autoClose: 3000,
             hideProgressBar: false,
@@ -63,6 +64,7 @@ class SignupRenter extends Component {
             draggable: true,
           });
         }
+       
       })
       .catch((err) => console.log(err));
     //Send notification đăng ký thành công
