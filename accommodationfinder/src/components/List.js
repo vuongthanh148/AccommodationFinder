@@ -54,8 +54,8 @@ class List extends Component {
           url: `https://accommodation-finder.herokuapp.com/accommodation/${
             this.state.isFollowed ? 'unfollow' : 'follow'
           }`,
-          headers: {
-            Authorization: `Bearer ${this.state.userToken}`,
+          headers:{
+            Authorization: `Bearer ${this.state.userToken}`
           },
           data: {
             accomodId: this.props.accomod._id,

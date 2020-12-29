@@ -133,7 +133,7 @@ function TableManagementOwner(props) {
                   })
               }}
             >
-              <Tooltip title="Xoá bài đăng">
+              <Tooltip title="Xoá tài khoản">
                 <div className="table-icons">
                   <img alt="delete-icon" src={DeleteIcon} />
                 </div>

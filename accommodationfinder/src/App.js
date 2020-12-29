@@ -33,11 +33,17 @@ class App extends Component {
       isLoggedIn: false,
       userData: {},
       finishFetchUserData: false,
+      listAvatar: ['111']
     }
     this.changeNavbarState = this.changeNavbarState.bind(this)
     this.updateLoginState = this.updateLoginState.bind(this)
+    this.updateListAvatar = this.updateListAvatar.bind(this)
   }
-
+  updateListAvatar = (newList) => {
+    this.setState({
+      listAvatar: newList
+    })
+  }
   myRef = React.createRef()
 
   async componentDidMount() {
@@ -181,6 +187,8 @@ class App extends Component {
                   userData={this.state.userData}
                   isLoggedIn={this.state.isLoggedIn}
                   updateFetchingAccomod={this.updateFetchingAccomod}
+                  listAvatar={this.state.listAvatar}
+                  updateListAvatar={this.updateListAvatar}
                 />
                 <Footer />
               </Route>

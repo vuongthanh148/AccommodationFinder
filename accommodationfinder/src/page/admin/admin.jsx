@@ -68,8 +68,8 @@ const AdminPage = (props) => {
                 <TabPane tab="Quản lý tài khoản chủ nhà trọ" key="4">
                   <TableManagementOwner />
                 </TabPane>
-                <TabPane tab="Phân tích và thống ké" key="5">
-                  Phân tích và thống ké
+                <TabPane tab="Phân tích và thống kê" key="5">
+                  Phân tích và thống kê
                 </TabPane>
               </Tabs>
             </Col>

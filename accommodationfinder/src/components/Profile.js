@@ -33,6 +33,7 @@ class Info extends Component {
     myProfile: 1,
     favorites: 2,
     changePassword: 3,
+    myAccomod: 4,
     currentPage: 1,
     userData: this.context.userData,
     userToken: localStorage.getItem('token'),
@@ -45,7 +46,7 @@ class Info extends Component {
   async componentDidMount() {
     await axios({
       method: 'POST',
-      url: `http://localhost:4000/followList`,
+      url: `https://accommodation-finder.herokuapp.com/followList`,
       data: {
         _id: this.state.userData._id,
       },
@@ -54,7 +55,6 @@ class Info extends Component {
       },
     }).then(async (res) => {
       let tempList = []
-      console.log('dit me may')
       console.log(res)
       await res.data.forEach((e) => {
         axios
@@ -156,7 +156,7 @@ class Info extends Component {
                   className="profile-block profile-margin-remove profile-text-center"
                   style={{ position: 'relative' }}
                 >
-                  <img
+                  <img style={{maxWidth: '500px', maxHeight: '500px'}}
                     className="profile-border-rounded profile-box-shadow-small profile-width-1-2"
                     src={userAvatar}
                   />
@@ -200,14 +200,14 @@ class Info extends Component {
                       Hồ sơ cá nhân
                     </a>
                   </li>
-                  <li>
+                  {this.state.userData.userType === 'renter' && <li>
                     <a
                       className="ev-link-secondary"
                       onClick={() => this.setState({ currentPage: 2 })}
                     >
                       Danh sách yêu thích
                     </a>
-                  </li>
+                  </li>}
                   {this.state.userData.userType === 'owner' && (
                     <li>
                       <a

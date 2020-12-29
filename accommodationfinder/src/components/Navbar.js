@@ -158,11 +158,11 @@ class Bar extends Component {
                     Trang chủ
                   </NavLink>
                 </li>
-                <li>
+                {this.props.userType === 'owner' && <li>
                   <NavLink activeStyle={{ color: '#fff' }} to="/newpost">
                     Tạo bài viết
                   </NavLink>
-                </li>
+                </li>}
                 <li className="user-button">
                   <a
                     href="#"

@@ -163,7 +163,7 @@ function TableManagementPost(props) {
             {!record.isApproved && (
               <Popconfirm
                 className="pop-confirm-admin"
-                title="Bạn muốn chấp thuận tài khoản này?"
+                title="Bạn muốn phê duyệt bài đăng này?"
                 okText="Đồng ý"
                 cancelText="Huỷ bỏ"
                 onConfirm={() => {
@@ -185,7 +185,7 @@ function TableManagementPost(props) {
                     })
                 }}
               >
-                <Tooltip title="Chấp thuận tài khoản">
+                <Tooltip title="Chấp thuận bài đăng">
                   <div className="table-icons">
                     <img alt="accept-icon" src={AcceptIcon} />
                   </div>
@@ -194,7 +194,7 @@ function TableManagementPost(props) {
             )}
             <Popconfirm
               className="pop-confirm-admin"
-              title="Bạn có chắc muốn xoá tài khoản này?"
+              title="Bạn có chắc muốn xoá bài đăng này?"
               okText="Đồng ý"
               cancelText="Huỷ bỏ"
               onConfirm={() => {

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react'
+import React, { useState, useMemo, useCallback, useEffect } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import {
@@ -21,7 +21,10 @@ import {
 } from '@material-ui/core'
 import clsx from 'clsx'
 import Select from 'react-select'
+import CreatableSelect from 'react-select/creatable'
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const useStyles = makeStyles((theme) => ({
   formHelperText: {
@@ -61,7 +64,8 @@ const useStyles = makeStyles((theme) => ({
 // begin for upload
 
 const UploadImage = (props) => {
-  const { files, setFiles, imgData, setImgData } = props
+  let { files, setFiles, imgData, setImgData, updateListAvatar} = props
+  console.log('files in upload: ', files)
   const classes = useStyles()
   /**
    *
@@ -93,6 +97,10 @@ const UploadImage = (props) => {
           setFiles([...files, ...newFiles])
           setImgData([...imgData, ...newImgs])
         })
+        console.log('file after load: ', files)
+        if(files.length > 0){
+          updateListAvatar(files)
+        }
       }
     },
     [files, imgData]
@@ -132,9 +140,24 @@ const UploadImage = (props) => {
 
 // thông tin cơ bản
 const MainInfo = (props) => {
-  const { formik } = props
+  const {
+    formik,
+    listCity,
+    setListCity,
+    listDistrict,
+    setListDistrict,
+    listWard,
+    setListWard,
+    listPublicLocation,
+    setListPublicLocation,
+  } = props
   const { values, touched, errors, handleChange, setFieldValue } = formik
   const classes = useStyles()
+
+  let [selectedCity, setSelectedCity] = useState()
+  let [selectedDistrict, setSelectedDistrict] = useState()
+  let [selectedWard, setSelectedWard] = useState()
+  let [selectedLocation, setSelectedLocation] = useState()
 
   return (
     <>
@@ -160,26 +183,46 @@ const MainInfo = (props) => {
         <InputLabel htmlFor="address">Địa chỉ</InputLabel>
         <Box mb={2}>
           <Select
-            options={[{ value: 'Ha Noi', label: 'Ha Noi' }]}
-            value={values.city ? { value: values.city, label: values.city } : null}
-            onChange={(e) => {
+            options={listCity}
+            value={selectedCity}
+            onChange={async (e) => {
+              setSelectedCity(e)
               setFieldValue('city', e.value)
-              console.log('set district')
+              await axios.get(`https://thongtindoanhnghiep.co/api/city/${e.ID}/district`).then(async (res) => {
+                let listDistrict = await res.data.map((item) => {
+                  return {
+                    ID: item.ID,
+                    type: 'district',
+                    value: item.Title.replace(/Quận |Huyện |Thị Xã |Thành Phố |District |Phường /g, ''),
+                    label: item.Title,
+                  }
+                })
+                setListDistrict(listDistrict)
+              })
             }}
-            placeholder="Thành phố"
+            placeholder={'Thành phố'}
             style={{ width: '100%' }}
           />
           <FormHelperText className={clsx(classes.formHelperText)}>{touched.city && errors.city}</FormHelperText>
         </Box>
         <Box mb={2}>
           <Select
-            options={[
-              { value: 'Hai Ba Trung', label: 'Ha Ba Trung' },
-              { value: 'Cau Giay', label: 'Cau Giay' },
-            ]}
-            value={values.district ? { value: values.district, label: values.district } : null}
-            onChange={(e) => {
+            options={listDistrict}
+            value={selectedDistrict}
+            onChange={async (e) => {
+              setSelectedDistrict(e)
               setFieldValue('district', e.value)
+              await axios.get(`https://thongtindoanhnghiep.co/api/district/${e.ID}/ward`).then(async (res) => {
+                let listWard = await res.data.map((item) => {
+                  return {
+                    ID: item.ID,
+                    type: 'ward',
+                    value: item.Title.replace(/Quận |Huyện |Thị Xã |Thành Phố |District |Phường /g, ''),
+                    label: item.Title,
+                  }
+                })
+                setListWard(listWard)
+              })
             }}
             placeholder="Quận huyện"
             style={{ width: '100%' }}
@@ -190,15 +233,13 @@ const MainInfo = (props) => {
         </Box>
         <Box mb={2}>
           <Select
-            options={[
-              { value: 'Thanh Luong', label: 'Thanh Luong' },
-              { value: 'Thanh Nhan', label: 'Thanh Nhan' },
-            ]}
-            value={values.ward ? { value: values.ward, label: values.ward } : null}
-            onChange={(e) => {
+            options={listWard}
+            value={selectedWard}
+            onChange={async (e) => {
+              setSelectedWard(e)
               setFieldValue('ward', e.value)
             }}
-            placeholder="Phường xã"
+            placeholder={'Phường xã'}
             style={{ width: '100%' }}
           />
           <FormHelperText className={clsx(classes.formHelperText)}>{touched.ward && errors.ward}</FormHelperText>
@@ -233,16 +274,17 @@ const MainInfo = (props) => {
       </Box>
       {/* Public Place */}
       <Box pb={3}>
-        <InputLabel htmlFor="publicPlace">Địa điểm công cộng</InputLabel>
-        <TextField
-          fullWidth
-          id="publicPlace"
-          value={values.publicPlace}
-          onChange={handleChange('publicPlace')}
-          size="small"
-          type="text"
-          variant="outlined"
+        <CreatableSelect
+          options={listPublicLocation}
+          value={selectedLocation}
+          onChange={async (e) => {
+            setSelectedLocation(e)
+            setFieldValue('publicPlace', e.value)
+          }}
+          placeholder={'Gần địa điểm công cộng'}
+          style={{ width: '100%' }}
         />
+        <FormHelperText className={clsx(classes.formHelperText)}>{touched.ward && errors.ward}</FormHelperText>
       </Box>
       {/* Living Area */}
       <Box pb={3}>
@@ -262,20 +304,24 @@ const MainInfo = (props) => {
         />
       </Box>
       {/* Accommodation Type */}
-      <Box pb={3}>
-        <InputLabel htmlFor="accommodationType">Loại nhà</InputLabel>
-        <TextField
-          fullWidth
-          id="accommodationType"
-          value={values.accommodationType}
-          onChange={handleChange('accommodationType')}
-          size="small"
-          variant="outlined"
-          helperText={touched.accommodationType && errors.accommodationType}
-          FormHelperTextProps={{
-            className: clsx(classes.formHelperText),
+      <Box mb={3}>
+        <Select
+          options={[
+            { value: 'Phòng trọ', label: 'Phòng trọ' },
+            { value: 'Chung cư mini', label: 'Chung cư mini' },
+            { value: 'Nhà nguyên căn', label: 'Nhà nguyên căn' },
+            { value: 'Chung cư nguyên căn', label: 'Chung cư nguyên căn' },
+          ]}
+          value={values.accommodationType ? { value: values.accommodationType, label: values.accommodationType } : null}
+          onChange={(e) => {
+            setFieldValue('accommodationType', e.value)
           }}
+          placeholder="Loại nhà cho thuê"
+          style={{ width: '100%' }}
         />
+        <FormHelperText className={clsx(classes.formHelperText)}>
+          {touched.accommodationType && errors.accommodationType}
+        </FormHelperText>
       </Box>
       {/* Price */}
       <Box pb={3}>
@@ -438,11 +484,73 @@ const NewPost = (props) => {
   /**
    * @type {[string[], React.Dispatch<React.SetStateAction<string[]>>]}
    */
+
+   const {updateListAvatar, listAvatar} = props
   const [imgData, setImgData] = useState([]) // BASE64
 
-  const handleSubmit = (values) => {
-    console.log(values)
-    console.log(props.userData)
+  const [listCity, setListCity] = useState([])
+  const [listDistrict, setListDistrict] = useState([])
+  const [listWard, setListWard] = useState([])
+  const [listPublicLocation, setListPublicLocation] = useState([])
+
+  useEffect(() => {
+    axios.get(`https://thongtindoanhnghiep.co/api/city`).then(async (res) => {
+      const cities = await res.data.LtsItem.map((item) => {
+        return {
+          ID: item.ID,
+          type: 'city',
+          value: item.Title.replace(/Quận |Huyện |Thị Xã |Thành Phố |District |Phường /g, ''),
+          label: item.Title,
+        }
+      })
+      setListCity(cities)
+    })
+    axios.get(`https://accommodation-finder.herokuapp.com/location`).then(async (res) => {
+      if (res.data.length !== 0) {
+        const listPlace = await res.data.map((l) => {
+          return { value: l.name, label: l.name }
+        })
+        setListPublicLocation(listPlace)
+      }
+    })
+  }, [])
+
+  const handleSubmit = async (values, newfiles) => {
+    toast.info('Đã gửi yêu cầu đăng bài', {
+      position: 'bottom-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    })
+    // console.log(files)
+    // console.log(values)
+    // var photos = []
+    // var ImgData = new FormData()
+    // await Promise.all(
+    //   files.map(async (f) => {
+    //     ImgData.append('image', f)
+    //     var config = {
+    //       method: 'post',
+    //       url: 'https://api.imgur.com/3/image',
+    //       headers: {
+    //         Authorization: 'Client-ID 546c25a59c58ad7',
+    //         Accept: '*/*',
+    //       },
+    //       data: ImgData,
+    //     }
+    //     await axios(config).then((res) => {
+    //       photos.push(res.data.data.link)
+    //     })
+    //   })
+    // )
+    // console.log(photos)
+    var photos = ['https://www.wellingtonnz.com/assets/Uploads/Intros/Intercontinental_room-couches-view__FocusFillWzk2MCw1MzYsInkiLDkxXQ.jpg',
+    'https://www.canterbury.ac.nz/life/accommodation/temporary/Sonoda-Temp-accom_127832166035890251.jpg',
+    'https://pix10.agoda.net/hotelImages/747/7476707/7476707_19053021300074837521.jpg?s=1024x768'
+  ]
+
     const data = {
       _id: props.userData._id,
       name: props.userData.name,
@@ -455,13 +563,17 @@ const NewPost = (props) => {
         city: values.city,
         publicPlace: values.publicPlace,
         accommodationType: values.accommodationType,
-        seperateAccomodation: values.seperateAccomod,
+        price: values.price,
+        seperateAccommodation: values.seperateAccomod,
         livingArea: values.livingArea,
-        livingArea: values.livingArea,
+        photos: values.photos,
+        timeToLive: values.week,
+        title: values.title,
+        photos: photos,
       },
       facilitiesInfo: {
-        bathroom: values.bathroom,
-        bedroom: { seperate: values.bedroom, amount: 1 },
+        bathroom: { seperate: values.bathroom, amount: 1 },
+        bedroom: values.bedroom,
         electricWaterHeater: values.electricWaterHeater,
         kitchen: values.kitchen,
         airConditioner: values.airConditioner,
@@ -472,6 +584,30 @@ const NewPost = (props) => {
         fridge: values.fridge,
       },
     }
+    axios({
+      method: 'POST',
+      url: `https://accommodation-finder.herokuapp.com/accommodation/newAccomod`,
+      data,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+      .then((res) => {
+        console.log(res)
+        toast.success('Bài viết đã được gửi. Vui lòng chờ duyệt', {
+          position: 'bottom-left',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        })
+        // location.href='/home'
+      })
+      .catch((e) => {
+        console.log(e.data.response)
+      })
+    console.log('data: ', data)
   }
   const newPostValidationSchema = yup.object().shape({
     title: yup.string().max(50, 'Tối đa 50 kí tự').required('Không được để trống'),
@@ -486,7 +622,7 @@ const NewPost = (props) => {
     price: yup.string().required('Không được để trống'),
     week: yup.number().nullable().required('Không được để trống'),
 
-    seperateAccomod: yup.number().required('Không được để trống'),
+    seperateAccomod: yup.bool().required('Không được để trống'),
     bathroom: yup.bool().required('Không được để trống'),
     airConditioner: yup.bool().required('Không được để trống'),
     electricWaterHeater: yup.bool().required('Không được để trống'),
@@ -554,11 +690,23 @@ const NewPost = (props) => {
     (step) => {
       switch (step) {
         case 0:
-          return <MainInfo formik={formik} />
+          return (
+            <MainInfo
+              formik={formik}
+              listCity={listCity}
+              setListCity={setListCity}
+              listDistrict={listDistrict}
+              setListDistrict={setListDistrict}
+              listWard={listWard}
+              setListWard={setListWard}
+              listPublicLocation={listPublicLocation}
+              setListPublicLocation={setListPublicLocation}
+            />
+          )
         case 1:
           return <Furniture formik={formik} />
         case 2:
-          return <UploadImage files={files} setFiles={setFiles} imgData={imgData} setImgData={setImgData} />
+          return <UploadImage files={files} setFiles={setFiles} imgData={imgData} setImgData={setImgData} updateListAvatar={updateListAvatar}/>
       }
     },
     [activeStep, formik]
@@ -599,7 +747,7 @@ const NewPost = (props) => {
                 variant="contained"
                 color="primary"
                 disabled={formik.isSubmitting}
-                onClick={() => handleSubmit(formik.values)}
+                onClick={() => handleSubmit(formik.values, files)}
               >
                 Hoàn tất
               </Button>
