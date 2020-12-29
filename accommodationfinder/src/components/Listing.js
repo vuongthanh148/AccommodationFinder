@@ -5,6 +5,7 @@ import Select from "react-select";
 import Pagination from "@material-ui/lab/Pagination";
 
 import List from "./List";
+import axios from "axios";
 
 class Listing extends Component {
   constructor(props) {
@@ -188,9 +189,11 @@ class Listing extends Component {
           style={{ marginBottom: "30px", height: "100%" }}
         >
           {this.state.finishSorting &&
-            this.state.accomod_to_render.map((house, index) => (
-              <List accomod={house} key={index} />
-            ))}
+            this.state.accomod_to_render.map((house, index) => {
+              let isFollowed = false;
+              if(this.props.list_follow.indexOf(house._id) != -1) isFollowed= true;
+              return <List accomod={house} key={index} isFollowed={isFollowed}/> 
+            })}
         </div>
         <Pagination
           page={this.state.currentPage}

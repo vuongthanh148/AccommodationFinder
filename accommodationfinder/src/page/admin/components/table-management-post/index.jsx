@@ -7,6 +7,8 @@ import Loader from '../../../../components/Loader'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { baseURL } from '../../../../constants/api'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 import './index.css'
 
@@ -165,8 +167,22 @@ function TableManagementPost(props) {
                 okText="Đồng ý"
                 cancelText="Huỷ bỏ"
                 onConfirm={() => {
-                  // To do
-                  // Call api approve account
+                  axios
+                    .put('http://localhost:4000/accommodation/approve', {
+                      accommodationId: posterList[index].id,
+                    })
+                    .then((res) => {
+                      console.log(res.status)
+                      toast.success('Đã chấp thuận thành công', {
+                        position: 'bottom-left',
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                      })
+                      // location.href = '/admin'
+                    })
                 }}
               >
                 <Tooltip title="Chấp thuận tài khoản">
@@ -182,8 +198,14 @@ function TableManagementPost(props) {
               okText="Đồng ý"
               cancelText="Huỷ bỏ"
               onConfirm={() => {
-                // To do
-                // Call api delete account
+                axios
+                  .delete(
+                    `http://localhost:4000/accommodation/${posterList[index].id}`,
+                    {}
+                  )
+                  .then((res) => {
+                    console.log(res.status)
+                  })
               }}
             >
               <Tooltip title="Xoá bài đăng">

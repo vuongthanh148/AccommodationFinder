@@ -12,6 +12,7 @@ html {
 }
 body {
   font-family: 'Montserrat', sans-serif;
+  text-decoration: none ;
 }
 small {
   font-weight: 300;
@@ -584,9 +585,6 @@ h3 {
   margin: auto;
 }
 
-.{
-  transition: all 0.2s ease-in-out; 
-}
 
 .label-hover:hover{
   cursor: pointer;

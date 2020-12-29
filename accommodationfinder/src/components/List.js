@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import logo from '../image/bg-img-1.jpg'
 import { Slide } from 'react-slideshow-image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Rating from 'material-ui-rating'
@@ -12,14 +13,20 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 import 'react-slideshow-image/dist/styles.css'
-import { Link, withRouter } from 'react-router-dom'
+import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
+import { withRouter } from 'react-router-dom'
+import 'react-toastify/dist/ReactToastify.css'
 
 class List extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isFollowed: false,
+      isFollowed: this.props.isFollowed,
+      userToken: localStorage.getItem('token'),
+      userType: localStorage.getItem('userType'),
     }
+    this.handleFollow = this.handleFollow.bind(this)
   }
 
   componentDidMount() {}
@@ -29,9 +36,30 @@ class List extends Component {
     history.push(`/home-detail/${accomod._id}`, { accommodation: accomod })
   }
 
-  render() {
-    // //accomod);
+  handleFollow = async () => {
+    this.setState({ isFollowed: !this.state.isFollowed }),
+      await axios({
+        method: 'POST',
+        url: `https://accommodation-finder.herokuapp.com/followChange`,
+        headers: {
+          Authorization: `Bearer ${this.state.userToken}`,
+        },
+        data: {
+          accomodId: this.props.accomod._id,
+        },
+      }).then((res) => {
+        toast.info(res.data.isFollowed ? 'Thêm vào danh sách yêu thích thành công!' : 'Huỷ yêu thích thành công!', {
+          // position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+        })
+      })
+  }
 
+  render() {
     const { accomod } = this.props
     return (
       <div className="ev-card-1">
@@ -47,34 +75,38 @@ class List extends Component {
             >
               <div className="views">
                 <FontAwesomeIcon style={{ margin: 'auto 0' }} icon={fasEye} />
-                <p style={{ paddingLeft: '8px', paddingRight: '8px' }}>
-                  {accomod.watch}
-                </p>
+                <p style={{ paddingLeft: '8px', paddingRight: '8px' }}>{accomod.watch}</p>
               </div>
               <div className="uk-overlay overlay-gradient">
                 <p className="ev-price">
                   {accomod.price.toLocaleString('en')} <small>Đ/ Tháng</small>
                 </p>
-                {/* <FontAwesomeIcon
-                  style={{ color: "white", fontSize: "22px", margin: "auto 0" }}
-                  icon={farHeart}
-                /> */}
-                <FontAwesomeIcon
-                  style={{
-                    color: 'FireBrick',
-                    fontSize: '22px',
-                    margin: 'auto 0',
-                  }}
-                  icon={fasHeart}
-                />
+                {!this.state.isFollowed && (
+                  <FontAwesomeIcon
+                    onClick={this.handleFollow}
+                    style={{
+                      color: 'white',
+                      fontSize: '22px',
+                      margin: 'auto 0',
+                      cursor: 'pointer',
+                    }}
+                    icon={farHeart}
+                  />
+                )}
+                {this.state.isFollowed && (
+                  <FontAwesomeIcon
+                    onClick={this.handleFollow}
+                    style={{
+                      color: 'FireBrick',
+                      fontSize: '22px',
+                      margin: 'auto 0',
+                      cursor: 'pointer',
+                    }}
+                    icon={fasHeart}
+                  />
+                )}
               </div>
-              <Slide
-                autoplay={true}
-                duration={2000}
-                pauseOnHover={true}
-                transitionDuration={750}
-                canSwipe={false}
-              >
+              <Slide autoplay={true} duration={2000} pauseOnHover={true} transitionDuration={750} canSwipe={false}>
                 {accomod.photos.map((element, index) => (
                   <div
                     className="each-slide-list"
@@ -86,46 +118,25 @@ class List extends Component {
                 ))}
               </Slide>
             </div>
-
-            <div
-              className="ev-body"
-              onClick={this.handleNavigateToHomeDetailsPage}
-              style={{ cursor: 'pointer' }}
-            >
+            <div className="ev-body" onClick={this.handleNavigateToHomeDetailsPage}>
               <div style={{ display: 'flex' }}>
                 <Rating value={parseFloat(accomod.avgRate)} max={5} readOnly />
                 <p style={{ margin: 'auto 0 auto auto' }}>
-                  {accomod.postedDate
-                    .slice(0, 10)
-                    .split('-')
-                    .reverse()
-                    .join('/')}
+                  {accomod.postedDate.slice(0, 10).split('-').reverse().join('/')}
                 </p>
               </div>
               <div
                 className="title"
                 style={{
-                  fontSize: '19px',
-                  fontWeight: '550',
-                  textAlign: 'left',
                   margin: '0',
+                  textAlign: 'left',
+                  paddingLeft: '5px',
                 }}
               >
-                <p
-                  style={{
-                    margin: '0',
-                    textAlign: 'left',
-                    paddingLeft: '5px',
-                  }}
-                >
-                  {accomod.title}
-                </p>
+                <p>{accomod.title}</p>
               </div>
               <div className="flex-row">
-                <FontAwesomeIcon
-                  style={{ color: '#bf7c2f' }}
-                  icon={fasMapMarkedAlt}
-                />
+                <FontAwesomeIcon style={{ color: '#bf7c2f' }} icon={fasMapMarkedAlt} />
                 <p
                   style={{
                     paddingRight: '5px',
@@ -138,15 +149,11 @@ class List extends Component {
                   Địa chỉ:
                 </p>
                 <p style={{ textAlign: 'left', width: '66%', margin: '0' }}>
-                  {accomod.houseNumber} {accomod.street}, {accomod.ward},{' '}
-                  {accomod.district}, {accomod.city}
+                  {accomod.houseNumber} {accomod.street}, {accomod.ward}, {accomod.district}, {accomod.city}
                 </p>
               </div>
               <div className="flex-row">
-                <FontAwesomeIcon
-                  style={{ color: '#bf7c2f' }}
-                  icon={fasPlaceOfWorship}
-                />
+                <FontAwesomeIcon style={{ color: '#bf7c2f' }} icon={fasPlaceOfWorship} />
                 <p
                   style={{
                     paddingRight: '5px',
@@ -158,9 +165,7 @@ class List extends Component {
                 >
                   Ở gần:
                 </p>
-                <p style={{ textAlign: 'left', width: '70%', margin: '0' }}>
-                  {accomod.publicPlace}
-                </p>
+                <p style={{ textAlign: 'left', width: '70%', margin: '0' }}>{accomod.publicPlace}</p>
               </div>
               <div className="flex-row">
                 <FontAwesomeIcon style={{ color: '#bf7c2f' }} icon={fasHome} />
@@ -175,9 +180,7 @@ class List extends Component {
                 >
                   Diện tích:
                 </p>
-                <p style={{ textAlign: 'left', width: '62%', margin: '0' }}>
-                  {accomod.livingArea}m²
-                </p>
+                <p style={{ textAlign: 'left', width: '62%', margin: '0' }}>{accomod.livingArea}m²</p>
               </div>
               <div className="flex-row">
                 .
@@ -194,21 +197,10 @@ class List extends Component {
                   CSVC:
                 </p>
                 <p style={{ textAlign: 'left', width: '100%', margin: '0' }}>
-                  {accomod.seperateAccomodation
-                    ? 'Không chung chủ'
-                    : 'Chung chủ'}
-                  ,{' '}
-                  {accomod.materialFacilities.airConditional
-                    ? 'có điều hoà'
-                    : 'không có điều hoà'}
-                  ,{' '}
-                  {accomod.materialFacilities.electricWaterHeater
-                    ? 'có nóng lạnh'
-                    : 'không có nóng lạnh'}
-                  ,{' '}
-                  {accomod.materialFacilities.bathroom.seperate
-                    ? 'vệ sinh khép kin'
-                    : 'vệ sinh chung'}
+                  {accomod.seperateAccomodation ? 'Không chung chủ' : 'Chung chủ'},{' '}
+                  {accomod.materialFacilities.airConditional ? 'có điều hoà' : 'không có điều hoà'},{' '}
+                  {accomod.materialFacilities.electricWaterHeater ? 'có nóng lạnh' : 'không có nóng lạnh'},{' '}
+                  {accomod.materialFacilities.bathroom.seperate ? 'vệ sinh khép kin' : 'vệ sinh chung'}
                 </p>
               </div>
             </div>
