@@ -19,8 +19,8 @@ import bell from '@iconify-icons/fa-solid/bell'
 import axios from 'axios'
 import Chatbox from '../page/chat/Chatbox/Chatbox'
 import { Redirect } from 'react-router'
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 class Navbar extends Component {
   constructor(props) {
@@ -76,14 +76,14 @@ class Bar extends Component {
 
   handleLogOut = async () => {
     const token = localStorage.getItem('token')
-    toast.info("Đang thực hiện yêu cầu đăng xuất", {
-      position: "bottom-left",
+    toast.info('Đang thực hiện yêu cầu đăng xuất', {
+      position: 'bottom-left',
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-    });
+    })
     await axios({
       method: 'POST',
       url: `https://accommodation-finder.herokuapp.com/${this.props.userData.userType}/logoutAll`,

@@ -1,24 +1,24 @@
-import React, { Component, useEffect, useRef } from "react";
-import "../css/Homepage.css";
-import "react-slideshow-image/dist/styles.css";
-import axios from "axios";
-import Headroom from "react-headroom";
-import { Price, Area } from "../data/searchBar";
-import Select, { components } from "react-select";
-import { Slide } from "react-slideshow-image";
-import Listing from "./Listing";
-import Loader from "react-loader-spinner";
+import React, { Component, useEffect, useRef } from 'react'
+import '../css/Homepage.css'
+import 'react-slideshow-image/dist/styles.css'
+import axios from 'axios'
+import Headroom from 'react-headroom'
+import { Price, Area } from '../data/searchBar'
+import Select, { components } from 'react-select'
+import { Slide } from 'react-slideshow-image'
+import Listing from './Listing'
+import Loader from 'react-loader-spinner'
 
 class Home extends Component {
   constructor(props) {
-    super(props);
+    super(props)
   }
 
   componentDidMount() {
-    this.props.changeNavbarState(true);
+    this.props.changeNavbarState(true)
   }
   render() {
-    const randomLoader = Math.floor(Math.random() * 12);
+    const randomLoader = Math.floor(Math.random() * 12)
     return (
       <div className="App">
         <Cover />
@@ -28,31 +28,31 @@ class Home extends Component {
           userData={this.props.userData}
         />
       </div>
-    );
+    )
   }
 }
-let myRef = React.createRef();
-export default Home;
+let myRef = React.createRef()
+export default Home
 
 class Cover extends Component {
   constructor() {
-    super();
+    super()
     // this.myRef = React.createRef()
   }
-  executeScroll = () => myRef.current.scrollIntoView();
+  executeScroll = () => myRef.current.scrollIntoView()
   slideImages = [
-    "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/edc-web-house-tour-fuller07-1586874956.jpg",
-    "https://www.metricon.com.au/metricon/media/metricon/gallery/2020/july/0001.jpg",
-    "https://news.mogi.vn/wp-content/uploads/2019/03/cach-khac-phuc-loi-treo-dong-ho-phong-khach-chan-van-may-gia-chu-anh-4.jpg",
-  ];
+    'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/edc-web-house-tour-fuller07-1586874956.jpg',
+    'https://www.metricon.com.au/metricon/media/metricon/gallery/2020/july/0001.jpg',
+    'https://news.mogi.vn/wp-content/uploads/2019/03/cach-khac-phuc-loi-treo-dong-ho-phong-khach-chan-van-may-gia-chu-anh-4.jpg',
+  ]
   render() {
     return (
       <div className="slide-container">
         <div className=" homecover-text-center">
-          <h1 className="homecover-text-bold" style={{ color: "white" }}>
-            Discover The Best Accommodations{" "}
+          <h1 className="homecover-text-bold" style={{ color: 'white' }}>
+            Discover The Best Accommodations{' '}
           </h1>
-          <h4 className="homecover-margin" style={{ color: "white" }}>
+          <h4 className="homecover-margin" style={{ color: 'white' }}>
             Your Property, Our Priority.
           </h4>
           <a
@@ -94,28 +94,28 @@ class Cover extends Component {
           </div>
         </Slide>
       </div>
-    );
+    )
   }
 }
 
 class Search extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
-      divAppearance: "none",
-      className: "",
+      divAppearance: 'none',
+      className: '',
       list_city: [],
       list_district: [],
       list_ward: [],
       list_accomod: [],
       list_location: [],
-      selectedOptionCity: "",
-      selectedOptionDistrict: "",
-      selectedOptionWard: "",
-      livingArea: { value: "200", label: "Dưới 200m²" },
+      selectedOptionCity: '',
+      selectedOptionDistrict: '',
+      selectedOptionWard: '',
+      livingArea: { value: '200', label: 'Dưới 200m²' },
       publicPlace: undefined,
-      price: { value: "10000000", label: "Dưới 10 triệu" },
+      price: { value: '10000000', label: 'Dưới 10 triệu' },
       chooseAirConditioner: false,
       chooseElectricWaterHeater: false,
       chooseAccomod: false,
@@ -131,27 +131,27 @@ class Search extends Component {
       finishFetchingAccomod: false,
       list_follow: [],
       userToken: localStorage.getItem('token'),
-    };
+    }
 
-    this.getAccomod = this.getAccomod.bind(this);
-    this.updateFetchingAccomod = this.updateFetchingAccomod.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleLocationChange = this.handleLocationChange.bind(this);
+    this.getAccomod = this.getAccomod.bind(this)
+    this.updateFetchingAccomod = this.updateFetchingAccomod.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleLocationChange = this.handleLocationChange.bind(this)
   }
 
   options = {
     enableHighAccuracy: true,
     timeout: 5000,
     maximumAge: 0,
-  };
+  }
 
   updateFetchingAccomod = (finish, event) => {
     this.setState({
       finishFetchingAccomod: finish,
-    });
+    })
     if (event) {
     }
-  };
+  }
 
   getPosition = (getAccomod) => {
     navigator.geolocation.getCurrentPosition(
@@ -172,48 +172,48 @@ class Search extends Component {
                       if (
                         this.removeAccents(e.Title) ===
                         res.data.localityInfo.administrative[2].name.replace(
-                          " District",
-                          ""
+                          ' District',
+                          ''
                         )
                       ) {
                         res.data.localityInfo.administrative[2].name = e.Title.replace(
-                          "Quận ",
-                          ""
-                        );
+                          'Quận ',
+                          ''
+                        )
                       }
-                    });
+                    })
                     this.setState({
                       accommodationInfo: {
                         city: res.data.localityInfo.administrative[1].name,
                         district: res.data.localityInfo.administrative[2].name,
                       },
-                    });
+                    })
                     if (res.data.localityInfo.administrative[3] !== undefined) {
                       this.setState({
                         accommodationInfo: {
                           ward: res.data.localityInfo.administrative[3].name.replace(
-                            "Phường ",
-                            ""
+                            'Phường ',
+                            ''
                           ),
                         },
-                      });
+                      })
                     }
-                    getAccomod();
-                  });
+                    getAccomod()
+                  })
               }
-            });
-          });
+            })
+          })
       },
       () => {
         //Get all accomod
-        getAccomod();
+        getAccomod()
       },
       this.options
-    );
-  };
+    )
+  }
 
   getAccomod = async () => {
-    var that = this;
+    var that = this
     const data_to_send = {
       accommodationInfo: {
         ...that.state.accommodationInfo,
@@ -227,11 +227,11 @@ class Search extends Component {
       facilitiesInfo: that.state.facilitiesInfo,
       price: that.state.price.value,
       livingArea: that.state.livingArea.value,
-    };
-    console.log("data_to_send: ", data_to_send);
+    }
+    console.log('data_to_send: ', data_to_send)
     if (Object.keys(this.props.userData).length !== 0) {
       await axios({
-        method: "POST",
+        method: 'POST',
         url: `https://accommodation-finder.herokuapp.com/followList`,
         data: {
           _id: this.props.userData._id,
@@ -240,35 +240,38 @@ class Search extends Component {
           Authorization: `Bearer ${this.state.userToken}`,
         },
       }).then((res) => {
-        console.log(res);
+        console.log(res)
         this.setState({
           list_follow: res.data,
-        });
-      });
-    } else console.log("Chưa đăng nhập");
+        })
+      })
+    } else console.log('Chưa đăng nhập')
 
     await axios
       .post(
-        "https://accommodation-finder.herokuapp.com/accommodation",
+        'https://accommodation-finder.herokuapp.com/accommodation',
         data_to_send
       )
       .then((res) => {
+        const allAccomod = res.data.allAccomod
+        const filteredAccomod = allAccomod.filter((a) => a.pending === false)
+        console.log(filteredAccomod)
         // //"data fetched: ", res.data.allAccomod);
         that.setState({
-          list_accomod: res.data.allAccomod,
-        });
-      });
+          list_accomod: filteredAccomod,
+        })
+      })
 
-    that.updateFetchingAccomod(true);
-  };
+    that.updateFetchingAccomod(true)
+  }
 
   removeAccents(str) {
     return str
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/đ/g, "d")
-      .replace(/Đ/g, "D")
-      .replace(/Quan |Huyen |Thi Xa |Thanh Pho |District |Phuong /g, "");
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/đ/g, 'd')
+      .replace(/Đ/g, 'D')
+      .replace(/Quan |Huyen |Thi Xa |Thanh Pho |District |Phuong /g, '')
   }
 
   componentDidMount() {
@@ -276,17 +279,17 @@ class Search extends Component {
       const cities = res.data.LtsItem.map((item) => {
         return {
           ID: item.ID,
-          type: "city",
+          type: 'city',
           value: this.removeAccents(item.Title),
           label: item.Title,
-        };
-      });
-      this.setState({ list_city: cities });
+        }
+      })
+      this.setState({ list_city: cities })
       if (Object.keys(this.state.accommodationInfo).length === 0) {
         // //"accomod: ", this.state.accommodationInfo);
-        this.getPosition(this.getAccomod);
+        this.getPosition(this.getAccomod)
       }
-    });
+    })
     axios
       .get(`https://accommodation-finder.herokuapp.com/location`)
       .then((res) => {
@@ -294,48 +297,48 @@ class Search extends Component {
         if (res)
           this.setState({
             list_location: res.data.map((l) => {
-              return { value: l.name, label: l.name };
+              return { value: l.name, label: l.name }
             }),
-          });
-      });
+          })
+      })
   }
 
   changeState = () => {
     if (!this.state.divAppearance) {
       this.setState({
-        divAppearance: "none",
-        className: "",
-      });
+        divAppearance: 'none',
+        className: '',
+      })
     } else {
       this.setState({
-        divAppearance: "",
-        className: "search-open",
-      });
+        divAppearance: '',
+        className: 'search-open',
+      })
     }
-  };
+  }
 
   handleLocationChange = (selectedOption) => {
-    let url = "",
-      typeOption = "";
+    let url = '',
+      typeOption = ''
     if (selectedOption) {
-      if (selectedOption.type === "city") {
+      if (selectedOption.type === 'city') {
         this.setState({
           selectedOptionCity: selectedOption,
-          selectedOptionDistrict: "",
-          selectedOptionWard: "",
-        });
-        url = `https://thongtindoanhnghiep.co/api/city/${selectedOption.ID}/district`;
-        typeOption = "district";
-      } else if (selectedOption.type === "district") {
+          selectedOptionDistrict: '',
+          selectedOptionWard: '',
+        })
+        url = `https://thongtindoanhnghiep.co/api/city/${selectedOption.ID}/district`
+        typeOption = 'district'
+      } else if (selectedOption.type === 'district') {
         this.setState({
           selectedOptionDistrict: selectedOption,
-          selectedOptionWard: "",
-        });
-        url = `https://thongtindoanhnghiep.co/api/district/${selectedOption.ID}/ward`;
-        typeOption = "ward";
-      } else if (selectedOption.type === "ward") {
-        this.setState({ selectedOptionWard: selectedOption });
-        return;
+          selectedOptionWard: '',
+        })
+        url = `https://thongtindoanhnghiep.co/api/district/${selectedOption.ID}/ward`
+        typeOption = 'ward'
+      } else if (selectedOption.type === 'ward') {
+        this.setState({ selectedOptionWard: selectedOption })
+        return
       }
       axios.get(url).then((res) => {
         const finalData = res.data.map((item) => {
@@ -344,50 +347,50 @@ class Search extends Component {
             type: typeOption,
             value: this.removeAccents(item.Title),
             label: item.Title,
-          };
-        });
-        if (typeOption === "district")
-          this.setState({ list_district: finalData });
-        else if (typeOption === "ward") this.setState({ list_ward: finalData });
-      });
+          }
+        })
+        if (typeOption === 'district')
+          this.setState({ list_district: finalData })
+        else if (typeOption === 'ward') this.setState({ list_ward: finalData })
+      })
     } else {
       this.setState({
-        selectedOptionCity: "",
-        selectedOptionDistrict: "",
-        selectedOptionWard: "",
+        selectedOptionCity: '',
+        selectedOptionDistrict: '',
+        selectedOptionWard: '',
         list_district: [],
         list_ward: [],
-      });
+      })
       // //"state after change: ", this.state);
     }
-  };
+  }
 
   handleSubmit = async (event) => {
-    event.preventDefault();
-    myRef.current.scrollIntoView();
-    this.updateFetchingAccomod(false);
+    event.preventDefault()
+    myRef.current.scrollIntoView()
+    this.updateFetchingAccomod(false)
     this.setState(
       {
         accommodationInfo: {
           city:
-            this.state.selectedOptionCity !== ""
+            this.state.selectedOptionCity !== ''
               ? this.state.selectedOptionCity.label.replace(
                   /Quận |Thị Xã |Thành Phố |Huyện |Phường |District /g,
-                  ""
+                  ''
                 )
               : undefined,
           district:
-            this.state.selectedOptionDistrict !== ""
+            this.state.selectedOptionDistrict !== ''
               ? this.state.selectedOptionDistrict.label.replace(
                   /Quận |Thị Xã |Thành Phố |Huyện |Phường |District /g,
-                  ""
+                  ''
                 )
               : undefined,
           ward:
-            this.state.selectedOptionWard !== ""
+            this.state.selectedOptionWard !== ''
               ? this.state.selectedOptionWard.label.replace(
                   /Quận |Thị Xã |Thành Phố |Huyện |Phường |District /g,
-                  ""
+                  ''
                 )
               : undefined,
         },
@@ -398,8 +401,8 @@ class Search extends Component {
           bathroom: this.state.chooseBathroom ? this.state.bathroom : undefined,
           kitchen: this.state.chooseSeperateKitchen
             ? this.state.kitchen
-              ? "closed"
-              : "shared"
+              ? 'closed'
+              : 'shared'
             : undefined,
           electricWaterHeater: this.state.chooseElectricWaterHeater
             ? this.state.electricWaterHeater
@@ -408,10 +411,10 @@ class Search extends Component {
       },
       () => {
         // //this.state);
-        this.getAccomod();
+        this.getAccomod()
       }
-    );
-  };
+    )
+  }
 
   render() {
     const {
@@ -421,9 +424,9 @@ class Search extends Component {
       price,
       livingArea,
       publicPlace,
-    } = this.state;
-    let searchBackColor = "rgba(255,255,255, 0.95)";
-    const accomods = this.state.list_accomod;
+    } = this.state
+    let searchBackColor = 'rgba(255,255,255, 0.95)'
+    const accomods = this.state.list_accomod
 
     return (
       <>
@@ -436,17 +439,17 @@ class Search extends Component {
             <Headroom
               pinStart={window.innerHeight + 116 + 80}
               upTolerance={40}
-              disable={window.innerWidth<1366?true:false}
+              disable={window.innerWidth < 1366 ? true : false}
               style={{
-                width: "90vw",
-                margin: "auto",
+                width: '90vw',
+                margin: 'auto',
                 backgroundColor: searchBackColor,
-                paddingTop: "10px",
-                zIndex: "11",
-                paddingRight: "1px",
-                paddingLeft: "2px",
-                borderBottom: "1px solid #D3D3D3",
-                borderRadius: "8px",
+                paddingTop: '10px',
+                zIndex: '11',
+                paddingRight: '1px',
+                paddingLeft: '2px',
+                borderBottom: '1px solid #D3D3D3',
+                borderRadius: '8px',
               }}
             >
               <form
@@ -469,7 +472,7 @@ class Search extends Component {
                         className="list-cities"
                         value={selectedOptionCity}
                         onChange={this.handleLocationChange}
-                        placeholder={"Thành phố"}
+                        placeholder={'Thành phố'}
                         options={this.state.list_city}
                       />
                     </div>
@@ -491,7 +494,7 @@ class Search extends Component {
                         isClearable="true"
                         className="list-district"
                         value={selectedOptionDistrict}
-                        placeholder={"Quận/Huyện"}
+                        placeholder={'Quận/Huyện'}
                         onChange={this.handleLocationChange}
                         options={this.state.list_district}
                       />
@@ -514,7 +517,7 @@ class Search extends Component {
                         isClearable="true"
                         className="list-ward"
                         value={selectedOptionWard}
-                        placeholder={"Phường/Xã"}
+                        placeholder={'Phường/Xã'}
                         onChange={this.handleLocationChange}
                         options={this.state.list_ward}
                       />
@@ -597,7 +600,7 @@ class Search extends Component {
 
                 <div
                   className="search-width-1-1@s search-width-5-6@m"
-                  style={{ height: "90px", margin: "0" }}
+                  style={{ height: '90px', margin: '0' }}
                 >
                   <div className="search-margin ">
                     <ul className="search-other-features">
@@ -620,7 +623,7 @@ class Search extends Component {
                                 onChange={() => {
                                   this.setState((prevState) => ({
                                     chooseAccomod: !prevState.chooseAccomod,
-                                  }));
+                                  }))
                                 }}
                               />
                               <label
@@ -629,12 +632,12 @@ class Search extends Component {
                                   this.setState({
                                     seperateAccommodation: !this.state
                                       .seperateAccommodation,
-                                  });
+                                  })
                                 }}
                               >
                                 {this.state.seperateAccommodation
-                                  ? "Không chung chủ"
-                                  : "Chung chủ"}
+                                  ? 'Không chung chủ'
+                                  : 'Chung chủ'}
                               </label>
                             </div>
 
@@ -645,7 +648,7 @@ class Search extends Component {
                                 onChange={() => {
                                   this.setState((prevState) => ({
                                     chooseAirConditioner: !prevState.chooseAirConditioner,
-                                  }));
+                                  }))
                                 }}
                               />
                               <label
@@ -653,12 +656,12 @@ class Search extends Component {
                                 onClick={() => {
                                   this.setState({
                                     airConditioner: !this.state.airConditioner,
-                                  });
+                                  })
                                 }}
                               >
                                 {this.state.airConditioner
-                                  ? "Điều hoà"
-                                  : "Không điều hoà"}
+                                  ? 'Điều hoà'
+                                  : 'Không điều hoà'}
                               </label>
                             </div>
 
@@ -669,7 +672,7 @@ class Search extends Component {
                                 onChange={() => {
                                   this.setState((prevState) => ({
                                     chooseElectricWaterHeater: !prevState.chooseElectricWaterHeater,
-                                  }));
+                                  }))
                                 }}
                               />
                               <label
@@ -678,12 +681,12 @@ class Search extends Component {
                                   this.setState({
                                     electricWaterHeater: !this.state
                                       .electricWaterHeater,
-                                  });
+                                  })
                                 }}
                               >
                                 {this.state.electricWaterHeater
-                                  ? "Nóng lạnh"
-                                  : "Không nóng lạnh"}
+                                  ? 'Nóng lạnh'
+                                  : 'Không nóng lạnh'}
                               </label>
                             </div>
 
@@ -694,7 +697,7 @@ class Search extends Component {
                                 onChange={() => {
                                   this.setState((prevState) => ({
                                     chooseBathroom: !prevState.chooseBathroom,
-                                  }));
+                                  }))
                                 }}
                               />
                               <label
@@ -702,12 +705,12 @@ class Search extends Component {
                                 onClick={() => {
                                   this.setState({
                                     bathroom: !this.state.bathroom,
-                                  });
+                                  })
                                 }}
                               >
                                 {this.state.bathroom
-                                  ? "Vệ sinh riêng"
-                                  : "Vệ sinh chung"}
+                                  ? 'Vệ sinh riêng'
+                                  : 'Vệ sinh chung'}
                               </label>
                             </div>
                             <div className="search-other-margin ">
@@ -717,7 +720,7 @@ class Search extends Component {
                                 onChange={() => {
                                   this.setState((prevState) => ({
                                     chooseSeperateKitchen: !prevState.chooseSeperateKitchen,
-                                  }));
+                                  }))
                                 }}
                               />
                               <label
@@ -725,10 +728,10 @@ class Search extends Component {
                                 onClick={() => {
                                   this.setState({
                                     kitchen: !this.state.kitchen,
-                                  });
+                                  })
                                 }}
                               >
-                                {this.state.kitchen ? "Bếp riêng" : "Bếp chung"}
+                                {this.state.kitchen ? 'Bếp riêng' : 'Bếp chung'}
                               </label>
                             </div>
                           </div>
@@ -761,27 +764,27 @@ class Search extends Component {
             )}
             {!this.state.finishFetchingAccomod && (
               <div
-                style={{ position: "relative", width: "90vw", height: "300px" }}
+                style={{ position: 'relative', width: '90vw', height: '300px' }}
               >
                 <div
                   style={{
-                    width: "150px",
-                    height: "150px",
-                    position: "absolute",
-                    top: "0",
-                    right: "0",
-                    bottom: "0",
-                    left: "0",
-                    margin: "auto",
+                    width: '150px',
+                    height: '150px',
+                    position: 'absolute',
+                    top: '0',
+                    right: '0',
+                    bottom: '0',
+                    left: '0',
+                    margin: 'auto',
                   }}
                 >
                   <Loader
-                    type={"Bars"}
+                    type={'Bars'}
                     color="#bf7c2f"
                     height={200}
                     width={200}
                   />
-                  <p style={{ paddingTop: "20px", fontSize: "20px" }}>
+                  <p style={{ paddingTop: '20px', fontSize: '20px' }}>
                     Loading data...
                   </p>
                 </div>
@@ -790,6 +793,6 @@ class Search extends Component {
           </div>
         </div>
       </>
-    );
+    )
   }
 }

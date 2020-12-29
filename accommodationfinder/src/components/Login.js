@@ -7,7 +7,6 @@ import logo_trang from '../image/logo_ngang_trang.png'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-
 const Login = (props) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -31,7 +30,7 @@ const Login = (props) => {
       let url = ''
 
       userType === 'owner'
-        ? (url = 'https://accommodation-finder.herokuapp.com/owner/login')
+        ? (url = 'http://localhost:4000/owner/login')
         : (url = 'https://accommodation-finder.herokuapp.com/renter/login')
 
       await axios
