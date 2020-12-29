@@ -244,10 +244,14 @@ const HomeDetailPage = () => {
               <Rate value={avgRate} disabled />
             </Row>
             <Row align="middle" style={{ paddingBottom: '0.5rem' }}>
-              <Typography.Paragraph strong style={{ fontSize: '1rem' }}>
-                Đánh giá của bạn:
-              </Typography.Paragraph>
-              <Rate value={rate ? rate : infoPost.rate} onChange={handleChangeRate} />
+              {userType === 'renter' && (
+                <>
+                  <Typography.Paragraph strong style={{ fontSize: '1rem' }}>
+                    Đánh giá của bạn:
+                  </Typography.Paragraph>
+                  <Rate value={rate ? rate : infoPost.rate} onChange={handleChangeRate} />
+                </>
+              )}
             </Row>
             <Row style={{ marginTop: '1rem' }}>
               {infoHouse.map((info, idx) => {
