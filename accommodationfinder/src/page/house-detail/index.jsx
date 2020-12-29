@@ -19,6 +19,8 @@ import {
   faDonate,
 } from '@fortawesome/free-solid-svg-icons'
 import HouseInfo from './components/HouseInfo'
+import 'react-slideshow-image/dist/styles.css'
+import { Slide } from 'react-slideshow-image'
 
 import './index.scss'
 
@@ -34,7 +36,7 @@ const HomeDetailPage = () => {
   const location = useLocation()
   const userContext = useContext(UserContext)
 
-  const { avatar, name, userType } = userContext.userData
+  const { avatar, name, userType, userId: _id } = userContext.userData
 
   useEffect(() => {
     getAllComments()
@@ -97,9 +99,21 @@ const HomeDetailPage = () => {
   }, [comment])
 
   const handleChangeRate = (r) => {
+    console.log(userContext.userData)
     setRate(r)
-    //To do
-    //Call api change rate
+    axios({
+      method: 'POST',
+      url: `${baseURL}/rating`,
+      headers: {
+        'Context-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      data: {
+        ratedStar: r,
+        accommodationId: params.id,
+        userId: userContext.userData._id
+      },
+    })
   }
 
   const handleFollow = async () => {
@@ -221,7 +235,25 @@ const HomeDetailPage = () => {
         <Divider orientation="left">Details</Divider>
         <Row>
           <Col span={14}>
-            <Image src={photos[0]} width={700} height={500} />
+            {/* <Image src={photos[1]} width={700} height={500} /> */}
+            <div style={{ width: '90%', height: '400px' }}>
+              <Slide autoplay={true} duration={2000} pauseOnHover={true} transitionDuration={750} canSwipe={true}>
+                {photos.map((element, index) => (
+                  <div
+                    style={{
+                      backgroundImage: `url(${element})`,
+                      width: '100%',
+                      height: '400px',
+                      backgroundRepeat: 'no-repeat',
+                      backgroundSize: 'cover',
+                      backgroundPosition: '50% 50%',
+                      overflow: 'hidden',
+                    }}
+                    key={index}
+                  ></div>
+                ))}
+              </Slide>
+            </div>
           </Col>
           <Col span={10}>
             <Row align="middle">
