@@ -65,6 +65,22 @@ class SignupOwner extends Component {
             pauseOnHover: true,
             draggable: true,
           })
+
+          let statusCode = 0
+          axios
+            .post(`http://localhost:3002/createChatbox`, {
+              _id: res.data.objectOwner._id,
+              name: res.data.objectOwner.name,
+              avatar: res.data.objectOwner.avatar,
+              role: localStorage.getItem('userType'),
+            })
+            .then((res) => {
+              console.log(res.status)
+              statusCode = res.status
+            })
+          if (statusCode === 200) {
+            console.log('create chatbox successfully')
+          }
           location.href = '/'
         } else {
           toast.error(res.data.message, {
@@ -76,7 +92,6 @@ class SignupOwner extends Component {
             draggable: true,
           })
         }
-        
       })
       .catch((err) => console.log(err))
     //Send notification yêu cầu đăng ký thành công
