@@ -1,4 +1,42 @@
 .house-detail-page {
+  .details-section {
+    margin-top: 2rem;
+    .home-details-address {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      white-space: nowrap;
+      padding-bottom: 0.5rem;
+      align-items: center;
+    }
+    .house-details-title {
+      font-size: 2.5rem;
+      font-weight: 600;
+    }
+    .follow-btn {
+      border: 2px solid #bf7c2f;
+      border-radius: 50px;
+      padding: 0.5rem 1rem;
+      margin-left: 1rem;
+      padding: 0.2rem 1rem;
+      cursor: pointer;
+    }
+    .unfollow {
+      background-color: #fff;
+      border-color: #bf7c2f;
+      color: #bf7c2f;
+    }
+    .follow {
+      background-color: #bf7c2f;
+      color: #fff;
+      font-weight: 600;
+    }
+    div.ant-typography,
+    .ant-typography p {
+      margin-bottom: 0;
+    }
+  }
+
   #avatar-username {
     margin-left: 0.5rem;
     font-size: 1rem;

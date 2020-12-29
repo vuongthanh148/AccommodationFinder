@@ -6,6 +6,7 @@ import axios from 'axios'
 
 import './index.css'
 import Loader from '../../../../components/Loader'
+import { baseURL } from '../../../../constants/api'
 
 function TableManagementOwner(props) {
   const [ownerAccountList, setOwnerAccountList] = useState([])
@@ -15,7 +16,7 @@ function TableManagementOwner(props) {
       setServiceLoader(true)
       const res = await axios({
         method: 'GET',
-        url: 'http://localhost:4000/admin/management-owner',
+        url: `${baseURL}/admin/management-owner`,
         headers: {
           'Content-Type': 'application/json',
         },

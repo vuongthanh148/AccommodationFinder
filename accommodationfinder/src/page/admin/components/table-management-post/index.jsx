@@ -6,6 +6,7 @@ import DescriptionIcon from '@material-ui/icons/Description'
 import Loader from '../../../../components/Loader'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import { baseURL } from '../../../../constants/api'
 
 import './index.css'
 
@@ -18,7 +19,7 @@ function TableManagementPost(props) {
       setServiceLoader(true)
       const res = await axios({
         method: 'GET',
-        url: 'http://localhost:4000/admin/management-post',
+        url: `${baseURL}/admin/management-post`,
         headers: {
           'Content-Type': 'application/json',
         },
