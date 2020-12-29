@@ -248,6 +248,22 @@ const MainInfo = (props) => {
           />
         </Box>
       </Box>
+      {/* Public Place */}
+      <Box pb={3}>
+        <InputLabel htmlFor="publicPlace">Địa điểm công cộng</InputLabel>
+        <TextField
+          fullWidth
+          id="publicPlace"
+          value={values.publicPlace}
+          onChange={handleChange('publicPlace')}
+          size="small"
+          variant="outlined"
+          helperText={touched.livingArea && errors.livingArea}
+          FormHelperTextProps={{
+            className: clsx(classes.formHelperText),
+          }}
+        />
+      </Box>
       {/* Living Area */}
       <Box pb={3}>
         <InputLabel htmlFor="livingArea">Diện tích</InputLabel>
@@ -512,7 +528,7 @@ const NewPost = () => {
       city: void 0,
       district: void 0,
       ward: void 0,
-      publicPlace: void 0,
+      publicPlace: '',
       accommodationType: '',
       street: '',
       number: void 0,
@@ -532,8 +548,8 @@ const NewPost = () => {
       washingMachine: false,
       fridge: false,
     },
-    validationSchema: newPostValidationSchema,
-    onSubmit: async (values, helpers) => {
+    validationSchema: {newPostValidationSchema},
+    onSubmit: (values, helpers) => {
       console.log("dcmcmcm")
       // kiểm tra và gửi
       console.log(values);
@@ -631,7 +647,7 @@ const NewPost = () => {
                 variant="contained"
                 color="primary"
                 disabled={formik.isSubmitting}
-                onClick={formik.onSubmit}
+                onClick={() => {console.log(formik)}}
               >
                 Hoàn tất
               </Button>
