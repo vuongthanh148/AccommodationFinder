@@ -97,6 +97,13 @@ function TableManagementOwner(props) {
                 onConfirm={() => {
                   // To do
                   // Call api approve account
+                  axios
+                    .patch('http://localhost:4000/owner/approve', {
+                      email: ownerAccountList[index].email,
+                    })
+                    .then((res) => {
+                      console.log(res)
+                    })
                 }}
               >
                 <Tooltip title="Chấp thuận tài khoản">
@@ -114,6 +121,15 @@ function TableManagementOwner(props) {
               onConfirm={() => {
                 // To do
                 // Call api delete account
+
+                axios
+                  .delete(
+                    `http://localhost:4000/owner/profile/${ownerAccountList[index].email}`,
+                    {}
+                  )
+                  .then((res) => {
+                    console.log(res.status)
+                  })
               }}
             >
               <Tooltip title="Xoá bài đăng">
