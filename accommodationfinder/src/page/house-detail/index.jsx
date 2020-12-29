@@ -30,7 +30,7 @@ const HomeDetailPage = () => {
   const [comment, setComment] = useState()
   const [listComment, setListComment] = useState([])
   const [infoPost, setInfoPost] = useState({})
-  const [rate, setRate] = useState(0)
+  const [rate, setRate] = useState(null)
   const location = useLocation()
   const userContext = useContext(UserContext)
 
@@ -247,7 +247,7 @@ const HomeDetailPage = () => {
               <Typography.Paragraph strong style={{ fontSize: '1rem' }}>
                 Đánh giá của bạn:
               </Typography.Paragraph>
-              <Rate value={rate} onChange={handleChangeRate} />
+              <Rate value={rate ? rate : infoPost.rate} onChange={handleChangeRate} />
             </Row>
             <Row style={{ marginTop: '1rem' }}>
               {infoHouse.map((info, idx) => {
