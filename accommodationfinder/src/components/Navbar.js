@@ -159,7 +159,7 @@ class Bar extends Component {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink activeStyle={{ color: '#fff' }} to="/login">
+                  <NavLink activeStyle={{ color: '#fff' }} to="/newpost">
                     Tạo bài viết
                   </NavLink>
                 </li>
