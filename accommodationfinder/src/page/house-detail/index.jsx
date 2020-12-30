@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Row, Col, Divider, Button, Avatar, Input, Typography, Rate, Image } from 'antd'
 import { useLocation, useParams } from 'react-router-dom'
 import Footer from '../../components/Footer'
-import { baseURL } from '../../constants/api'
+import { baseURL, productionURL } from '../../constants/api'
 import { UserContext } from '../../context/user.context'
 import moment from 'moment'
 import ContentComment from './components/ContentComment'
@@ -55,11 +55,12 @@ const HomeDetailPage = () => {
   const handleGetDetailsData = async () => {
     const result = await axios({
       method: 'GET',
-      url: `${baseURL}/accommodation/${params.id}`,
+      url: `${productionURL}/accommodation/${params.id}`,
       headers: {
         'Content-Type': 'application/json',
       },
     })
+    console.log(result.data)
     setAccommodation(result.data)
   }
 
