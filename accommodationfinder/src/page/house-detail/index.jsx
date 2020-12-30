@@ -215,10 +215,24 @@ const HomeDetailPage = () => {
     } = accommodation
     const { userType } = userContext.userData
     photos = photos || []
+    avgRate = avgRate || ''
+    city = city || ''
+    district = district || ''
+    livingArea = livingArea = ''
+    materialFacilities = materialFacilities || []
+    ownerName = ownerName || ''
+    ownerPhone = ownerPhone || ''
+    price = price || ''
+    publicPlace = publicPlace || ''
+    street = street || ''
+    postedDate = postedDate || ''
+    houseNumber = houseNumber || ''
+    title = title || ''
+    ward = ward || ''
     const infoHouse = [
       {
         title: 'Địa chỉ',
-        content: `${houseNumber} ${street}, ${ward}, ${district}, ${city}`,
+        content: street ? `${houseNumber} ${street}, ${ward}, ${district}, ${city}` : '',
         icon: fasMapMarkedAlt,
       },
       {
