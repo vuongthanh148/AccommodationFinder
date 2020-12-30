@@ -57,11 +57,9 @@ class Info extends Component {
       let tempList = []
       console.log(res)
       await res.data.forEach((e) => {
-        axios
-          .get(`https://accommodation-finder.herokuapp.com/accommodation/${e.accommodationId}`)
-          .then((res2) => {
-            tempList.push(res2.data)
-          })
+        axios.get(`https://accommodation-finder.herokuapp.com/accommodation/${e.accommodationId}`).then((res2) => {
+          tempList.push(res2.data)
+        })
       })
       this.setState(
         {
@@ -139,13 +137,7 @@ class Info extends Component {
   }
 
   render() {
-    const {
-      myProfile,
-      favorites,
-      changePassword,
-      currentPage,
-      userAvatar,
-    } = this.state
+    const { myProfile, favorites, changePassword, currentPage, userAvatar } = this.state
     if (this.state.fisnishFetching) {
       return (
         <div className="ev-page-container">
@@ -156,73 +148,79 @@ class Info extends Component {
                   className="profile-block profile-margin-remove profile-text-center"
                   style={{ position: 'relative' }}
                 >
-                  <img style={{maxWidth: '500px', maxHeight: '500px'}}
+                  <img
+                    style={{ maxWidth: '500px', maxHeight: '500px' }}
                     className="profile-border-rounded profile-box-shadow-small profile-width-1-2"
                     src={userAvatar}
                   />
                   <label htmlFor="files" className="change_label">
                     Change Avatar
                   </label>
-                  <input
-                    type="file"
-                    className="change_input"
-                    id="files"
-                    onChange={this.onFileChange}
-                  ></input>
+                  <input type="file" className="change_input" id="files" onChange={this.onFileChange}></input>
                 </div>
                 <div className="profile-margin profile-text-center">
-                  <p
-                    className="profile-text-bold profile-margin-remove"
-                    style={{ fontSize: '1rem' }}
-                  >
+                  <p className="profile-text-bold profile-margin-remove" style={{ fontSize: '1rem' }}>
                     {this.context.userData.name}
                   </p>
                   <p className="profile-text-muted profile-text-small profile-margin-remove">
-                    {this.context.userData.userType.replace(
-                      /\w\S*/g,
-                      function (txt) {
-                        return (
-                          txt.charAt(0).toUpperCase() +
-                          txt.substr(1).toLowerCase()
-                        )
-                      }
-                    )}
+                    {this.context.userData.userType.replace(/\w\S*/g, function (txt) {
+                      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+                    })}
                   </p>
                 </div>
                 <hr />
 
                 <ul className="profile-list ev-list profile-text-small">
                   <li>
-                    <a
-                      className="ev-link-secondary"
-                      onClick={() => this.setState({ currentPage: 1 })}
-                    >
+                    <a className="ev-link-secondary" onClick={() => this.setState({ currentPage: 1 })}>
                       Hồ sơ cá nhân
                     </a>
                   </li>
-                  {this.state.userData.userType === 'renter' && <li>
-                    <a
-                      className="ev-link-secondary"
-                      onClick={() => this.setState({ currentPage: 2 })}
-                    >
-                      Danh sách yêu thích
-                    </a>
-                  </li>}
+                  {this.state.userData.userType === 'renter' && (
+                    <li>
+                      <a className="ev-link-secondary" onClick={() => this.setState({ currentPage: 2 })}>
+                        Danh sách yêu thích
+                      </a>
+                    </li>
+                  )}
                   {this.state.userData.userType === 'owner' && (
                     <li>
                       <a
                         className="ev-link-secondary"
-                        onClick={() => this.setState({ currentPage: 4 })}
+                        onClick={ async () => {
+                          this.setState({ currentPage: 2, fisnishFetching: false })
+                          await axios({
+                            method: 'POST',
+                            url: `http://localhost:4000/allAccommodation`,
+                            data: {
+                              userId: this.state.userData._id,
+                            },
+                            headers: {
+                              Authorization: `Bearer ${this.state.userToken}`,
+                            },
+                          }).then( (res) => {
+                            console.log(res.data)
+                
+                            this.setState(
+                              {
+                                list_follow_accomod: res.data,
+                              },
+                              () => {
+                                console.log(this.state.list_follow_accomod)
+                                this.setState({
+                                  fisnishFetching: true,
+                                })
+                              }
+                            )
+                          })
+                        }}
                       >
                         Bài đăng của tôi
                       </a>
                     </li>
                   )}
                   <li>
-                    <a
-                      className="ev-link-secondary"
-                      onClick={() => this.setState({ currentPage: 3 })}
-                    >
+                    <a className="ev-link-secondary" onClick={() => this.setState({ currentPage: 3 })}>
                       Đổi mật khẩu
                     </a>
                   </li>
@@ -231,10 +229,7 @@ class Info extends Component {
                 <hr />
 
                 <a className="profile-button profile-button-default profile-text-truncate profile-border-rounded profile-width-1-1">
-                  <Icon
-                    icon={lockIcon}
-                    className="profile-margin-small-right"
-                  />
+                  <Icon icon={lockIcon} className="profile-margin-small-right" />
                   Đăng xuất
                 </a>
               </div>
@@ -246,7 +241,7 @@ class Info extends Component {
             )}
             {favorites === currentPage && (
               <div className="user-profile">
-                <Favorites list_accomod={this.state.list_follow_accomod} />
+                <Favorites list_accomod={this.state.list_follow_accomod} userData={this.state.userData}/>
               </div>
             )}
             {changePassword === currentPage && (
@@ -403,6 +398,7 @@ class MyProfile extends Component {
   }
 }
 class Favorites extends Component {
+  static contextType = UserContext
   constructor(props) {
     super(props)
     this.state = {
@@ -414,7 +410,7 @@ class Favorites extends Component {
     return (
       <div>
         <h5 className="profile-heading-line">
-          <span>Danh sách yêu thích</span>
+          <span>{this.props.userData.userType === 'owner'?'Danh sách bài đăng':'Danh sách yêu thích'}</span>
         </h5>
         <div className="list_favorite">
           {this.state.list_accomod.map((accomod, index) => {
@@ -451,13 +447,10 @@ class ChangePassword extends Component {
   handleSubmit = () => {
     const email = this.context.userData.email
     axios
-      .post(
-        `https://accommodation-finder.herokuapp.com/${this.state.userData.userType}/login`,
-        {
-          email: email,
-          password: this.state.password,
-        }
-      )
+      .post(`https://accommodation-finder.herokuapp.com/${this.state.userData.userType}/login`, {
+        email: email,
+        password: this.state.password,
+      })
       .then((res) => {
         if (res.status === 200) {
           if (this.state.newPassWord === this.state.newPassWord1) {

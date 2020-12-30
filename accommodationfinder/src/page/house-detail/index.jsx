@@ -35,10 +35,12 @@ const HomeDetailPage = () => {
   const [rate, setRate] = useState(null)
   const location = useLocation()
   const userContext = useContext(UserContext)
+  
 
   const { avatar, name, userType, userId: _id } = userContext.userData
 
   useEffect(() => {
+    console.log(params)
     getAllComments()
     analystPage()
     if (userContext.userData.userType) {
