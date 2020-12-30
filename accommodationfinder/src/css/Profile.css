@@ -297,6 +297,10 @@ th.profile-text-truncate {
   .profile-second-column, .change-padding {
     margin-top: 30px;
   }
+  .list_favorite {
+    grid-template-columns: repeat(1, calc(100%)) !important;
+    grid-column-gap: 2% !important;
+  }
 }
 
 @media (min-width:640px) {

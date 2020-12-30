@@ -1,4 +1,12 @@
 import React, { Component } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  NavLink,
+  withRouter,
+} from 'react-router-dom'
 import { Icon, InlineIcon } from "@iconify/react";
 import bars from "@iconify-icons/fa-solid/bars";
 import search from "@iconify-icons/fa-solid/search";
@@ -48,9 +56,9 @@ class NavbarMobile extends Component {
             </a>
           </div>
           <div className="mobile-navbar-center">
-            <a className="mobile-navbar-item mobile-logo" href="#">
+            <NavLink className="mobile-navbar-item mobile-logo" activeStyle={{ color: '#fff' }} to="/home">
               <img alt="Image" src={logo_den} />
-            </a>
+            </NavLink>
           </div>
           <div className="mobile-navbar-right">
             <a className="mobile-button mobile-button-link ev-button" href="#">
@@ -92,7 +100,9 @@ class NavbarMobile extends Component {
             <p className="sidebar-nav-header">Main Menu</p>
             <ul className="ev-main-menu sidebar-nav-default sidebar-nav-parent-icon sidebar-margin-small-bottom">
               <li className="sidebar-parent">
-                <a href="#">Trang chủ</a>
+                <NavLink activeStyle={{ color: '#fff' }} to="/home" onClick={this.changeSidebarState}>
+                  Trang chủ
+                </NavLink>
               </li>
               <li className="sidebar-parent">
                 <a href="#">Đăng nhập</a>
