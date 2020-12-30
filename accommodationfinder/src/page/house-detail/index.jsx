@@ -192,8 +192,6 @@ const HomeDetailPage = () => {
     }
   }
 
-  // const detailSection = <div></div>
-
   const detailSection = useMemo(() => {
     let {
       photos,
@@ -218,7 +216,7 @@ const HomeDetailPage = () => {
     avgRate = avgRate || ''
     city = city || ''
     district = district || ''
-    livingArea = livingArea = ''
+    livingArea = livingArea || ''
     materialFacilities = materialFacilities || []
     ownerName = ownerName || ''
     ownerPhone = ownerPhone || ''

@@ -28,7 +28,14 @@ const Login = (props) => {
     async (event) => {
       event.preventDefault()
       let url = ''
-
+      toast.info('Đang đăng nhập, vui lòng chờ', {
+        position: 'bottom-left',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      })
       userType === 'owner'
         ? (url = 'http://localhost:4000/owner/login')
         : (url = 'https://accommodation-finder.herokuapp.com/renter/login')
@@ -37,10 +44,7 @@ const Login = (props) => {
         .post(url, { email: email, password: password })
         .then((res) => {
           //Saving tolken to local storage
-          localStorage.setItem(
-            `token`,
-            res.data.user.tokens[res.data.user.tokens.length - 1].token
-          )
+          localStorage.setItem(`token`, res.data.user.tokens[res.data.user.tokens.length - 1].token)
           localStorage.setItem(`userType`, userType)
           setUserData({
             ...res.data.user,
@@ -67,17 +71,6 @@ const Login = (props) => {
 
   return (
     <>
-      <ToastContainer
-        position="bottom-left"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       {!isLoggedIn && (
         <div className="login-height-1-1">
           <div className="login-background-cover login-height-1-1 login-flex login-light">
@@ -145,13 +138,10 @@ const Login = (props) => {
 
                 <div className="login-margin login-text-left login-text-small">
                   <label>
-                    <input className="login-checkbox" type="checkbox" /> Nhớ mật
-                    khẩu
+                    <input className="login-checkbox" type="checkbox" /> Nhớ mật khẩu
                   </label>
                 </div>
-                <button className="login-button login-border-pill">
-                  Đăng nhập
-                </button>
+                <button className="login-button login-border-pill">Đăng nhập</button>
 
                 <div className="login-margin login-text-small">
                   <p
@@ -164,11 +154,7 @@ const Login = (props) => {
                     {status}
                   </p>
                   Bạn chưa có tài khoản?{' '}
-                  <NavLink
-                    className="login-link-primary login-text-bold"
-                    activeStyle={{ color: '#fff' }}
-                    to="/signup"
-                  >
+                  <NavLink className="login-link-primary login-text-bold" activeStyle={{ color: '#fff' }} to="/signup">
                     Đăng ký
                   </NavLink>
                   <NavLink
