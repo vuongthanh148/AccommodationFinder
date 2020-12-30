@@ -31,16 +31,16 @@ const HomeDetailPage = () => {
 
   const [comment, setComment] = useState()
   const [listComment, setListComment] = useState([])
+  const [accommodation, setAccommodation] = useState({})
   const [infoPost, setInfoPost] = useState({})
   const [rate, setRate] = useState(null)
   const location = useLocation()
   const userContext = useContext(UserContext)
-  
 
   const { avatar, name, userType, userId: _id } = userContext.userData
 
   useEffect(() => {
-    console.log(params)
+    handleGetDetailsData()
     getAllComments()
     analystPage()
     if (userContext.userData.userType) {
@@ -51,6 +51,18 @@ const HomeDetailPage = () => {
   const handleChangeComment = useCallback((event) => {
     setComment(event.target.value)
   }, [])
+
+  const handleGetDetailsData = async () => {
+    debugger
+    const result = await axios({
+      method: 'GET',
+      url: `${baseURL}/accommodation/${params.id}`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    setAccommodation(result.data)
+  }
 
   const getAllComments = async () => {
     const res = await axios({
@@ -113,7 +125,7 @@ const HomeDetailPage = () => {
       data: {
         ratedStar: r,
         accommodationId: params.id,
-        userId: userContext.userData._id
+        userId: userContext.userData._id,
       },
     })
   }
@@ -180,8 +192,10 @@ const HomeDetailPage = () => {
     }
   }
 
+  // const detailSection = <div></div>
+
   const detailSection = useMemo(() => {
-    const {
+    let {
       photos,
       accommodationType,
       avgRate,
@@ -198,8 +212,9 @@ const HomeDetailPage = () => {
       houseNumber,
       title,
       ward,
-    } = location.state.accommodation
+    } = accommodation
     const { userType } = userContext.userData
+    photos = photos || []
     const infoHouse = [
       {
         title: 'Địa chỉ',
