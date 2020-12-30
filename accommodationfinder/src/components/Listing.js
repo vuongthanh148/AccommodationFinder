@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import "../css/Listing.css";
-import "react-slideshow-image/dist/styles.css";
-import Select from "react-select";
-import Pagination from "@material-ui/lab/Pagination";
+import React, { Component } from 'react'
+import '../css/Listing.css'
+import 'react-slideshow-image/dist/styles.css'
+import Select from 'react-select'
+import Pagination from '@material-ui/lab/Pagination'
 
-import List from "./List";
-import axios from "axios";
+import List from './List'
+import axios from 'axios'
 
 class Listing extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       currentPage: 1,
       pageAmount: 0,
@@ -17,50 +17,50 @@ class Listing extends Component {
       finishSorting: false,
       asc: 1,
       sortType: {
-        value: "postedDate",
-        label: "Ngày đăng",
+        value: 'postedDate',
+        label: 'Ngày đăng',
         listOrder: [
-          { value: "desc", label: "Mới nhất" },
-          { value: "asc", label: "Cũ nhất" },
+          { value: 'desc', label: 'Mới nhất' },
+          { value: 'asc', label: 'Cũ nhất' },
         ],
       },
-      sortOrder: { value: "desc", label: "Mới nhất" },
+      sortOrder: { value: 'desc', label: 'Mới nhất' },
 
       listSortOption: [
         {
-          value: "postedDate",
-          label: "Ngày đăng",
+          value: 'postedDate',
+          label: 'Ngày đăng',
           listOrder: [
-            { value: "desc", label: "Mới nhất" },
-            { value: "asc", label: "Cũ nhất" },
+            { value: 'desc', label: 'Mới nhất' },
+            { value: 'asc', label: 'Cũ nhất' },
           ],
         },
         {
-          value: "price",
-          label: "Giá",
+          value: 'price',
+          label: 'Giá',
           listOrder: [
-            { value: "asc", label: "Tăng dần" },
-            { value: "desc", label: "Giảm dần" },
+            { value: 'asc', label: 'Tăng dần' },
+            { value: 'desc', label: 'Giảm dần' },
           ],
         },
         {
-          value: "livingArea",
-          label: "Diện tích",
+          value: 'livingArea',
+          label: 'Diện tích',
           listOrder: [
-            { value: "asc", label: "Tăng dần" },
-            { value: "desc", label: "Giảm dần" },
+            { value: 'asc', label: 'Tăng dần' },
+            { value: 'desc', label: 'Giảm dần' },
           ],
         },
       ],
       listSortOrder: [
-        { value: "desc", label: "Mới nhất" },
-        { value: "asc", label: "Cũ nhất" },
+        { value: 'desc', label: 'Mới nhất' },
+        { value: 'asc', label: 'Cũ nhất' },
       ],
       list_accomod: [],
       accomod_to_render: [],
-    };
-    this.handleSortButton = this.handleSortButton.bind(this);
-    this.handleChangePage = this.handleChangePage.bind(this);
+    }
+    this.handleSortButton = this.handleSortButton.bind(this)
+    this.handleChangePage = this.handleChangePage.bind(this)
   }
 
   componentDidMount() {
@@ -72,20 +72,20 @@ class Listing extends Component {
           ),
         },
         () => {
-          this.setState({
-            pageAmount:
-              parseInt(
-                this.state.list_accomod.length / this.state.accomodPerPage
-              ) + 1,
-            accomod_to_render: this.state.list_accomod.slice(
-              (this.state.currentPage - 1) * this.state.accomodPerPage,
-              this.state.currentPage * this.state.accomodPerPage
-            ),
-          }, () => this.setState({finishSorting: true}));
+          this.setState(
+            {
+              pageAmount: parseInt(this.state.list_accomod.length / this.state.accomodPerPage) + 1,
+              accomod_to_render: this.state.list_accomod.slice(
+                (this.state.currentPage - 1) * this.state.accomodPerPage,
+                this.state.currentPage * this.state.accomodPerPage
+              ),
+            },
+            () => this.setState({ finishSorting: true })
+          )
         }
-      );
+      )
     } else {
-      //"I dont see any accomod here");
+      console.log('dont find any accomod')
     }
   }
 
@@ -94,27 +94,25 @@ class Listing extends Component {
       {
         finishSorting: false,
         list_accomod: this.props.list_accomod.sort((a, b) =>
-          a[this.state.sortType.value] > b[this.state.sortType.value]
-            ? this.state.asc
-            : -this.state.asc
+          a[this.state.sortType.value] > b[this.state.sortType.value] ? this.state.asc : -this.state.asc
         ),
-        currentPage: 1
+        currentPage: 1,
       },
       () => {
-        //"Current page: ", this.state.currentPage);
-        this.setState({ 
-          accomod_to_render: this.state.list_accomod.slice(
-            (this.state.currentPage - 1) * this.state.accomodPerPage,
-            this.state.currentPage * this.state.accomodPerPage
-          ),  
-        }, (() => this.setState({finishSorting: true})));
+        this.setState(
+          {
+            accomod_to_render: this.state.list_accomod.slice(
+              (this.state.currentPage - 1) * this.state.accomodPerPage,
+              this.state.currentPage * this.state.accomodPerPage
+            ),
+          },
+          () => this.setState({ finishSorting: true })
+        )
       }
-    );
+    )
   }
 
   handleChangePage(event, newPage) {
-    //newPage);
-    //this.state.list_accomod)
     this.setState(
       {
         finishSorting: false,
@@ -126,21 +124,19 @@ class Listing extends Component {
       },
       () => {
         this.setState({
-          finishSorting: true
+          finishSorting: true,
         })
-        this.props.myRef.current.scrollIntoView();
-        //"page choosing: ", this.state.currentPage);
-        //"page render: ", this.state.accomod_to_render);
+        this.props.myRef.current.scrollIntoView()
       }
-    );
+    )
   }
   render() {
-    const { sortType, sortOrder } = this.state;
+    const { sortType, sortOrder } = this.state
     return (
       <>
         <div className="sortField">
           <div className="sort-result">
-            <p className="result" style={{ fontStyle: "italic", textAlign: "left" }}>
+            <p className="result" style={{ fontStyle: 'italic', textAlign: 'left' }}>
               Tìm kiếm được {this.state.list_accomod.length} kết quả
             </p>
           </div>
@@ -157,8 +153,8 @@ class Listing extends Component {
                   sortType,
                   listSortOrder: sortType.listOrder,
                   sortOrder: sortType.listOrder[0],
-                  asc: sortType.listOrder[0].value === "asc" ? 1 : -1,
-                });
+                  asc: sortType.listOrder[0].value === 'asc' ? 1 : -1,
+                })
               }}
             />
           </div>
@@ -173,7 +169,7 @@ class Listing extends Component {
               onChange={(sortOrder) =>
                 this.setState({
                   sortOrder,
-                  asc: sortOrder.value === "asc" ? 1 : -1,
+                  asc: sortOrder.value === 'asc' ? 1 : -1,
                 })
               }
             />
@@ -184,15 +180,12 @@ class Listing extends Component {
             </button>
           </div>
         </div>
-        <div
-          className="uk-slider-items list-product-items"
-          style={{ marginBottom: "30px", height: "100%" }}
-        >
+        <div className="uk-slider-items list-product-items" style={{ marginBottom: '30px', height: '100%' }}>
           {this.state.finishSorting &&
             this.state.accomod_to_render.map((house, index) => {
-              let isFollowed = false;
-              if(this.props.list_follow.indexOf(house._id) != -1) isFollowed= true;
-              return <List accomod={house} key={index} isFollowed={isFollowed}/> 
+              let isFollowed = false
+              if (this.props.list_follow.find((x) => x.accommodationId === house._id) != undefined) isFollowed = true
+              return <List accomod={house} key={index} isFollowed={isFollowed} />
             })}
         </div>
         <Pagination
@@ -203,8 +196,8 @@ class Listing extends Component {
           onChange={this.handleChangePage}
         />
       </>
-    );
+    )
   }
 }
 
-export default Listing;
+export default Listing

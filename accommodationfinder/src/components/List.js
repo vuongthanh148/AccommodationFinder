@@ -51,18 +51,16 @@ class List extends Component {
       async () => {
         await axios({
           method: 'POST',
-          url: `https://accommodation-finder.herokuapp.com/accommodation/${
-            this.state.isFollowed ? 'unfollow' : 'follow'
-          }`,
-          headers:{
-            Authorization: `Bearer ${this.state.userToken}`
+          url: `http://localhost:4000/accommodation/${this.state.isFollowed ? 'follow' : 'unfollow'}`,
+          headers: {
+            Authorization: `Bearer ${this.state.userToken}`,
           },
           data: {
             accomodId: this.props.accomod._id,
           },
         }).then((res) => {
           console.log(res)
-          toast.info(res.data.success ? 'Thêm vào danh sách yêu thích thành công!' : 'Huỷ yêu thích thành công!', {
+          toast.info(res.data.message ? 'Thêm vào danh sách yêu thích thành công!' : 'Huỷ yêu thích thành công!', {
             // position: "top-right",
             autoClose: 3000,
             hideProgressBar: false,
@@ -77,6 +75,7 @@ class List extends Component {
 
   render() {
     const { accomod } = this.props
+    console.log(this.props.isFollowed)
     return (
       <div className="ev-card-1">
         <div>

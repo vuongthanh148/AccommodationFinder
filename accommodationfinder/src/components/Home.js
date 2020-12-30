@@ -214,7 +214,7 @@ class Search extends Component {
           Authorization: `Bearer ${this.state.userToken}`,
         },
       }).then((res) => {
-        console.log(res)
+        console.log('list follow: ', res.data)
         this.setState({
           list_follow: res.data,
         })
@@ -515,7 +515,7 @@ class Search extends Component {
                   </div>
                 </div>
 
-                <div className="search-width-1-1@s search-width-5-6@m" style={{ height: '90px', margin: '0' }}>
+                <div className="search-width-1-1@s search-width-5-6@m" style={{ margin: '0' }}>
                   <div className="search-margin ">
                     <ul className="search-other-features">
                       <li className={this.state.className}>
