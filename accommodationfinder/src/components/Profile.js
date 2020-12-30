@@ -58,7 +58,7 @@ class Info extends Component {
       console.log(res)
       await res.data.forEach((e) => {
         axios
-          .get(`https://accommodation-finder.herokuapp.com/accommodation/${e}`)
+          .get(`https://accommodation-finder.herokuapp.com/accommodation/${e.accommodationId}`)
           .then((res2) => {
             tempList.push(res2.data)
           })
