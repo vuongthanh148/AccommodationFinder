@@ -64,7 +64,13 @@ body {
     border: 1px solid rgba(128,128,128,0.7);
     padding: 8px;
     box-shadow: 4px 7px 15px #888888;
+    transition: all 0.25s ease-in-out;
 }
+
+.ev-card-1:hover{
+    transform: scale(1.02);
+}
+
 
 .ev-card-1 .uk-label {
     color: #ffffff !important;
@@ -80,14 +86,11 @@ body {
     border-radius: 8px;
 }
 
-.ev-card-1 .ev-body {
-    /* padding: 5px 15px; */
-}
-
 .ev-body{
     border-radius: 8px;
     /* border: 1px solid rgba(128,128,128,0.3); */
     margin-top: 5px;
+    text-decoration: none;
 }
 
 .ev-card-1 .uk-label-primary {

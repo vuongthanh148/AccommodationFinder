@@ -35,7 +35,7 @@ class SignupRenter extends Component {
   handleRegister = async (event) => {
     event.preventDefault();
     const { name, email, password } = this.state;
-    console.log(this.state)
+    //this.state)
     await axios
       .post("https://accommodation-finder.herokuapp.com/renter/signup", {
         name,
@@ -43,9 +43,9 @@ class SignupRenter extends Component {
         password,
       })
       .then((res) => {
-        console.log(res);
+        //res);
         if (res.data.response) {
-          toast.info(res.data.response.toString(), {
+          toast.info(res.data.response, {
             position: "bottom-left",
             autoClose: 3000,
             hideProgressBar: false,
@@ -53,8 +53,9 @@ class SignupRenter extends Component {
             pauseOnHover: true,
             draggable: true,
           });
+          location.href = '/'
         } else {
-          toast.error(res.data.message.toString(), {
+          toast.error(res.data.message, {
             position: "bottom-left",
             autoClose: 3000,
             hideProgressBar: false,
@@ -63,6 +64,7 @@ class SignupRenter extends Component {
             draggable: true,
           });
         }
+       
       })
       .catch((err) => console.log(err));
     //Send notification đăng ký thành công
@@ -71,17 +73,6 @@ class SignupRenter extends Component {
   render() {
     return (
       <div className="signupRenter-background-cover signupRenter-height-1-1 signupRenter-flex signupRenter-light">
-        <ToastContainer
-          position="bottom-left"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <div className="signupRenter-overlay-secondary signupRenter-position-cover"></div>
 
         <div className="signupRenter-auth-2 signupRenter-position-z-index">
