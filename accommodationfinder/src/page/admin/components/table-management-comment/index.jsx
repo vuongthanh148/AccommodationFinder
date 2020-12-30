@@ -78,7 +78,7 @@ function TableManagementComment() {
       },
     },
     {
-      title: 'ID bài đăng',
+      title: 'ID bình luận',
       key: 'accommodationId',
       align: 'center',
       dataIndex: 'accommodationId',
@@ -150,7 +150,7 @@ function TableManagementComment() {
                 handleDeleteComment(record._id)
               }}
             >
-              <Tooltip title="Xoá bài đăng">
+              <Tooltip title="Xoá bình luận">
                 <div className="table-icons">
                   <img alt="delete-icon" src={DeleteIcon} />
                 </div>
