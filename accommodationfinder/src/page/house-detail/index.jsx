@@ -53,7 +53,6 @@ const HomeDetailPage = () => {
   }, [])
 
   const handleGetDetailsData = async () => {
-    debugger
     const result = await axios({
       method: 'GET',
       url: `${baseURL}/accommodation/${params.id}`,
@@ -326,7 +325,7 @@ const HomeDetailPage = () => {
         </Row>
       </div>
     )
-  }, [rate, infoPost])
+  }, [rate, infoPost, accommodation])
 
   const commentSection = useMemo(() => {
     return (
