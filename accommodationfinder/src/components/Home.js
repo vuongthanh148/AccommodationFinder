@@ -161,8 +161,12 @@ class Search extends Component {
             `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=vi`
           )
           .then((res) => {
+            console.log(res)
+            var city = res.data.localityInfo.administrative.find(a => a.adminLevel === 4);
+            var district = res.data.localityInfo.administrative.find(a => a.adminLevel === 6);
+            var ward = res.data.localityInfo.administrative.find(a => a.adminLevel === 8);
             this.state.list_city.forEach((c) => {
-              if (c.label === res.data.localityInfo.administrative[1].name) {
+              if (c.label === city.name) {
                 axios
                   .get(
                     `https://thongtindoanhnghiep.co/api/city/${c.ID}/district`
@@ -171,12 +175,12 @@ class Search extends Component {
                     res1.data.forEach((e) => {
                       if (
                         this.removeAccents(e.Title) ===
-                        res.data.localityInfo.administrative[2].name.replace(
+                        district.name.replace(
                           ' District',
                           ''
                         )
                       ) {
-                        res.data.localityInfo.administrative[2].name = e.Title.replace(
+                        district.name = e.Title.replace(
                           'Quận ',
                           ''
                         )
@@ -184,14 +188,14 @@ class Search extends Component {
                     })
                     this.setState({
                       accommodationInfo: {
-                        city: res.data.localityInfo.administrative[1].name,
-                        district: res.data.localityInfo.administrative[2].name,
+                        city: city.name,
+                        district: district.name,
                       },
                     })
-                    if (res.data.localityInfo.administrative[3] !== undefined) {
+                    if (ward !== undefined) {
                       this.setState({
                         accommodationInfo: {
-                          ward: res.data.localityInfo.administrative[3].name.replace(
+                          ward: ward.name.replace(
                             'Phường ',
                             ''
                           ),
@@ -207,6 +211,7 @@ class Search extends Component {
       () => {
         //Get all accomod
         getAccomod()
+        
       },
       this.options
     )
@@ -240,7 +245,6 @@ class Search extends Component {
           Authorization: `Bearer ${this.state.userToken}`,
         },
       }).then((res) => {
-        console.log(res)
         this.setState({
           list_follow: res.data,
         })
@@ -255,14 +259,13 @@ class Search extends Component {
       .then((res) => {
         const allAccomod = res.data.allAccomod
         const filteredAccomod = allAccomod.filter((a) => a.pending === false)
-        console.log(filteredAccomod)
         // //"data fetched: ", res.data.allAccomod);
         that.setState({
           list_accomod: filteredAccomod,
         })
+        that.updateFetchingAccomod(true)
       })
 
-    that.updateFetchingAccomod(true)
   }
 
   removeAccents(str) {
@@ -275,6 +278,7 @@ class Search extends Component {
   }
 
   componentDidMount() {
+    
     axios.get(`https://thongtindoanhnghiep.co/api/city`).then((res) => {
       const cities = res.data.LtsItem.map((item) => {
         return {
@@ -289,6 +293,7 @@ class Search extends Component {
         // //"accomod: ", this.state.accommodationInfo);
         this.getPosition(this.getAccomod)
       }
+      else console.log(this.state.accommodationInfo)
     })
     axios
       .get(`https://accommodation-finder.herokuapp.com/location`)

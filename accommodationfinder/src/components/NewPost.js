@@ -524,32 +524,36 @@ const NewPost = (props) => {
       pauseOnHover: true,
       draggable: true,
     })
-    // console.log(files)
-    // console.log(values)
-    // var photos = []
-    // var ImgData = new FormData()
-    // await Promise.all(
-    //   files.map(async (f) => {
-    //     ImgData.append('image', f)
-    //     var config = {
-    //       method: 'post',
-    //       url: 'https://api.imgur.com/3/image',
-    //       headers: {
-    //         Authorization: 'Client-ID 546c25a59c58ad7',
-    //         Accept: '*/*',
-    //       },
-    //       data: ImgData,
-    //     }
-    //     await axios(config).then((res) => {
-    //       photos.push(res.data.data.link)
-    //     })
-    //   })
-    // )
-    // console.log(photos)
-    var photos = ['https://www.wellingtonnz.com/assets/Uploads/Intros/Intercontinental_room-couches-view__FocusFillWzk2MCw1MzYsInkiLDkxXQ.jpg',
-    'https://www.canterbury.ac.nz/life/accommodation/temporary/Sonoda-Temp-accom_127832166035890251.jpg',
-    'https://pix10.agoda.net/hotelImages/747/7476707/7476707_19053021300074837521.jpg?s=1024x768'
-  ]
+
+    var photos = []
+    var listPromise = []
+    // photos.push(value.data.data.link)
+    files.map(f => {
+      var ImgData = new FormData()
+      ImgData.append('image', f)
+      var config = {
+        headers: {
+          Authorization: 'Client-ID 8179920b3f62ec7',
+          Accept: '*/*',
+          "Content-type": "application/x-www-form-urlencoded",
+        }
+      }
+      var p = new Promise((res,rej) => {
+        axios.post("https://api.imgur.com/3/image", ImgData, config).then((value) => {
+          res(value)
+        })
+      })
+      listPromise.push(p)
+    })
+    const listRes = await Promise.all(listPromise)
+    listRes.forEach(res => {
+      photos.push(res.data.data.link)
+    })
+    console.log(photos)
+  //   var photos = ['https://www.wellingtonnz.com/assets/Uploads/Intros/Intercontinental_room-couches-view__FocusFillWzk2MCw1MzYsInkiLDkxXQ.jpg',
+  //   'https://www.canterbury.ac.nz/life/accommodation/temporary/Sonoda-Temp-accom_127832166035890251.jpg',
+  //   'https://pix10.agoda.net/hotelImages/747/7476707/7476707_19053021300074837521.jpg?s=1024x768'
+  // ]
 
     const data = {
       _id: props.userData._id,
@@ -602,7 +606,7 @@ const NewPost = (props) => {
           pauseOnHover: true,
           draggable: true,
         })
-        // location.href='/home'
+        location.href='/home'
       })
       .catch((e) => {
         console.log(e.data.response)

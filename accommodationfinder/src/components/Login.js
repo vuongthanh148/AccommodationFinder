@@ -30,7 +30,7 @@ const Login = (props) => {
       let url = ''
 
       userType === 'owner'
-        ? (url = 'http://localhost:4000/owner/login')
+        ? (url = 'https://accommodation-finder.herokuapp.com/owner/login')
         : (url = 'https://accommodation-finder.herokuapp.com/renter/login')
 
       await axios

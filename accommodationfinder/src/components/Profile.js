@@ -84,19 +84,17 @@ class Info extends Component {
       pauseOnHover: true,
       draggable: true,
     })
-    var data = new FormData()
-    data.append('image', event.target.files[0])
-    var config = {
-      method: 'post',
-      url: 'https://api.imgur.com/3/image',
+    
+    const data = new FormData();
+    data.append("image", event.target.files[0]);
+    const config = {
       headers: {
-        Authorization: 'Client-ID 546c25a59c58ad7',
-        Accept: '*/*',
+        "Content-type": "application/x-www-form-urlencoded",
+        Authorization: "Client-ID 8179920b3f62ec7",
       },
-      data: data,
-    }
-
-    axios(config).then((res) => {
+    };
+    axios.post("https://api.imgur.com/3/image", data, config).then((res) => {
+      console.log(res)
       this.setState({
         userAvatar: res.data.data.link,
       })
