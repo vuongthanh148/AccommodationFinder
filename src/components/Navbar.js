@@ -99,7 +99,7 @@ class Bar extends Component {
   handleChat = async () => {
     let statusCode = 0
     await axios
-      .post(`http://localhost:3002/createChatbox`, {
+      .post(`https://accommodation-chat.herokuapp.com/createChatbox`, {
         _id: this.props.userData._id,
         name: this.props.userData.name,
         avatar: this.props.userData.avatar,

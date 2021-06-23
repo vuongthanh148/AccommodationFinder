@@ -23,7 +23,7 @@ function Chatbox(props) {
   //   const type = 'admin'
   const type = props.role.toLowerCase()
 
-  const ENDPOINT = 'localhost:3002'
+  const ENDPOINT = 'https://accommodation-chat.herokuapp.com/'
 
   useEffect(() => {
     if (props.role === 'admin') props.changeNavbarState(false)
@@ -32,7 +32,7 @@ function Chatbox(props) {
     })
     if (type === 'owner') {
       axios
-        .get(`http://localhost:3002/${props.userId}`, {
+        .get(`${ENDPOINT}${props.userId}`, {
           body: {
             _id: props.userId,
             name: props.userName,
@@ -53,7 +53,7 @@ function Chatbox(props) {
         .catch((error) => console.log(error))
     } else if (type === 'admin') {
       axios
-        .get(`http://localhost:3002/`, {})
+        .get(`${ENDPOINT}`, {})
         .then((result) => {
           const { chatboxes } = result.data
           console.log({ chatboxes })
@@ -83,7 +83,7 @@ function Chatbox(props) {
     if (chatboxId !== '') {
       socket.emit('join', { name, chatboxId }, () => {})
       axios
-        .get('http://localhost:3002/getChatbox/' + chatboxId)
+        .get(`${ENDPOINT}getChatbox/` + chatboxId)
         .then((result) => {
           setMessagesList(result.data.messages)
         })
