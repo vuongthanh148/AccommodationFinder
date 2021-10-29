@@ -11,7 +11,7 @@ import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 import Loader from 'react-loader-spinner'
 import ScrollToTop from 'react-scroll-to-top'
 import './css/App.css'
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import { HashRouter, Switch, Route, Redirect } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import NavbarAdmin from './components/NavbarAdmin'
 import Chatbox from './page/chat/Chatbox/Chatbox'
@@ -127,7 +127,7 @@ class App extends Component {
           pauseOnHover
         />
         {this.state.finishFetchUserData && (
-          <Router>
+          <HashRouter>
             {this.state.navbar ? (
               <>
                 <ScrollToTop smooth="true" color="#bf7c2f" className="scroll-to-top" />
@@ -223,7 +223,7 @@ class App extends Component {
                 <Redirect to="/home" />
               </Route>
             </Switch>
-          </Router>
+          </HashRouter>
         )}
         {!this.state.finishFetchUserData && (
           <div style={{ position: 'relative', width: '100vw', height: '90vh' }}>

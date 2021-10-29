@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
-  "homepage": "http://vuongthanh148.github.io/",
+  "homepage": "http://vuongthanh148.github.io/AccommodationFinder/",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
