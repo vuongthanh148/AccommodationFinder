@@ -41,6 +41,7 @@
     "react-toastify": "^6.2.0",
     "socket.io-client": "^3.0.4",
     "typeface-montserrat": "^1.1.13",
+    "vercel": "^23.0.1",
     "web-vitals": "^0.2.4",
     "yup": "^0.32.8"
   },

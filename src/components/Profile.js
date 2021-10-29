@@ -189,7 +189,7 @@ class Info extends Component {
                           this.setState({ currentPage: 2, fisnishFetching: false })
                           await axios({
                             method: 'POST',
-                            url: `http://localhost:4000/allAccommodation`,
+                            url: `http://accommodation-finder.herokuapp.com/allAccommodation`,
                             data: {
                               userId: this.state.userData._id,
                             },
