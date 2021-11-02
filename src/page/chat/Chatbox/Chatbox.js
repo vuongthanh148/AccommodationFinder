@@ -3,10 +3,11 @@ import ChatCard from './ChatCard'
 import Messages from './Massages/Messages'
 import './Chatbox.css'
 import Input from './Input/Input'
-import axios from 'axios'
 import io from 'socket.io-client'
 import { useParams } from 'react-router-dom'
 import InfoBar from '../Chatbox/InfoBar/InfoBar'
+import { adminGetAllChatbox, getChatboxByID, ownerGetChatbox } from '../../../apis/chat'
+import { ChatUrl } from '../../../apis'
 
 let socket
 
@@ -23,23 +24,21 @@ function Chatbox(props) {
   //   const type = 'admin'
   const type = props.role.toLowerCase()
 
-  const ENDPOINT = 'https://accommodation-chat.herokuapp.com/'
-
   useEffect(() => {
     if (props.role === 'admin') props.changeNavbarState(false)
-    socket = io(ENDPOINT, {
+    socket = io(ChatUrl, {
       transports: ['websocket', 'polling', 'flashsocket'],
     })
     if (type === 'owner') {
-      axios
-        .get(`${ENDPOINT}${props.userId}`, {
-          body: {
-            _id: props.userId,
-            name: props.userName,
-            avatar: props.userAvatar,
-            role: props.role.toUpperCase(),
-          },
-        })
+      ownerGetChatbox({
+        userId: props.userId,
+        body: {
+          _id: props.userId,
+          name: props.userName,
+          avatar: props.userAvatar,
+          role: props.role.toUpperCase(),
+        }
+      })
         .then((result) => {
           const { chatboxes } = result.data
           console.log(chatboxes)
@@ -52,9 +51,7 @@ function Chatbox(props) {
         })
         .catch((error) => console.log(error))
     } else if (type === 'admin') {
-      axios
-        .get(`${ENDPOINT}`, {})
-        .then((result) => {
+        adminGetAllChatbox().then((result) => {
           const { chatboxes } = result.data
           console.log({ chatboxes })
           setChatboxList(chatboxes)
@@ -82,9 +79,7 @@ function Chatbox(props) {
   useEffect(() => {
     if (chatboxId !== '') {
       socket.emit('join', { name, chatboxId }, () => {})
-      axios
-        .get(`${ENDPOINT}getChatbox/` + chatboxId)
-        .then((result) => {
+        getChatboxByID(chatboxId).then((result) => {
           setMessagesList(result.data.messages)
         })
         .catch((error) => console.log(error))

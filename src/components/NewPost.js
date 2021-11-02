@@ -22,9 +22,11 @@ import {
 import clsx from 'clsx'
 import Select from 'react-select'
 import CreatableSelect from 'react-select/creatable'
-import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { getCities, getDistricts, getPublicLocations, getWards } from '../apis/location'
+import { createNewAccomod } from '../apis/accomod'
+import { ImgurConfig, imgurUploadImage } from '../apis/imgur'
 
 const useStyles = makeStyles((theme) => ({
   formHelperText: {
@@ -188,8 +190,9 @@ const MainInfo = (props) => {
             onChange={async (e) => {
               setSelectedCity(e)
               setFieldValue('city', e.value)
-              await axios.get(`https://thongtindoanhnghiep.co/api/city/${e.ID}/district`).then(async (res) => {
-                let listDistrict = await res.data.map((item) => {
+              const res = await getDistricts({cID: e.ID})
+              if(res){
+                let listDistrict = res.data.map((item) => {
                   return {
                     ID: item.ID,
                     type: 'district',
@@ -198,7 +201,7 @@ const MainInfo = (props) => {
                   }
                 })
                 setListDistrict(listDistrict)
-              })
+              }
             }}
             placeholder={'Thành phố'}
             style={{ width: '100%' }}
@@ -212,7 +215,8 @@ const MainInfo = (props) => {
             onChange={async (e) => {
               setSelectedDistrict(e)
               setFieldValue('district', e.value)
-              await axios.get(`https://thongtindoanhnghiep.co/api/district/${e.ID}/ward`).then(async (res) => {
+              const res = getWards({dID: e.ID})
+              if(res) {
                 let listWard = await res.data.map((item) => {
                   return {
                     ID: item.ID,
@@ -222,7 +226,7 @@ const MainInfo = (props) => {
                   }
                 })
                 setListWard(listWard)
-              })
+              }
             }}
             placeholder="Quận huyện"
             style={{ width: '100%' }}
@@ -494,7 +498,14 @@ const NewPost = (props) => {
   const [listPublicLocation, setListPublicLocation] = useState([])
 
   useEffect(() => {
-    axios.get(`https://thongtindoanhnghiep.co/api/city`).then(async (res) => {
+    fetchListCity()
+
+    fetchListLocation()
+  }, [])
+
+  const fetchListCity = async () => {
+    const res = await getCities()
+    if(res) {
       const cities = await res.data.LtsItem.map((item) => {
         return {
           ID: item.ID,
@@ -504,16 +515,20 @@ const NewPost = (props) => {
         }
       })
       setListCity(cities)
-    })
-    axios.get(`https://accommodation-finder.herokuapp.com/location`).then(async (res) => {
+    }
+  }
+
+  const fetchListLocation = async () => {
+    const res = getPublicLocations()
+    if(res) {
       if (res.data.length !== 0) {
         const listPlace = await res.data.map((l) => {
           return { value: l.name, label: l.name }
         })
         setListPublicLocation(listPlace)
       }
-    })
-  }, [])
+    }
+  }
 
   const handleSubmit = async (values, newfiles) => {
     toast.info('Đã gửi yêu cầu đăng bài', {
@@ -529,19 +544,8 @@ const NewPost = (props) => {
     var listPromise = []
     // photos.push(value.data.data.link)
     files.map(f => {
-      var ImgData = new FormData()
-      ImgData.append('image', f)
-      var config = {
-        headers: {
-          Authorization: 'Client-ID 8179920b3f62ec7',
-          Accept: '*/*',
-          "Content-type": "application/x-www-form-urlencoded",
-        }
-      }
       var p = new Promise((res,rej) => {
-        axios.post("https://api.imgur.com/3/image", ImgData, config).then((value) => {
-          res(value)
-        })
+        imgurUploadImage(f).then(img => res(img))
       })
       listPromise.push(p)
     })
@@ -588,15 +592,8 @@ const NewPost = (props) => {
         fridge: values.fridge,
       },
     }
-    axios({
-      method: 'POST',
-      url: `https://accommodation-finder.herokuapp.com/accommodation/newAccomod`,
-      data,
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    })
-      .then((res) => {
+    const res = await createNewAccomod(data)
+    if(res){
         console.log(res)
         toast.success('Bài viết đã được gửi. Vui lòng chờ duyệt', {
           position: 'bottom-left',
@@ -607,10 +604,7 @@ const NewPost = (props) => {
           draggable: true,
         })
         location.href='/home'
-      })
-      .catch((e) => {
-        console.log(e.data.response)
-      })
+      }
     console.log('data: ', data)
   }
   const newPostValidationSchema = yup.object().shape({

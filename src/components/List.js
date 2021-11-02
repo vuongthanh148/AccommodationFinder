@@ -14,10 +14,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
 import 'react-slideshow-image/dist/styles.css'
-import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import { withRouter } from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css'
+import { updateFollowAction } from '../apis/accomod'
 
 class List extends Component {
   constructor(props) {
@@ -49,18 +49,8 @@ class List extends Component {
         isFollowed: !this.state.isFollowed,
       },
       async () => {
-        await axios({
-          method: 'POST',
-          url: `https://accommodation-finder.herokuapp.com/accommodation/${
-            this.state.isFollowed ? 'unfollow' : 'follow'
-          }`,
-          headers:{
-            Authorization: `Bearer ${this.state.userToken}`
-          },
-          data: {
-            accomodId: this.props.accomod._id,
-          },
-        }).then((res) => {
+        const res = await updateFollowAction({action: this.state.isFollowed ? 'unfollow' : 'follow', accomodID: this.props.accomod._id})
+        if(res){
           console.log(res)
           toast.info(res.data.success ? 'Thêm vào danh sách yêu thích thành công!' : 'Huỷ yêu thích thành công!', {
             // position: "top-right",
@@ -70,7 +60,7 @@ class List extends Component {
             pauseOnHover: false,
             draggable: false,
           })
-        })
+        }
       }
     )
   }

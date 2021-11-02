@@ -9,9 +9,9 @@ import {
 // import "../css/unikit.css";
 import '../css/SignupOwner.css'
 import logo from '../image/logo_ngang_trang.png'
-import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { handleSignUp } from '../apis/user'
 
 class SignupOwner extends Component {
   constructor(props) {
@@ -46,40 +46,40 @@ class SignupOwner extends Component {
       email,
       password,
     } = this.state
-    await axios
-      .post('https://accommodation-finder.herokuapp.com/owner/signup', {
+    await handleSignUp({
+      userType: "owner",
+      data: {
         name,
         address,
         citizenId,
         phoneNumber,
         email,
-        password,
-      })
-      .then((res) => {
-        if (res.data.response) {
-          toast.info(res.data.response, {
-            position: 'bottom-left',
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          })
-          location.href = '/'
-        } else {
-          toast.error(res.data.message, {
-            position: 'bottom-left',
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          })
-        }
-        
-      })
-      .catch((err) => console.log(err))
-    //Send notification yêu cầu đăng ký thành công
+        password
+      }
+    }).then((res) => {
+      if (res.data.response) {
+        toast.info(res.data.response, {
+          position: 'bottom-left',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        })
+        location.href = '/'
+      } else {
+        toast.error(res.data.message, {
+          position: 'bottom-left',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        })
+      }    
+    })
+    .catch((err) => console.log(err))
+  //Send notification yêu cầu đăng ký thành công
   }
 
   render() {

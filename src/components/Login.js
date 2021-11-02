@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState, useContext } from 'react'
 import { NavLink, Redirect } from 'react-router-dom'
 import { UserContext } from '../context/user.context'
-import axios from 'axios'
 import '../css/login.css'
 import logo_trang from '../image/logo_ngang_trang.png'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { handleLogin } from '../apis/user'
 
 const Login = (props) => {
   const [email, setEmail] = useState('')
@@ -27,16 +27,11 @@ const Login = (props) => {
   const handleSubmit = useCallback(
     async (event) => {
       event.preventDefault()
-      let url = ''
-
-      userType === 'owner'
-        ? (url = 'https://accommodation-finder.herokuapp.com/owner/login')
-        : (url = 'https://accommodation-finder.herokuapp.com/renter/login')
-
-      await axios
-        .post(url, { email: email, password: password })
-        .then((res) => {
-          //Saving tolken to local storage
+      try{
+        const res = await handleLogin({userType: userType, email: email, password: password})
+        if(res){
+          //Saving token to local storage
+          console.log("set item token: ", res.data.user.tokens[res.data.user.tokens.length - 1].token)
           localStorage.setItem(
             `token`,
             res.data.user.tokens[res.data.user.tokens.length - 1].token
@@ -49,18 +44,18 @@ const Login = (props) => {
           setIsLoggedIn(true)
           props.updateLoginState({ ...res.data.user, userType: userType }, true)
           userContext.setUserData({ ...res.data.user, userType: userType })
+        }
+      }
+      catch(e) {
+        toast.error(e.response.data, {
+          position: 'bottom-left',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
         })
-        .catch((e) => {
-          console.log(e.response)
-          toast.error(e.response.data, {
-            position: 'bottom-left',
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          })
-        })
+      }
     },
     [email, password, userType]
   )

@@ -16,11 +16,12 @@ import chevronDown from '@iconify-icons/fa-solid/chevron-down'
 import chevronUp from '@iconify-icons/fa-solid/chevron-up'
 import envelope from '@iconify-icons/fa-solid/envelope'
 import bell from '@iconify-icons/fa-solid/bell'
-import axios from 'axios'
 import Chatbox from '../page/chat/Chatbox/Chatbox'
 import { Redirect } from 'react-router'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { handleLogout } from '../apis/user'
+import { createChatbox } from '../apis/chat'
 
 class Navbar extends Component {
   constructor(props) {
@@ -84,13 +85,7 @@ class Bar extends Component {
       pauseOnHover: true,
       draggable: true,
     })
-    await axios({
-      method: 'POST',
-      url: `https://accommodation-finder.herokuapp.com/${this.props.userData.userType}/logoutAll`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    await handleLogout({userType: this.props.userData.userType})
     this.props.updateLoginState({}, false)
     localStorage.removeItem('token')
     location.href = '/'
@@ -98,17 +93,16 @@ class Bar extends Component {
 
   handleChat = async () => {
     let statusCode = 0
-    await axios
-      .post(`https://accommodation-chat.herokuapp.com/createChatbox`, {
-        _id: this.props.userData._id,
-        name: this.props.userData.name,
-        avatar: this.props.userData.avatar,
-        role: localStorage.getItem('userType'),
-      })
-      .then((res) => {
-        console.log(res.status)
-        statusCode = res.status
-      })
+    const res = await createChatbox({
+      _id: this.props.userData._id,
+      name: this.props.userData.name,
+      avatar: this.props.userData.avatar,
+      role: localStorage.getItem('userType'),
+    })
+    if(res){
+      console.log(res.status)
+      statusCode = res.status
+    }
     if (statusCode === 200) {
       console.log('moved')
       location.href = '/chat'

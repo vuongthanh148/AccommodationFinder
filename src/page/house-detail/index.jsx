@@ -1,9 +1,7 @@
 import React, { useCallback, useState, useEffect, useContext, useMemo } from 'react'
-import axios from 'axios'
 import { Row, Col, Divider, Button, Avatar, Input, Typography, Rate, Image } from 'antd'
 import { useLocation, useParams } from 'react-router-dom'
 import Footer from '../../components/Footer'
-import { baseURL, productionURL } from '../../constants/api'
 import { UserContext } from '../../context/user.context'
 import moment from 'moment'
 import ContentComment from './components/ContentComment'
@@ -23,6 +21,8 @@ import 'react-slideshow-image/dist/styles.css'
 import { Slide } from 'react-slideshow-image'
 
 import './index.scss'
+import { getAccomodAnalyst, getAccomodById, getAccomodInfo } from '../../apis/accomod'
+import { createComment, fetchComment, fetchCommentByPostId, followPost, ratePost } from '../../apis/utils'
 
 const { TextArea } = Input
 
@@ -53,58 +53,24 @@ const HomeDetailPage = () => {
   }, [])
 
   const handleGetDetailsData = async () => {
-    const result = await axios({
-      method: 'GET',
-      url: `${productionURL}/accommodation/${params.id}`,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    const result = await getAccomodById(params.id)
     console.log(result.data)
     setAccommodation(result.data)
   }
 
   const getAllComments = async () => {
-    const res = await axios({
-      method: 'POST',
-      url: `${baseURL}/comment/get-all-comments`,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      data: {
-        accommodationId: params.id,
-      },
-    })
+    const res = await fetchCommentByPostId(params.id)
+    console.log(res)
     setListComment(res.data.comments)
   }
 
   const analystPage = async () => {
-    await axios({
-      method: 'POST',
-      url: `${baseURL}/accommodation/analyst`,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      data: {
-        accommodationId: params.id,
-      },
-    })
+    await getAccomodAnalyst(params.id)
   }
 
   const onUploadComment = useCallback(async () => {
     try {
-      await axios({
-        method: 'POST',
-        url: `${baseURL}/comment/create-new-comment`,
-        headers: {
-          'Context-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-        data: {
-          content: comment,
-          accommodationId: params.id,
-        },
-      })
+      await createComment(comment, params.id)
       await getAllComments()
       setComment('')
     } catch (error) {
@@ -115,34 +81,12 @@ const HomeDetailPage = () => {
   const handleChangeRate = (r) => {
     console.log(userContext.userData)
     setRate(r)
-    axios({
-      method: 'POST',
-      url: `${baseURL}/rating`,
-      headers: {
-        'Context-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-      data: {
-        ratedStar: r,
-        accommodationId: params.id,
-        userId: userContext.userData._id,
-      },
-    })
+    ratePost({rate: r, postId: params.id, userId: userContext.userData._id})
   }
 
   const handleFollow = async () => {
     try {
-      await axios({
-        method: 'POST',
-        url: `${baseURL}/accommodation/follow`,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-        data: {
-          accommodationId: params.id,
-        },
-      })
+      await updateFollowAction("follow", params.id)
       handleGetInfoPost()
     } catch (error) {
       console.log(error)
@@ -151,17 +95,7 @@ const HomeDetailPage = () => {
 
   const handleUnfollow = async () => {
     try {
-      await axios({
-        method: 'POST',
-        url: `${baseURL}/accommodation/unfollow`,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-        data: {
-          accommodationId: params.id,
-        },
-      })
+      await updateFollowAction("unfollow", params.id)
       handleGetInfoPost()
     } catch (error) {
       console.log(error)
@@ -170,14 +104,7 @@ const HomeDetailPage = () => {
 
   const handleGetInfoPost = async () => {
     try {
-      const result = await axios({
-        method: 'GET',
-        url: `${baseURL}/accommodations/${params.id}/info`,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      })
+      const result = await getAccomodInfo(params.id)
       setInfoPost(result.data.result)
     } catch (error) {
       console.error(error)
@@ -218,7 +145,7 @@ const HomeDetailPage = () => {
     avgRate = avgRate || ''
     city = city || ''
     district = district || ''
-    livingArea = livingArea = ''
+    livingArea = livingArea || ''
     materialFacilities = materialFacilities || []
     ownerName = ownerName || ''
     ownerPhone = ownerPhone || ''

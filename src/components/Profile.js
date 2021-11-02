@@ -4,15 +4,15 @@ import angleDoubleRight from '@iconify-icons/fa-solid/angle-double-right'
 import lockIcon from '@iconify-icons/fa-solid/lock'
 import avatar from '../image/avatar.png'
 import '../css/Profile.css'
-import { Favorite, TocRounded } from '@material-ui/icons'
 import { UserContext } from '../context/user.context'
 import List from './List'
-import Listing from './Listing'
-import axios from 'axios'
 import Loader from 'react-loader-spinner'
 import FormData from 'form-data'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { getFollowList, handleLogin, updateUserProfile } from '../apis/user'
+import { imgurUploadImage } from '../apis/imgur'
+import { getAccomodById, getAllAccomod } from '../apis/accomod'
 
 class Profile extends Component {
   render() {
@@ -44,20 +44,11 @@ class Info extends Component {
   }
 
   async componentDidMount() {
-    await axios({
-      method: 'POST',
-      url: `https://accommodation-finder.herokuapp.com/followList`,
-      data: {
-        _id: this.state.userData._id,
-      },
-      headers: {
-        Authorization: `Bearer ${this.state.userToken}`,
-      },
-    }).then(async (res) => {
+    getFollowList({ _id: this.state.userData._id }).then(async (res) => {
       let tempList = []
       console.log(res)
       await res.data.forEach((e) => {
-        axios.get(`https://accommodation-finder.herokuapp.com/accommodation/${e.accommodationId}`).then((res2) => {
+        getAccomodById(e.accommodationId).then((res2) => {
           tempList.push(res2.data)
         })
       })
@@ -84,53 +75,38 @@ class Info extends Component {
       pauseOnHover: true,
       draggable: true,
     })
-    
-    const data = new FormData();
-    data.append("image", event.target.files[0]);
-    const config = {
-      headers: {
-        "Content-type": "application/x-www-form-urlencoded",
-        Authorization: "Client-ID 8179920b3f62ec7",
-      },
-    };
-    axios.post("https://api.imgur.com/3/image", data, config).then((res) => {
+
+    imgurUploadImage(event.target.files[0]).then((res) => {
       console.log(res)
       this.setState({
         userAvatar: res.data.data.link,
       })
-      axios({
-        method: 'POST',
-        url: `https://accommodation-finder.herokuapp.com/${this.state.userData.userType}/profile`,
-        data: {
-          avatar: res.data.data.link,
-        },
-        headers: {
-          Authorization: `Bearer ${this.state.userToken}`,
-        },
+
+      updateUserProfile({userType: this.state.userData.userType, data: {
+        avatar: res.data.data.link
+      }}).then((res2) => {
+        console.log(res2)
+        toast.success('Change avatar successfully!', {
+          position: 'bottom-left',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        })
+        location.href = '/profile'
       })
-        .then((res2) => {
-          console.log(res2)
-          toast.success('Change avatar successfully!', {
-            position: 'bottom-left',
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          })
-          location.href = '/profile'
+      .catch((e) => {
+        console.log(e.response.data)
+        toast.error(e.response.data, {
+          position: 'bottom-left',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
         })
-        .catch((e) => {
-          console.log(e.response.data)
-          toast.error(e.response.data, {
-            position: 'bottom-left',
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          })
-        })
+      })
     })
   }
 
@@ -187,15 +163,9 @@ class Info extends Component {
                         className="ev-link-secondary"
                         onClick={ async () => {
                           this.setState({ currentPage: 2, fisnishFetching: false })
-                          await axios({
-                            method: 'POST',
-                            url: `http://accommodation-finder.herokuapp.com/allAccommodation`,
-                            data: {
-                              userId: this.state.userData._id,
-                            },
-                            headers: {
-                              Authorization: `Bearer ${this.state.userToken}`,
-                            },
+
+                          await getAllAccomod({
+                            userId: this.state.userData._id,
                           }).then( (res) => {
                             console.log(res.data)
                 
@@ -302,23 +272,18 @@ class MyProfile extends Component {
   }
 
   handleSubmit = () => {
-    axios({
-      method: 'POST',
-      url: `https://accommodation-finder.herokuapp.com/${this.state.userData.userType}/profile`,
-      data: {
+    updateUserProfile({
+      userType: this.state.userData.userType,
+      data:{
         phoneNumber: this.state.phoneNumber,
         address: this.state.address,
-      },
-      headers: {
-        Authorization: `Bearer ${this.state.userToken}`,
-      },
+      }
+    }).then((res) => {
+      console.log(res)
     })
-      .then((res) => {
-        console.log(res)
-      })
-      .catch((e) => {
-        console.log(e.response.data)
-      })
+    .catch((e) => {
+      console.log(e.response.data)
+    })
   }
 
   render() {
@@ -444,33 +409,27 @@ class ChangePassword extends Component {
 
   handleSubmit = () => {
     const email = this.context.userData.email
-    axios
-      .post(`https://accommodation-finder.herokuapp.com/${this.state.userData.userType}/login`, {
-        email: email,
-        password: this.state.password,
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          if (this.state.newPassWord === this.state.newPassWord1) {
-            axios({
-              method: 'POST',
-              url: `https://accommodation-finder.herokuapp.com/${this.state.userData.userType}/profile`,
+    handleLogin({
+      userType: this.state.userData.userType,
+      email: email,
+      password: this.state.password
+    }).then((res) => {
+      if (res.status === 200) {
+        if (this.state.newPassWord === this.state.newPassWord1) {
+            updateUserProfile({
+              userType: this.state.userData.userType,
               data: {
                 password: this.state.newPassWord,
-              },
-              headers: {
-                Authorization: `Bearer ${this.state.userToken}`,
-              },
+              }
+            }).then((res) => {
+              console.log(res)
             })
-              .then((res) => {
-                console.log(res)
-              })
-              .catch((e) => {
-                console.log(e.response.data)
-              })
-          }
+            .catch((e) => {
+              console.log(e.response.data)
+            })
         }
-      })
+      }
+    })
   }
 
   render() {

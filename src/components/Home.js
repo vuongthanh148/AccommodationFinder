@@ -8,6 +8,9 @@ import 'react-slideshow-image/dist/styles.css'
 import { Slide } from 'react-slideshow-image'
 import Listing from './Listing'
 import Loader from 'react-loader-spinner'
+import { getCities, getDistricts, getLocationFromCoords, getPublicLocations, getWards } from '../apis/location'
+import { getFollowList } from '../apis/user'
+import { getAllAccomod } from '../apis/accomod'
 
 class Home extends Component {
   constructor(props) {
@@ -42,7 +45,7 @@ class Cover extends Component {
   executeScroll = () => myRef.current.scrollIntoView()
   slideImages = [
     'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/edc-web-house-tour-fuller07-1586874956.jpg',
-    'https://www.metricon.com.au/metricon/media/metricon/gallery/2020/july/0001.jpg',
+    'https://propholic.com/wp-content/uploads/2018/08/NKR_20180808_0343.jpg',
     'https://news.mogi.vn/wp-content/uploads/2019/03/cach-khac-phuc-loi-treo-dong-ho-phong-khach-chan-van-may-gia-chu-anh-4.jpg',
   ]
   render() {
@@ -130,7 +133,6 @@ class Search extends Component {
       facilitiesInfo: {},
       finishFetchingAccomod: false,
       list_follow: [],
-      userToken: localStorage.getItem('token'),
     }
 
     this.getAccomod = this.getAccomod.bind(this)
@@ -155,58 +157,82 @@ class Search extends Component {
 
   getPosition = (getAccomod) => {
     navigator.geolocation.getCurrentPosition(
-      (position) => {
-        axios
-          .get(
-            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=vi`
-          )
-          .then((res) => {
-            console.log(res)
-            var city = res.data.localityInfo.administrative.find(a => a.adminLevel === 4);
-            var district = res.data.localityInfo.administrative.find(a => a.adminLevel === 6);
-            var ward = res.data.localityInfo.administrative.find(a => a.adminLevel === 8);
-            this.state.list_city.forEach((c) => {
-              if (c.label === city.name) {
-                axios
-                  .get(
-                    `https://thongtindoanhnghiep.co/api/city/${c.ID}/district`
-                  )
-                  .then((res1) => {
-                    res1.data.forEach((e) => {
-                      if (
-                        this.removeAccents(e.Title) ===
-                        district.name.replace(
-                          ' District',
-                          ''
-                        )
-                      ) {
-                        district.name = e.Title.replace(
-                          'Quận ',
-                          ''
-                        )
-                      }
-                    })
+      async (position) => {
+        const curPos = await getLocationFromCoords({lat: position.coords.latitude, lon: position.coords.longitude})
+        if(curPos){
+          console.log(curPos)
+          var city = curPos.data.localityInfo.administrative.find(a => a.adminLevel === 4);
+          var district = curPos.data.localityInfo.administrative.find(a => a.adminLevel === 6);
+          var ward = curPos.data.localityInfo.administrative.find(a => a.adminLevel === 8);
+
+          this.state.list_city.forEach(async (c) => {
+            if (c.label === city.name) {
+              this.setState({
+                selectedOptionCity: c
+              })
+              const fetchedDistricts = await getDistricts({cID: c.ID})
+
+              if(fetchedDistricts){
+                const districtsOption = fetchedDistricts.data.map((item) => {
+                  return {
+                    ID: item.ID,
+                    type: 'district',
+                    value: this.removeAccents(item.Title),
+                    label: item.Title,
+                  }
+                })
+                this.setState({ list_district: districtsOption })
+                console.log(district)
+                districtsOption.forEach(async (d) => {
+                  if (d.value === this.removeAccents(district.name)) {
                     this.setState({
-                      accommodationInfo: {
-                        city: city.name,
-                        district: district.name,
-                      },
+                      selectedOptionDistrict: d
                     })
-                    if (ward !== undefined) {
-                      this.setState({
-                        accommodationInfo: {
-                          ward: ward.name.replace(
-                            'Phường ',
-                            ''
-                          ),
-                        },
-                      })
+                    if(ward){
+                      const fetchedWard = await getWards({dID: d.ID})
+                      if(fetchedWard){
+                        const wardOption = fetchedWard.data.map((item) => {
+                          return {
+                            ID: item.ID,
+                            type: 'ward',
+                            value: this.removeAccents(item.Title),
+                            label: item.Title,
+                          }
+                        })
+                        wardOption.forEach(w => {
+                          if(w.value === this.removeAccents(ward.name)){
+                            this.setState({
+                              selectedOptionWard: w
+                            })
+                          }
+                        })
+                      }
                     }
-                    getAccomod()
+                  }
+                })
+
+                //Handle prepare data to send
+                this.setState({
+                  accommodationInfo: {
+                    city: city.name,
+                    district: district.name.replace("District ", ""),
+                  },
+                })
+                if (ward !== undefined) {
+                  this.setState({
+                    accommodationInfo: {
+                      ward: ward.name.replace(
+                        'Phường ',
+                        ''
+                      ),
+                    },
                   })
+                }
+                getAccomod()
               }
-            })
+            }
           })
+        }
       },
       () => {
         //Get all accomod
@@ -233,38 +259,28 @@ class Search extends Component {
       price: that.state.price.value,
       livingArea: that.state.livingArea.value,
     }
+
     console.log('data_to_send: ', data_to_send)
+
     if (Object.keys(this.props.userData).length !== 0) {
-      await axios({
-        method: 'POST',
-        url: `https://accommodation-finder.herokuapp.com/followList`,
-        data: {
-          _id: this.props.userData._id,
-        },
-        headers: {
-          Authorization: `Bearer ${this.state.userToken}`,
-        },
-      }).then((res) => {
+      console.log('get token: ', localStorage.getItem('token'))
+      const followList = await getFollowList({_id: this.props.userData._id,})
+      if(followList){
         this.setState({
-          list_follow: res.data,
+          list_follow: followList.data,
         })
-      })
+      }
     } else console.log('Chưa đăng nhập')
 
-    await axios
-      .post(
-        'https://accommodation-finder.herokuapp.com/accommodation',
-        data_to_send
-      )
-      .then((res) => {
-        const allAccomod = res.data.allAccomod
-        const filteredAccomod = allAccomod.filter((a) => a.pending === false)
-        // //"data fetched: ", res.data.allAccomod);
-        that.setState({
-          list_accomod: filteredAccomod,
-        })
-        that.updateFetchingAccomod(true)
+    const listAccomod = await getAllAccomod(data_to_send)
+    if(listAccomod){
+      const allAccomod = listAccomod.data.allAccomod
+      const filteredAccomod = allAccomod.filter((a) => a.pending === false)
+      that.setState({
+        list_accomod: filteredAccomod,
       })
+      that.updateFetchingAccomod(true)
+    }
 
   }
 
@@ -277,10 +293,10 @@ class Search extends Component {
       .replace(/Quan |Huyen |Thi Xa |Thanh Pho |District |Phuong /g, '')
   }
 
-  componentDidMount() {
-    
-    axios.get(`https://thongtindoanhnghiep.co/api/city`).then((res) => {
-      const cities = res.data.LtsItem.map((item) => {
+  async componentDidMount() {
+    const fetchedCities = await getCities()
+    if(fetchedCities){
+      const cities = fetchedCities.data.LtsItem.map((item) => {
         return {
           ID: item.ID,
           type: 'city',
@@ -294,18 +310,16 @@ class Search extends Component {
         this.getPosition(this.getAccomod)
       }
       else console.log(this.state.accommodationInfo)
-    })
-    axios
-      .get(`https://accommodation-finder.herokuapp.com/location`)
-      .then((res) => {
-        // //"location: ", res.data);
-        if (res)
-          this.setState({
-            list_location: res.data.map((l) => {
-              return { value: l.name, label: l.name }
-            }),
-          })
+    }
+
+    const publicLocation = await getPublicLocations()
+    if(publicLocation){
+      this.setState({
+        list_location: publicLocation.data.map((l) => {
+          return { value: l.name, label: l.name }
+        }),
       })
+    }
   }
 
   changeState = () => {
@@ -323,8 +337,7 @@ class Search extends Component {
   }
 
   handleLocationChange = (selectedOption) => {
-    let url = '',
-      typeOption = ''
+    let url = '', typeOption = ''
     if (selectedOption) {
       if (selectedOption.type === 'city') {
         this.setState({
@@ -366,7 +379,6 @@ class Search extends Component {
         list_district: [],
         list_ward: [],
       })
-      // //"state after change: ", this.state);
     }
   }
 

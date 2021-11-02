@@ -5,12 +5,11 @@ import AcceptIcon from '../../../../image/tick_box.svg'
 import DescriptionIcon from '@material-ui/icons/Description'
 import Loader from '../../../../components/Loader'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
-import { baseURL } from '../../../../constants/api'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 import './index.css'
+import { approvePost, deletePost, fetchAllPost } from '../../../../apis/admin'
 
 function TableManagementPost(props) {
   const [posterList, setPosterList] = useState([])
@@ -19,13 +18,7 @@ function TableManagementPost(props) {
   useEffect(() => {
     const callApi = async () => {
       setServiceLoader(true)
-      const res = await axios({
-        method: 'GET',
-        url: `${baseURL}/admin/management-post`,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const res = fetchAllPost()
       setPosterList(res.data.data)
       setServiceLoader(false)
     }
@@ -167,11 +160,7 @@ function TableManagementPost(props) {
                 okText="Đồng ý"
                 cancelText="Huỷ bỏ"
                 onConfirm={() => {
-                  axios
-                    .put('http://localhost:4000/accommodation/approve', {
-                      accommodationId: posterList[index].id,
-                    })
-                    .then((res) => {
+                    approvePost(posterList[index].id).then((res) => {
                       console.log(res.status)
                       toast.success('Đã chấp thuận thành công', {
                         position: 'bottom-left',
@@ -198,12 +187,7 @@ function TableManagementPost(props) {
               okText="Đồng ý"
               cancelText="Huỷ bỏ"
               onConfirm={() => {
-                axios
-                  .delete(
-                    `http://localhost:4000/accommodation/${posterList[index].id}`,
-                    {}
-                  )
-                  .then((res) => {
+                  deletePost(posterList[index].id).then((res) => {
                     console.log(res.status)
                   })
               }}

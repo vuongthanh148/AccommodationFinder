@@ -6,7 +6,6 @@ import Signup from './components/Signup'
 import SignupOwner from './components/SignupOwner'
 import SignupRenter from './components/SignupRenter'
 import ResetPassword from './components/ResetPassword'
-import axios from 'axios'
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 import Loader from 'react-loader-spinner'
 import ScrollToTop from 'react-scroll-to-top'
@@ -20,6 +19,7 @@ import Footer from './components/Footer'
 import { UserContext } from './context/user.context'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { getUserProfile } from './apis/user'
 const HomeDetailPage = React.lazy(() => import('./page/house-detail'))
 const NewPost = React.lazy(() => import('./components/NewPost'))
 const AdminPage = React.lazy(() => import('./page/admin/admin'))
@@ -50,23 +50,14 @@ class App extends Component {
     const token = localStorage.getItem('token')
     const userType = localStorage.getItem('userType')
     if (token && userType) {
-      await axios({
-        method: 'GET',
-        url: `https://accommodation-finder.herokuapp.com/${userType}/profile`,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((res) => {
-          this.setState({
-            userData: { ...res.data, userType: userType },
-            isLoggedIn: true,
-          })
-          this.context.setUserData({ ...res.data, userType: userType })
+      const res = await getUserProfile({userType: userType})
+      if(res) {
+        this.setState({
+          userData: { ...res.data, userType: userType },
+          isLoggedIn: true,
         })
-        .catch((err) => {
-          //err)
-        })
+        this.context.setUserData({ ...res.data, userType: userType })
+      }
       this.setState({
         finishFetchUserData: true,
       })

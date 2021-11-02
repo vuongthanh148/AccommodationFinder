@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Table, Tooltip, Popconfirm, Spin } from 'antd'
 import DeleteIcon from '../../../../image/trash_can.svg'
 import AcceptIcon from '../../../../image/tick_box.svg'
-import axios from 'axios'
-
 import './index.css'
 import Loader from '../../../../components/Loader'
-import { baseURL } from '../../../../constants/api'
+import { approveAccount, deleteOwnerAccount, fetchOwnerAccount } from '../../../../apis/admin'
 
 function TableManagementOwner(props) {
   const [ownerAccountList, setOwnerAccountList] = useState([])
@@ -14,13 +12,7 @@ function TableManagementOwner(props) {
   useEffect(() => {
     const callApi = async () => {
       setServiceLoader(true)
-      const res = await axios({
-        method: 'GET',
-        url: `${baseURL}/admin/management-owner`,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const res = await fetchOwnerAccount()
       setOwnerAccountList(res.data.data)
       setServiceLoader(false)
     }
@@ -98,13 +90,9 @@ function TableManagementOwner(props) {
                 onConfirm={() => {
                   // To do
                   // Call api approve account
-                  axios
-                    .patch('http://localhost:4000/owner/approve', {
-                      email: ownerAccountList[index].email,
-                    })
-                    .then((res) => {
-                      console.log(res)
-                    })
+                  approveOwnerAccount(ownerAccountList[index].email).then((res) => {
+                    console.log(res)
+                  })
                 }}
               >
                 <Tooltip title="Chấp thuận tài khoản">
@@ -122,15 +110,9 @@ function TableManagementOwner(props) {
               onConfirm={() => {
                 // To do
                 // Call api delete account
-
-                axios
-                  .delete(
-                    `http://localhost:4000/owner/profile/${ownerAccountList[index].email}`,
-                    {}
-                  )
-                  .then((res) => {
-                    console.log(res.status)
-                  })
+                deleteOwnerAccount(ownerAccountList[index].email).then((res) => {
+                  console.log(res.status)
+                })
               }}
             >
               <Tooltip title="Xoá tài khoản">

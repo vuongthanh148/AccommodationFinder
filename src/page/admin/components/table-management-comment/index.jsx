@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Table, Tooltip, Popconfirm, Spin } from 'antd'
-import axios from 'axios'
 import moment from 'moment'
-import { baseURL } from '../../../../constants/api'
 import AcceptIcon from '../../../../image/tick_box.svg'
 import DeleteIcon from '../../../../image/trash_can.svg'
 import Loader from '../../../../components/Loader'
+import { approveComment, deleteComment, fetchComment } from '../../../../apis/utils'
 
 function TableManagementComment() {
   const [comments, setComments] = useState([])
@@ -17,14 +16,7 @@ function TableManagementComment() {
   const getAllComment = useCallback(async () => {
     try {
       setServiceLoader(true)
-      const result = await axios({
-        method: 'GET',
-        url: `${baseURL}/comment/get-all-comments`,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      })
+      const result = await fetchComment()
       setComments(result.data.comments)
       setServiceLoader(false)
     } catch (error) {
@@ -35,34 +27,14 @@ function TableManagementComment() {
 
   const handleApproveComment = useCallback(async (id) => {
     try {
-      await axios({
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-        url: `${baseURL}/comment/approve-comment`,
-        data: {
-          commentId: id,
-        },
-      })
+      await approveComment(id)
       await getAllComment()
     } catch (error) {}
   }, [])
 
   const handleDeleteComment = useCallback(async (id) => {
     try {
-      await axios({
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-        url: `${baseURL}/comment/delete-comment`,
-        data: {
-          commentId: id,
-        },
-      })
+      await deleteComment(id)
       await getAllComment()
     } catch (error) {}
   }, [])
