@@ -19,9 +19,11 @@ import {
 import HouseInfo from './components/HouseInfo'
 import 'react-slideshow-image/dist/styles.css'
 import { Slide } from 'react-slideshow-image'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 import './index.scss'
-import { getAccomodAnalyst, getAccomodById, getAccomodInfo } from '../../apis/accomod'
+import { getAccomodAnalyst, getAccomodById, getAccomodInfo, updateFollowAction } from '../../apis/accomod'
 import { createComment, fetchComment, fetchCommentByPostId, followPost, ratePost } from '../../apis/utils'
 
 const { TextArea } = Input
@@ -73,6 +75,14 @@ const HomeDetailPage = () => {
       await createComment(comment, params.id)
       await getAllComments()
       setComment('')
+      toast.info('Bình luận đã được gửi. Đang chờ xét duyệt.', {
+        position: 'bottom-left',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      })
     } catch (error) {
       console.log(error)
     }
@@ -292,7 +302,7 @@ const HomeDetailPage = () => {
         )}
       </>
     )
-  }, [userType, listComment])
+  }, [userType, listComment, comment])
 
   return (
     <div className="house-detail-page">

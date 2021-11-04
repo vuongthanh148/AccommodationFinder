@@ -3,7 +3,21 @@ import { BackendUrl, createAuthApiRequest } from './index'
 
 export const getAllAccomod = async (body) => {
     try{
-        const res = await axios({
+        const res = await createAuthApiRequest({
+            method: 'POST',
+            url: `${BackendUrl}/allAccommodation`,
+            data: body
+          })
+        return res
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+export const searchAccomod = async (body) => {
+    try{
+        const res = await createAuthApiRequest({
             method: 'POST',
             url: `${BackendUrl}/accommodation`,
             data: body
@@ -17,7 +31,7 @@ export const getAllAccomod = async (body) => {
 
 export const createNewAccomod = async (body) => {
     try{
-        const res = createAuthApiRequest({
+        const res = await createAuthApiRequest({
             method: 'POST',
             url: `${BackendUrl}/accommodation/newAccomod`,
             data: body
@@ -31,7 +45,7 @@ export const createNewAccomod = async (body) => {
 
 export const getAccomodById = async (id) => {
     try{
-        const res = axios({
+        const res = createAuthApiRequest({
             method: 'GET',
             url: `${BackendUrl}/accommodation/${id}`
           })
@@ -55,15 +69,15 @@ export const getAccomodInfo = async (id) => {
     }
 }
 
-export const updateFollowAction = async ({action, accomodID}) => {
+export const updateFollowAction = async (action, accomodID) => {
     try{
-        const res = await axios({
+        const res = await createAuthApiRequest({
             method: 'POST',
             url: `${BackendUrl}/accommodation/${
               action
             }`,
             data: {
-              accomodId: accomodID,
+                accommodationId: accomodID,
             },
           })
           return res

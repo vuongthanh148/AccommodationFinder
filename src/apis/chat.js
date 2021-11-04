@@ -15,7 +15,7 @@ export const createChatbox = async (body) => {
 }
 
 export const ownerGetChatbox = ({userId, body}) => {
-    const res = axios.post(`${ChatUrl}${userId}`, {
+    const res = axios.get(`${ChatUrl}/${userId}`, {
       body: body,
     }).catch(e => {
         console.log(e.response)

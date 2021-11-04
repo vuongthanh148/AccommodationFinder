@@ -1,4 +1,5 @@
 import {BackendUrl} from './index'
+import axios from 'axios'
 
 export const approveOwnerAccount = (email) => {
     return axios.patch(`${BackendUrl}/owner/approve'`, { email: email})

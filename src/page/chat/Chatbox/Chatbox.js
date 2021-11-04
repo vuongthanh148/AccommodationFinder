@@ -68,7 +68,7 @@ function Chatbox(props) {
       // socket.emit('disconnect');
       socket.off()
     }
-  }, [ENDPOINT])
+  }, [ChatUrl])
 
   useEffect(() => {
     socket.on('message', (messageSent) => {

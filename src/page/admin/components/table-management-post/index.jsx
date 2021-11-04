@@ -18,7 +18,8 @@ function TableManagementPost(props) {
   useEffect(() => {
     const callApi = async () => {
       setServiceLoader(true)
-      const res = fetchAllPost()
+      const res = await fetchAllPost()
+      console.log(res.data.data)
       setPosterList(res.data.data)
       setServiceLoader(false)
     }
@@ -112,6 +113,13 @@ function TableManagementPost(props) {
       dataIndex: ['rating', 'rate'],
       key: '4',
       sorter: (a, b) => a.rating.rate - b.rating.rate,
+      render: (text, record, index) => {
+        return (
+          <div style={{ textAlign: 'center' }}>
+            {text.toFixed(2)}
+          </div>
+        )
+      }
     },
     {
       title: 'Lượt thích',
@@ -153,34 +161,33 @@ function TableManagementPost(props) {
       render: (text, record, index) => {
         return (
           <div className="table-management-post-action">
-            {!record.isApproved && (
-              <Popconfirm
-                className="pop-confirm-admin"
-                title="Bạn muốn phê duyệt bài đăng này?"
-                okText="Đồng ý"
-                cancelText="Huỷ bỏ"
-                onConfirm={() => {
-                    approvePost(posterList[index].id).then((res) => {
-                      console.log(res.status)
-                      toast.success('Đã chấp thuận thành công', {
-                        position: 'bottom-left',
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                      })
-                      // location.href = '/admin'
+            <Popconfirm
+              className={`pop-confirm-admin ${record.isApproved ? 'confirm-invisible' : ""}`}
+              title="Bạn muốn phê duyệt bài đăng này?"
+              okText="Đồng ý"
+              cancelText="Huỷ bỏ"
+              disabled={record.isApproved}
+              onConfirm={() => {
+                  approvePost(posterList[index].id).then((res) => {
+                    console.log(res.status)
+                    toast.success('Đã chấp thuận thành công', {
+                      position: 'bottom-left',
+                      autoClose: 3000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
                     })
-                }}
-              >
-                <Tooltip title="Chấp thuận bài đăng">
-                  <div className="table-icons">
-                    <img alt="accept-icon" src={AcceptIcon} />
-                  </div>
-                </Tooltip>
-              </Popconfirm>
-            )}
+                    // location.href = '/admin'
+                  })
+              }}
+            >
+              <Tooltip title="Chấp thuận bài đăng">
+                <div className="table-icons">
+                  <img alt="accept-icon" src={AcceptIcon} />
+                </div>
+              </Tooltip>
+            </Popconfirm>
             <Popconfirm
               className="pop-confirm-admin"
               title="Bạn có chắc muốn xoá bài đăng này?"

@@ -43,9 +43,9 @@ export const getWards = async ({dID}) => {
     }
 }
 
-export const getPublicLocations = async () => {
+export const getPublicLocations = () => {
     try{
-        return await axios.get(
+        return axios.get(
           `https://accommodation-finder.herokuapp.com/location`
         )
     }

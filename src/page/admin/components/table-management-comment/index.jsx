@@ -92,27 +92,26 @@ function TableManagementComment() {
       title: 'Hành động',
       align: 'center',
       fixed: 'right',
-      width: 150,
+      width: 80,
       render: (text, record, index) => {
         return (
           <div className="table-management-post-action">
-            {record.pending && (
-              <Popconfirm
-                title="Bạn muốn chấp thuận bình luận này?"
-                className="pop-confirm-admin"
-                okText="Đồng ý"
-                cancelText="Huỷ bỏ"
-                onConfirm={() => {
-                  handleApproveComment(record._id)
-                }}
-              >
-                <Tooltip title="Chấp thuận bình luận">
-                  <div className="table-icons">
-                    <img alt="accept-icon" src={AcceptIcon} />
-                  </div>
-                </Tooltip>
-              </Popconfirm>
-            )}
+            <Popconfirm
+              title="Bạn muốn chấp thuận bình luận này?"
+              className={`pop-confirm-admin ${record.pending ? '' : 'confirm-invisible'}`}
+              okText="Đồng ý"
+              cancelText="Huỷ bỏ"
+              disabled={!record.pending}
+              onConfirm={() => {
+                handleApproveComment(record._id)
+              }}
+            >
+              <Tooltip title="Chấp thuận bình luận">
+                <div className="table-icons">
+                  <img alt="accept-icon" src={AcceptIcon} />
+                </div>
+              </Tooltip>
+            </Popconfirm>
             <Popconfirm
               title="Bạn có chắc muốn xoá bình luận này?"
               className="pop-confirm-admin"

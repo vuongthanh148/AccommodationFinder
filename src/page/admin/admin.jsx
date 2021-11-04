@@ -17,10 +17,15 @@ import './index.scss'
 
 const AdminPage = (props) => {
   const [login, setLogin] = useState(false)
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('admin')
+  const [password, setPassword] = useState('admin')
   useEffect(() => {
     props.changeNavbarState(false)
+    var isAdminLogin = localStorage.getItem('admin')
+
+    console.log(isAdminLogin)
+    console.log(isAdminLogin == 'true')
+    if(isAdminLogin == "true") setLogin(true)
   }, [])
 
   const handleSubmit = (e) => {
@@ -35,6 +40,7 @@ const AdminPage = (props) => {
         draggable: true,
       })
       setLogin(true)
+      localStorage.setItem('admin', 'true')
     }
     else{
       toast.error('Sai tên đăng nhập hoặc mật khẩu', {
@@ -84,7 +90,7 @@ const AdminPage = (props) => {
           <div className="login-overlay-secondary login-position-cover"></div>
 
           <div className="login-auth-2 login-position-z-index">
-            <NavLink activeStyle={{ color: '#fff' }} to="/home">
+            <NavLink activeStyle={{ color: '#fff' }} to="/admin">
               <img className="login-logo" src={logo_trang} />
             </NavLink>
 

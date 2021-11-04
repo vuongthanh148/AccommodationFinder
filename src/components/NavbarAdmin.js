@@ -59,6 +59,10 @@ class Bar extends Component {
       })
     }
   }
+  handleLogOut = () => {
+    localStorage.setItem('admin', "false")
+    window.location.href = '/admin'
+  }
 
   handleChat = () =>{
     location.href = '/admin/chat'
@@ -72,7 +76,7 @@ class Bar extends Component {
             <NavLink
               className="navbar-logo"
               activeStyle={{ color: '#fff' }}
-              to="/"
+              to="/admin"
             >
               <img className="ev-logo" src={logo} />
             </NavLink>
@@ -80,7 +84,7 @@ class Bar extends Component {
           <div className="navbar-right">
             <ul className="navbar-subnav navbar-subnav-divider navbar-right-element">
               <li>
-                <NavLink activeStyle={{ color: '#fff' }} to="/">
+                <NavLink activeStyle={{ color: '#fff' }} to="/admin">
                   Trang chủ
                 </NavLink>
               </li>
@@ -88,7 +92,7 @@ class Bar extends Component {
                 <a href="#" className="click-button" onClick={this.changeState}>
                   <img
                     className="navbar1-avatar-user"
-                    src={'https://i.imgur.com/fTZerDj.png'}
+                    src={'https://i.imgur.com/FmTeEmg.jpg'}
                   />
                   <div className="navbar1-user-name">ADMIN</div>
                   <span className="user-icon">

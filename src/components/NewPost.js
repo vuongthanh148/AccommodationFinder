@@ -67,7 +67,6 @@ const useStyles = makeStyles((theme) => ({
 
 const UploadImage = (props) => {
   let { files, setFiles, imgData, setImgData, updateListAvatar} = props
-  console.log('files in upload: ', files)
   const classes = useStyles()
   /**
    *
@@ -99,7 +98,6 @@ const UploadImage = (props) => {
           setFiles([...files, ...newFiles])
           setImgData([...imgData, ...newImgs])
         })
-        console.log('file after load: ', files)
         if(files.length > 0){
           updateListAvatar(files)
         }
@@ -215,7 +213,7 @@ const MainInfo = (props) => {
             onChange={async (e) => {
               setSelectedDistrict(e)
               setFieldValue('district', e.value)
-              const res = getWards({dID: e.ID})
+              const res = await getWards({dID: e.ID})
               if(res) {
                 let listWard = await res.data.map((item) => {
                   return {
@@ -519,10 +517,10 @@ const NewPost = (props) => {
   }
 
   const fetchListLocation = async () => {
-    const res = getPublicLocations()
+    const res = await getPublicLocations()
     if(res) {
       if (res.data.length !== 0) {
-        const listPlace = await res.data.map((l) => {
+        const listPlace = res.data.map((l) => {
           return { value: l.name, label: l.name }
         })
         setListPublicLocation(listPlace)
@@ -542,8 +540,8 @@ const NewPost = (props) => {
 
     var photos = []
     var listPromise = []
-    // photos.push(value.data.data.link)
-    files.map(f => {
+    
+    newfiles.forEach(f => {
       var p = new Promise((res,rej) => {
         imgurUploadImage(f).then(img => res(img))
       })
@@ -553,11 +551,7 @@ const NewPost = (props) => {
     listRes.forEach(res => {
       photos.push(res.data.data.link)
     })
-    console.log(photos)
-  //   var photos = ['https://www.wellingtonnz.com/assets/Uploads/Intros/Intercontinental_room-couches-view__FocusFillWzk2MCw1MzYsInkiLDkxXQ.jpg',
-  //   'https://www.canterbury.ac.nz/life/accommodation/temporary/Sonoda-Temp-accom_127832166035890251.jpg',
-  //   'https://pix10.agoda.net/hotelImages/747/7476707/7476707_19053021300074837521.jpg?s=1024x768'
-  // ]
+    console.log("photos: ", photos)
 
     const data = {
       _id: props.userData._id,
@@ -592,21 +586,29 @@ const NewPost = (props) => {
         fridge: values.fridge,
       },
     }
-    const res = await createNewAccomod(data)
-    if(res){
-        console.log(res)
-        toast.success('Bài viết đã được gửi. Vui lòng chờ duyệt', {
-          position: 'bottom-left',
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        })
-        location.href='/home'
-      }
-    console.log('data: ', data)
+    try{
+      const res = await createNewAccomod(data).catch(e => {
+        console.log(e)
+      })
+      // if(res){
+          console.log(res)
+          toast.success('Bài viết đã được gửi. Vui lòng chờ duyệt', {
+            position: 'bottom-left',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          })
+          // location.href='/home'
+        // }
+      console.log('data: ', data)
+    }
+    catch(e) {
+      console.log(e)
+    }
   }
+
   const newPostValidationSchema = yup.object().shape({
     title: yup.string().max(50, 'Tối đa 50 kí tự').required('Không được để trống'),
     city: yup.string().nullable().required('Không được để trống'),
@@ -755,7 +757,7 @@ const NewPost = (props) => {
           return null
       }
     },
-    [activeStep]
+    [activeStep, files, handleSubmit]
   )
 
   return (

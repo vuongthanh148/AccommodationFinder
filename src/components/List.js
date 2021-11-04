@@ -49,7 +49,7 @@ class List extends Component {
         isFollowed: !this.state.isFollowed,
       },
       async () => {
-        const res = await updateFollowAction({action: this.state.isFollowed ? 'unfollow' : 'follow', accomodID: this.props.accomod._id})
+        const res = await updateFollowAction(this.state.isFollowed ? 'unfollow' : 'follow', this.props.accomod._id)
         if(res){
           console.log(res)
           toast.info(res.data.success ? 'Thêm vào danh sách yêu thích thành công!' : 'Huỷ yêu thích thành công!', {
@@ -206,8 +206,9 @@ class List extends Component {
                 </p>
                 <p style={{ textAlign: 'left', width: '100%', margin: '0' }}>
                   {accomod.seperateAccomodation ? 'Không chung chủ' : 'Chung chủ'},{' '}
-                  {accomod.materialFacilities.airConditional ? 'có điều hoà' : 'không có điều hoà'},{' '}
+                  {accomod.materialFacilities.airConditioner ? 'có điều hoà' : 'không có điều hoà'},{' '}
                   {accomod.materialFacilities.electricWaterHeater ? 'có nóng lạnh' : 'không có nóng lạnh'},{' '}
+                  {accomod.materialFacilities.kitchen === "shared" ? 'bếp chung' : 'bếp riêng'},{' '}
                   {accomod.materialFacilities.bathroom.seperate ? 'vệ sinh khép kin' : 'vệ sinh chung'}
                 </p>
               </div>

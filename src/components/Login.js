@@ -8,8 +8,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import { handleLogin } from '../apis/user'
 
 const Login = (props) => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('bluedragon3105@gmail.com')
+  const [password, setPassword] = useState('hanoi123')
   const [status, setStatus] = useState('')
   const [userType, setUserType] = useState('owner')
   const [userData, setUserData] = useState({})
@@ -125,6 +125,7 @@ const Login = (props) => {
                     name="typeUser"
                     id="owner"
                     required
+                    defaultChecked={true}
                     onChange={() => setUserType('owner')}
                   />
                   <label>Chủ trọ</label>

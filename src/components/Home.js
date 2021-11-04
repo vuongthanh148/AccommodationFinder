@@ -10,7 +10,7 @@ import Listing from './Listing'
 import Loader from 'react-loader-spinner'
 import { getCities, getDistricts, getLocationFromCoords, getPublicLocations, getWards } from '../apis/location'
 import { getFollowList } from '../apis/user'
-import { getAllAccomod } from '../apis/accomod'
+import { searchAccomod } from '../apis/accomod'
 
 class Home extends Component {
   constructor(props) {
@@ -272,7 +272,7 @@ class Search extends Component {
       }
     } else console.log('Chưa đăng nhập')
 
-    const listAccomod = await getAllAccomod(data_to_send)
+    const listAccomod = await searchAccomod(data_to_send)
     if(listAccomod){
       const allAccomod = listAccomod.data.allAccomod
       const filteredAccomod = allAccomod.filter((a) => a.pending === false)
