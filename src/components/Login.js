@@ -31,7 +31,6 @@ const Login = (props) => {
         const res = await handleLogin({userType: userType, email: email, password: password})
         if(res){
           //Saving token to local storage
-          console.log("set item token: ", res.data.user.tokens[res.data.user.tokens.length - 1].token)
           localStorage.setItem(
             `token`,
             res.data.user.tokens[res.data.user.tokens.length - 1].token

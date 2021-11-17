@@ -56,13 +56,11 @@ const HomeDetailPage = () => {
 
   const handleGetDetailsData = async () => {
     const result = await getAccomodById(params.id)
-    console.log(result.data)
     setAccommodation(result.data)
   }
 
   const getAllComments = async () => {
     const res = await fetchCommentByPostId(params.id)
-    console.log(res)
     setListComment(res.data.comments)
   }
 
@@ -89,7 +87,6 @@ const HomeDetailPage = () => {
   }, [comment])
 
   const handleChangeRate = (r) => {
-    console.log(userContext.userData)
     setRate(r)
     ratePost({rate: r, postId: params.id, userId: userContext.userData._id})
   }

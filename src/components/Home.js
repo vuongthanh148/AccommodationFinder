@@ -160,7 +160,6 @@ class Search extends Component {
       async (position) => {
         const curPos = await getLocationFromCoords({lat: position.coords.latitude, lon: position.coords.longitude})
         if(curPos){
-          console.log(curPos)
           var city = curPos.data.localityInfo.administrative.find(a => a.adminLevel === 4);
           var district = curPos.data.localityInfo.administrative.find(a => a.adminLevel === 6);
           var ward = curPos.data.localityInfo.administrative.find(a => a.adminLevel === 8);
@@ -182,7 +181,6 @@ class Search extends Component {
                   }
                 })
                 this.setState({ list_district: districtsOption })
-                console.log(district)
                 districtsOption.forEach(async (d) => {
                   if (d.value === this.removeAccents(district.name)) {
                     this.setState({
@@ -260,10 +258,7 @@ class Search extends Component {
       livingArea: that.state.livingArea.value,
     }
 
-    console.log('data_to_send: ', data_to_send)
-
     if (Object.keys(this.props.userData).length !== 0) {
-      console.log('get token: ', localStorage.getItem('token'))
       const followList = await getFollowList({_id: this.props.userData._id,})
       if(followList){
         this.setState({

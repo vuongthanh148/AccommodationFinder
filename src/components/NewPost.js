@@ -551,7 +551,6 @@ const NewPost = (props) => {
     listRes.forEach(res => {
       photos.push(res.data.data.link)
     })
-    console.log("photos: ", photos)
 
     const data = {
       _id: props.userData._id,
@@ -591,7 +590,7 @@ const NewPost = (props) => {
         console.log(e)
       })
       // if(res){
-          console.log(res)
+          // console.log(res)
           toast.success('Bài viết đã được gửi. Vui lòng chờ duyệt', {
             position: 'bottom-left',
             autoClose: 3000,
@@ -602,7 +601,7 @@ const NewPost = (props) => {
           })
           // location.href='/home'
         // }
-      console.log('data: ', data)
+      // console.log('data: ', data)
     }
     catch(e) {
       console.log(e)

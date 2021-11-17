@@ -23,8 +23,6 @@ const AdminPage = (props) => {
     props.changeNavbarState(false)
     var isAdminLogin = localStorage.getItem('admin')
 
-    console.log(isAdminLogin)
-    console.log(isAdminLogin == 'true')
     if(isAdminLogin == "true") setLogin(true)
   }, [])
 

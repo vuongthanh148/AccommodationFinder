@@ -41,7 +41,6 @@ function Chatbox(props) {
       })
         .then((result) => {
           const { chatboxes } = result.data
-          console.log(chatboxes)
           setChatboxList(chatboxes)
           setName(props.userName)
           setUserId(props.userId)
@@ -53,7 +52,6 @@ function Chatbox(props) {
     } else if (type === 'admin') {
         adminGetAllChatbox().then((result) => {
           const { chatboxes } = result.data
-          console.log({ chatboxes })
           setChatboxList(chatboxes)
           setName('Admin')
           setUserId('5feaa425896d970004b6a82f')

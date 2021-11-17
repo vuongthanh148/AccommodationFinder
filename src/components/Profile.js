@@ -46,7 +46,6 @@ class Info extends Component {
   async componentDidMount() {
     getFollowList({ _id: this.state.userData._id }).then(async (res) => {
       let tempList = []
-      console.log(res)
       await res.data.forEach((e) => {
         getAccomodById(e.accommodationId).then((res2) => {
           tempList.push(res2.data)
@@ -57,7 +56,6 @@ class Info extends Component {
           list_follow_accomod: tempList,
         },
         () => {
-          console.log(this.state.list_follow_accomod)
           this.setState({
             fisnishFetching: true,
           })
@@ -77,7 +75,6 @@ class Info extends Component {
     })
 
     imgurUploadImage(event.target.files[0]).then((res) => {
-      console.log(res)
       this.setState({
         userAvatar: res.data.data.link,
       })
@@ -85,7 +82,6 @@ class Info extends Component {
       updateUserProfile({userType: this.state.userData.userType, data: {
         avatar: res.data.data.link
       }}).then((res2) => {
-        console.log(res2)
         toast.success('Change avatar successfully!', {
           position: 'bottom-left',
           autoClose: 3000,
@@ -97,7 +93,6 @@ class Info extends Component {
         location.href = '/profile'
       })
       .catch((e) => {
-        console.log(e.response.data)
         toast.error(e.response.data, {
           position: 'bottom-left',
           autoClose: 3000,
@@ -167,14 +162,12 @@ class Info extends Component {
                           await getAllAccomod({
                             userId: this.state.userData._id,
                           }).then( (res) => {
-                            console.log(res.data)
                 
                             this.setState(
                               {
                                 list_follow_accomod: res.data,
                               },
                               () => {
-                                console.log(this.state.list_follow_accomod)
                                 this.setState({
                                   fisnishFetching: true,
                                 })
@@ -279,7 +272,7 @@ class MyProfile extends Component {
         address: this.state.address,
       }
     }).then((res) => {
-      console.log(res)
+      // console.log(res)
     })
     .catch((e) => {
       console.log(e.response.data)
@@ -369,7 +362,6 @@ class Favorites extends Component {
     }
   }
   render() {
-    console.log(this.props.list_accomod)
     return (
       <div>
         <h5 className="profile-heading-line">
@@ -422,7 +414,7 @@ class ChangePassword extends Component {
                 password: this.state.newPassWord,
               }
             }).then((res) => {
-              console.log(res)
+              // console.log(res)
             })
             .catch((e) => {
               console.log(e.response.data)

@@ -27,7 +27,6 @@ class List extends Component {
       userToken: localStorage.getItem('token'),
       userType: localStorage.getItem('userType'),
     }
-    this.handleViewAccomod = this.handleViewAccomod.bind(this)
     this.handleFollow = this.handleFollow.bind(this)
   }
 
@@ -36,10 +35,6 @@ class List extends Component {
   handleNavigateToHomeDetailsPage = () => {
     const { history, accomod } = this.props
     history.push(`/home-detail/${accomod._id}`, { accommodation: accomod })
-  }
-  handleViewAccomod = () => {
-    console.log('xem nha ne`')
-    console.log(this.state)
   }
 
   handleFollow = async () => {
@@ -51,7 +46,6 @@ class List extends Component {
       async () => {
         const res = await updateFollowAction(this.state.isFollowed ? 'unfollow' : 'follow', this.props.accomod._id)
         if(res){
-          console.log(res)
           toast.info(res.data.success ? 'Thêm vào danh sách yêu thích thành công!' : 'Huỷ yêu thích thành công!', {
             // position: "top-right",
             autoClose: 3000,

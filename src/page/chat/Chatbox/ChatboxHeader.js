@@ -3,7 +3,6 @@ import Avatar from 'react-avatar';
 
 function ChatboxHeader(props) {
 	const { name } = props;
-	console.log(name);
 	return (
 		<div>
 				<div className="listHeader">

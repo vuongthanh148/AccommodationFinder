@@ -19,7 +19,6 @@ function TableManagementPost(props) {
     const callApi = async () => {
       setServiceLoader(true)
       const res = await fetchAllPost()
-      console.log(res.data.data)
       setPosterList(res.data.data)
       setServiceLoader(false)
     }
@@ -169,7 +168,6 @@ function TableManagementPost(props) {
               disabled={record.isApproved}
               onConfirm={() => {
                   approvePost(posterList[index].id).then((res) => {
-                    console.log(res.status)
                     toast.success('Đã chấp thuận thành công', {
                       position: 'bottom-left',
                       autoClose: 3000,

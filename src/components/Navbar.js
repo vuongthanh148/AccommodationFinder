@@ -104,13 +104,11 @@ class Bar extends Component {
       statusCode = res.status
     }
     if (statusCode === 200) {
-      console.log('moved')
       location.href = '/chat'
     }
   }
 
   render() {
-    console.log(this.props.userData)
     return (
       <div className="ev-header-1 navbar-section-primary">
         <nav className="navbar-container navbar-transparent navbar">
