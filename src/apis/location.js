@@ -1,6 +1,7 @@
 import axios from "axios"
 
-axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+const locationURL = "https://cors-anywhere.herokuapp.com/" + "https://thongtindoanhnghiep.co"
+
 export const getLocationFromCoords = async ({lat, lon}) => {
     
     try{
@@ -14,10 +15,11 @@ export const getLocationFromCoords = async ({lat, lon}) => {
 export const getCities = async () => {
     try{
         return await axios.get(
-          `https://thongtindoanhnghiep.co/api/city`, {
+          `${locationURL}/api/city`, {
             headers: {
-              "Access-Control-Allow-Origin": "*"
-            }
+              "Access-Control-Allow-Origin": "*",
+            //   "origin": "http://192.168.0.104:3000/"
+            },
         }
         )
     }
@@ -29,10 +31,11 @@ export const getCities = async () => {
 export const getDistricts = async ({cID}) => {
     try{
         return await axios.get(
-          `https://thongtindoanhnghiep.co/api/city/${cID}/district`, {
+          `${locationURL}/api/city/${cID}/district`, {
             headers: {
-              "Access-Control-Allow-Origin": "*"
-            }
+              "Access-Control-Allow-Origin": "*",
+            //   "origin": "http://192.168.0.104:3000/"
+            },
         }
         )
     }
@@ -44,10 +47,11 @@ export const getDistricts = async ({cID}) => {
 export const getWards = async ({dID}) => {
     try{
         return await axios.get(
-          `https://thongtindoanhnghiep.co/api/district/${dID}/ward`, {
+          `${locationURL}/api/district/${dID}/ward`, {
             headers: {
-              "Access-Control-Allow-Origin": "*"
-            }
+              "Access-Control-Allow-Origin": "*",
+            //   "origin": "http://192.168.0.104:3000/"
+            },
         }
         )
     }
